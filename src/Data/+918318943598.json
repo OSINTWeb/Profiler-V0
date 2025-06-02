@@ -1,0 +1,306 @@
+[
+  {
+    "module": "callapp",
+    "category": {
+      "name": "Data Aggregator",
+      "description": "Platforms that aggregate data from multiple sources. The presence of data on these platforms does not necessarily indicate that the target has an account; instead, it may suggest that the platforms have obtained their data from other sources, such as web scraping or data collection."
+    },
+    "data": { "name": "nabardlucknow", "priority": 1 },
+    "front_schemas": [
+      {
+        "module": "CallApp",
+        "body": {},
+        "tags": [],
+        "timeline": {
+          "last_seen": true,
+          "registered": true,
+          "last_seen_date": null,
+          "registered_date": null,
+          "groups": {},
+          "group_items": {},
+          "group_years": {}
+        }
+      }
+    ],
+    "spec_format": [
+      {
+        "registered": { "type": "bool", "proper_key": "Registered", "value": true },
+        "name": { "type": "str", "proper_key": "Name", "value": "Nabardlucknow" },
+        "platform_variables": []
+      }
+    ],
+    "status": "found",
+    "query": "+918318943598",
+    "from": "User supplied phone.",
+    "reliable_source": true
+  },
+  {
+    "module": "eyecon",
+    "category": {
+      "name": "Data Aggregator",
+      "description": "Platforms that aggregate data from multiple sources. The presence of data on these platforms does not necessarily indicate that the target has an account; instead, it may suggest that the platforms have obtained their data from other sources, such as web scraping or data collection."
+    },
+    "data": { "name": "C Chiranjiv Nawat", "pic_url": null, "profile_url": null, "fb_id": null },
+    "front_schemas": [
+      {
+        "module": "Eyecon",
+        "body": {},
+        "tags": [],
+        "timeline": {
+          "last_seen": true,
+          "registered": true,
+          "last_seen_date": null,
+          "registered_date": null,
+          "groups": {},
+          "group_items": {},
+          "group_years": {}
+        }
+      }
+    ],
+    "spec_format": [
+      {
+        "registered": { "type": "bool", "proper_key": "Registered", "value": true },
+        "name": { "type": "str", "proper_key": "Name", "value": "C Chiranjiv Nawat" },
+        "platform_variables": []
+      }
+    ],
+    "status": "found",
+    "query": "+918318943598",
+    "from": "User supplied phone.",
+    "reliable_source": true
+  },
+  {
+    "module": "facebook",
+    "category": {
+      "name": "Social Media",
+      "description": "Platforms that function as social media networks."
+    },
+    "data": [
+      {
+        "name": null,
+        "type": null,
+        "profile_pic": null,
+        "emails_hints": [],
+        "phones_hints": ["+918318943598"]
+      }
+    ],
+    "front_schemas": [
+      {
+        "module": "Facebook",
+        "body": {},
+        "tags": [],
+        "timeline": {
+          "last_seen": true,
+          "registered": true,
+          "last_seen_date": null,
+          "registered_date": null,
+          "groups": {},
+          "group_items": {},
+          "group_years": {}
+        }
+      }
+    ],
+    "spec_format": [
+      {
+        "registered": { "type": "bool", "proper_key": "Registered", "value": true },
+        "platform_variables": []
+      }
+    ],
+    "status": "found",
+    "query": "+918318943598",
+    "from": "User supplied phone.",
+    "reliable_source": true
+  },
+  {
+    "module": "instagram",
+    "category": {
+      "name": "Social Media",
+      "description": "Platforms that function as social media networks."
+    },
+    "data": { "registered": true },
+    "front_schemas": [
+      {
+        "module": "Instagram",
+        "body": {},
+        "tags": [],
+        "timeline": {
+          "last_seen": true,
+          "registered": true,
+          "last_seen_date": null,
+          "registered_date": null,
+          "groups": {},
+          "group_items": {},
+          "group_years": {}
+        }
+      }
+    ],
+    "spec_format": [
+      {
+        "registered": { "type": "bool", "proper_key": "Registered", "value": true },
+        "platform_variables": []
+      }
+    ],
+    "status": "found",
+    "query": "+918318943598",
+    "from": "User supplied phone.",
+    "reliable_source": true
+  },
+  {
+    "module": "truecaller",
+    "category": {
+      "name": "Data Aggregator",
+      "description": "Platforms that aggregate data from multiple sources. The presence of data on these platforms does not necessarily indicate that the target has an account; instead, it may suggest that the platforms have obtained their data from other sources, such as web scraping or data collection."
+    },
+    "data": {
+      "data": [
+        {
+          "id": "ztSps9iM7aaPZXH5PVR8k6W==",
+          "score": "0.1",
+          "access": "PUBLIC",
+          "enhanced": true,
+          "internetAddresses": [],
+          "badges": ["user"],
+          "tags": [],
+          "sources": [],
+          "searchWarnings": [],
+          "commentsStats": { "showComments": false },
+          "manualCallerIdPrompt": false,
+          "name": "Nabardlucknow",
+          "phones": [
+            {
+              "e164Format": "+918318943598",
+              "numberType": "MOBILE",
+              "nationalFormat": "",
+              "dialingCode": 91,
+              "countryCode": "IN",
+              "carrier": "Reliance Jio",
+              "type": "openPhone",
+              "timeZone": "+05:30"
+            }
+          ],
+          "addresses": [{ "address": "IN", "countryCode": "IN", "type": "address" }]
+        }
+      ]
+    },
+    "front_schemas": [
+      {
+        "module": "TrueCaller",
+        "body": { "Carriers": "Reliance Jio", "Cities": "IN, IN, address" },
+        "tags": [],
+        "timeline": {
+          "last_seen": true,
+          "registered": true,
+          "last_seen_date": null,
+          "registered_date": null,
+          "groups": {},
+          "group_items": {},
+          "group_years": {}
+        }
+      }
+    ],
+    "spec_format": [
+      {
+        "registered": { "type": "bool", "proper_key": "Registered", "value": true },
+        "id": { "type": "str", "proper_key": "Id", "value": "ztSps9iM7aaPZXH5PVR8k6W==" },
+        "name": { "type": "str", "proper_key": "Name", "value": "Nabardlucknow" },
+        "location": { "type": "str", "proper_key": "Location", "value": "IN, IN, address" },
+        "platform_variables": [
+          { "key": "score", "proper_key": "Score", "value": "0.1", "type": "str" },
+          { "key": "access", "proper_key": "Access", "value": "PUBLIC", "type": "str" },
+          { "key": "enhanced", "proper_key": "Enhanced", "value": true, "type": "bool" },
+          {
+            "key": "phones",
+            "proper_key": "Phones",
+            "value": [
+              {
+                "e164Format": "+918318943598",
+                "numberType": "MOBILE",
+                "nationalFormat": "",
+                "dialingCode": 91,
+                "countryCode": "IN",
+                "carrier": "Reliance Jio",
+                "type": "openPhone",
+                "timeZone": "+05:30"
+              }
+            ],
+            "type": "list"
+          },
+          {
+            "key": "addresses",
+            "proper_key": "Addresses",
+            "value": [{ "address": "IN", "countryCode": "IN", "type": "address" }],
+            "type": "list"
+          },
+          {
+            "key": "internet_addresses",
+            "proper_key": "Internet Addresses",
+            "value": [],
+            "type": "list"
+          },
+          { "key": "badges", "proper_key": "Badges", "value": ["user"], "type": "list" },
+          { "key": "tags", "proper_key": "Tags", "value": [], "type": "list" },
+          { "key": "sources", "proper_key": "Sources", "value": [], "type": "list" },
+          {
+            "key": "search_warnings",
+            "proper_key": "Search Warnings",
+            "value": [],
+            "type": "list"
+          },
+          {
+            "key": "comments_stats",
+            "proper_key": "Comments Stats",
+            "value": { "showComments": false },
+            "type": "dict"
+          },
+          {
+            "key": "manual_caller_id_prompt",
+            "proper_key": "Manual Caller Id Prompt",
+            "value": false,
+            "type": "bool"
+          },
+          { "key": "carriers", "proper_key": "Carriers", "value": "Reliance Jio", "type": "str" }
+        ]
+      }
+    ],
+    "status": "found",
+    "query": "+918318943598",
+    "from": "User supplied phone.",
+    "reliable_source": true
+  },
+  {
+    "module": "whatsapp",
+    "category": {
+      "name": "Communication",
+      "description": "Platforms designed for communication and messaging."
+    },
+    "data": { "bussiness": false, "profile_pic": null, "about_me": "", "bussiness_data": null },
+    "front_schemas": [
+      {
+        "module": "Whatsapp",
+        "body": { "Business Account": false },
+        "tags": [],
+        "timeline": {
+          "last_seen": true,
+          "registered": true,
+          "last_seen_date": null,
+          "registered_date": null,
+          "groups": {},
+          "group_items": {},
+          "group_years": {}
+        }
+      }
+    ],
+    "spec_format": [
+      {
+        "registered": { "type": "bool", "proper_key": "Registered", "value": true },
+        "platform_variables": [
+          { "key": "bussiness", "proper_key": "Bussiness", "value": false, "type": "bool" }
+        ]
+      }
+    ],
+    "status": "found",
+    "query": "+918318943598",
+    "from": "User supplied phone.",
+    "reliable_source": true
+  }
+]

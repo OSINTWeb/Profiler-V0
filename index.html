@@ -1,0 +1,350 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <title>Profiler</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="description" content="Profiler: All-in-One OSINT Toolkit for Investigations" />
+    <meta name="author" content="Profiler" />
+
+    <meta property="og:title" content="Profiler" />
+    <meta
+      property="og:description"
+      content="Profiler: All-in-One OSINT Toolkit for Investigations."
+    />
+    <meta property="og:type" content="website" />
+    <meta
+      property="og:image"
+      content="https://res.cloudinary.com/dc05saeek/image/upload/v1747144738/9A3DE9F8-515B-4387-8BB8-874FE5FB3ACA_bophu7.png"
+    />
+
+    <meta name="twitter:card" content="summary_large_image" />
+    <meta name="twitter:site" content="@osintambition" />
+    <meta
+      name="twitter:image"
+      content="https://res.cloudinary.com/dc05saeek/image/upload/v1747144738/9A3DE9F8-515B-4387-8BB8-874FE5FB3ACA_bophu7.png"
+    />
+
+    <link
+      rel="icon"
+      href="https://res.cloudinary.com/dc05saeek/image/upload/v1747128047/favicon_512x512_ewoo3q.png"
+      type="image/png"
+    />
+
+    <link
+      rel="apple-touch-icon"
+      sizes="180x180"
+      href="https://res.cloudinary.com/dc05saeek/image/upload/v1747128047/favicon_512x512_ewoo3q.png"
+    />
+
+    <link
+      rel="mask-icon"
+      href="https://res.cloudinary.com/dc05saeek/image/upload/v1747128047/favicon_512x512_ewoo3q.png"
+      color="#000000"
+    />
+
+    <script type="application/ld+json">
+      [
+        {
+          "@context": "https://schema.org",
+          "@type": "WebSite",
+          "@id": "https://profiler.me/#website",
+          "name": "Profiler",
+          "alternateName": "Profiler OSINT",
+          "url": "https://profiler.me", // Main domain
+          "publisher": {
+            "@type": "Organization",
+            "@id": "https://profiler.me/#organization" // Reference a full Organization schema
+          },
+          "keywords": "OSINT, Profiler Tools, Free OSINT Tools, Cyber Investigation, Open Source Intelligence, Data Breach, Social Media Finder, Phone Number Lookup, Email Lookup, OSINT Search"
+        },
+        {
+          "@context": "https://schema.org",
+          "@type": "Organization",
+          "@id": "https://profiler.me/#organization",
+          "name": "Profiler",
+          "url": "https://profiler.me",
+          "logo": {
+            "@type": "ImageObject",
+            "url": "https://res.cloudinary.com/dc05saeek/image/upload/v1747128047/favicon_512x512_ewoo3q.png",
+            "width": 512,
+            "height": 512
+          }
+        },
+        {
+          "@context": "https://schema.org",
+          "@type": "WebPage", // This specific page is a WebPage
+          "@id": "https://search.profiler.me/#webpage", // Unique ID for this page's schema
+          "url": "https://search.profiler.me", // URL of this specific page
+          "name": "Profiler OSINT Search & Tools Directory", // Title for this page
+          "description": "Discover and access Profiler's comprehensive suite of OSINT tools, including free utilities and premium search capabilities, all listed here.", // Description for this page
+          "isPartOf": {
+            "@id": "https://profiler.me/#website" // Links to the WebSite entity
+          },
+          "publisher": {
+            "@id": "https://profiler.me/#organization"
+          },
+          "breadcrumb": {
+            "@context": "https://schema.org",
+            "@type": "BreadcrumbList",
+            "@id": "https://search.profiler.me/#breadcrumb", // Unique ID for this breadcrumb
+            "itemListElement": [
+              {
+                "@type": "ListItem",
+                // "position": 1, // Position is optional if order is clear
+                "name": "Home",
+                "item": "https://profiler.me"
+              },
+              {
+                "@type": "ListItem",
+                // "position": 2, // Position is optional
+                "name": "OSINT Tools Directory", // Name for this page in the breadcrumb
+                "item": "https://search.profiler.me"
+              }
+            ]
+          },
+          "mainEntity": {
+            // The ItemList below is the main content of this WebPage
+            "@context": "https://schema.org",
+            "@type": "ItemList",
+            "@id": "https://search.profiler.me/#OSINTtoolslist",
+            "name": "Profiler OSINT Tools and Search Options",
+            "description": "A directory of Profiler's free OSINT tools and premium search services.",
+            "itemListElement": [
+              {
+                "@type": "ListItem", // Each item in the ItemList is a ListItem
+                // "position": 1, // Optional
+                "item": {
+                  // The actual item being listed
+                  "@type": "SoftwareApplication", // More specific than SiteNavigationElement if these link to actual applications/tools
+                  "@id": "https://callspy.profiler.me/#tool", // Unique ID for this tool
+                  "name": "CallSpy",
+                  "url": "https://callspy.profiler.me",
+                  "description": "Lookup phone numbers for caller information and data leaks.",
+                  "applicationCategory": "UtilityApplication",
+                  "operatingSystem": "WebPlatform" // Indicates it's a web-based tool
+                }
+              },
+              {
+                "@type": "ListItem",
+                // "position": 2, // Optional
+                "item": {
+                  "@type": "SoftwareApplication",
+                  "@id": "https://breachguardian.profiler.me/#tool",
+                  "name": "BreachGuardian",
+                  "url": "https://breachguardian.profiler.me",
+                  "description": "Check if your personal data has been exposed in security breaches.",
+                  "applicationCategory": "SecurityApplication",
+                  "operatingSystem": "WebPlatform"
+                }
+              },
+              {
+                "@type": "ListItem",
+                "item": {
+                  "@type": "SoftwareApplication",
+                  "@id": "https://xscan.profiler.me/#tool",
+                  "name": "XScan",
+                  "url": "https://xscan.profiler.me",
+                  "description": "Scan online accounts and gather hidden user data.",
+                  "applicationCategory": "UtilityApplication",
+                  "operatingSystem": "WebPlatform"
+                }
+              },
+              {
+                "@type": "ListItem",
+                "item": {
+                  "@type": "SoftwareApplication",
+                  "@id": "https://linkedin2mail.profiler.me/#tool",
+                  "name": "LinkedIn2Mail",
+                  "url": "https://linkedin2mail.profiler.me",
+                  "description": "Extract and find emails linked to LinkedIn profiles.",
+                  "applicationCategory": "UtilityApplication",
+                  "operatingSystem": "WebPlatform"
+                }
+              },
+              {
+                "@type": "ListItem",
+                "item": {
+                  "@type": "SoftwareApplication",
+                  "@id": "https://infostealer.profiler.me/#tool",
+                  "name": "InfoStealer",
+                  "url": "https://infostealer.profiler.me",
+                  "description": "Search for compromised credentials and data leaks.",
+                  "applicationCategory": "SecurityApplication",
+                  "operatingSystem": "WebPlatform"
+                }
+              },
+              {
+                "@type": "ListItem",
+                "item": {
+                  "@type": "SoftwareApplication",
+                  "@id": "https://mail2linkedin.profiler.me/#tool",
+                  "name": "Mail2Linkedin",
+                  "url": "https://mail2linkedin.profiler.me",
+                  "description": "Find LinkedIn profiles connected to specific emails.",
+                  "applicationCategory": "UtilityApplication",
+                  "operatingSystem": "WebPlatform"
+                }
+              },
+              {
+                "@type": "ListItem",
+                "item": {
+                  "@type": "SoftwareApplication",
+                  "@id": "https://socialmediafinder.profiler.me/#tool",
+                  "name": "Social Media Finder",
+                  "url": "https://socialmediafinder.profiler.me",
+                  "description": "Discover social media profiles linked to emails, numbers, or usernames.",
+                  "applicationCategory": "UtilityApplication",
+                  "operatingSystem": "WebPlatform"
+                }
+              },
+              {
+                "@type": "ListItem",
+                "item": {
+                  "@type": "SoftwareApplication",
+                  "@id": "https://tiktokerfinder.profiler.me/#tool",
+                  "name": "TikToker Finder",
+                  "url": "https://tiktokerfinder.profiler.me",
+                  "description": "Find TikTok accounts based on email addresses and phone numbers.",
+                  "applicationCategory": "UtilityApplication",
+                  "operatingSystem": "WebPlatform"
+                }
+              },
+              {
+                "@type": "ListItem",
+                "item": {
+                  "@type": "SoftwareApplication",
+                  "@id": "https://simspy.profiler.me/#tool",
+                  "name": "SimSpy",
+                  "url": "https://simspy.profiler.me",
+                  "description": "Check SIM card and carrier information linked to phone numbers.",
+                  "applicationCategory": "UtilityApplication",
+                  "operatingSystem": "WebPlatform"
+                }
+              },
+              {
+                "@type": "ListItem",
+                "item": {
+                  "@type": "SoftwareApplication",
+                  "@id": "https://gravaton.profiler.me/#tool",
+                  "name": "Gravaton",
+                  "url": "https://gravaton.profiler.me",
+                  "description": "Search user avatars and linked accounts using Gravatar email IDs.",
+                  "applicationCategory": "UtilityApplication",
+                  "operatingSystem": "WebPlatform"
+                }
+              },
+              // --- Premium Search Products ---
+              {
+                "@type": "ListItem",
+                // "position": 11, // Optional
+                "item": {
+                  // The actual item being listed, which is a Product
+                  "@type": "Product",
+                  "@id": "https://profiler.me/pricing#basic-search", // Unique ID for this product offer
+                  "name": "Basic Search",
+                  "url": "https://search.profiler.me/pricing#basic-search", // URL to the product/pricing page
+                  "description": "Affordable OSINT searches with essential toolkit access. Powerful Open-Source OSINT Tools, Decoded for You.",
+                  "image": "https://res.cloudinary.com/dc05saeek/image/upload/v1747144738/9A3DE9F8-515B-4387-8BB8-874FE5FB3ACA_bophu7.png",
+                  "brand": { "@type": "Brand", "name": "Profiler" },
+                  "offers": {
+                    "@type": "Offer",
+                    "price": "0.05",
+                    "priceCurrency": "USD",
+                    "availability": "https://schema.org/InStock",
+                    "description": "Per Search"
+                  },
+                  "additionalProperty": [
+                    {
+                      "@type": "PropertyValue",
+                      "name": "Feature",
+                      "value": "OSINT Toolkit Access"
+                    },
+                    {
+                      "@type": "PropertyValue",
+                      "name": "Feature",
+                      "value": "Email & Username Lookup"
+                    },
+                    {
+                      "@type": "PropertyValue",
+                      "name": "Feature",
+                      "value": "Basic Phone & Social Search"
+                    },
+                    {
+                      "@type": "PropertyValue",
+                      "name": "Feature",
+                      "value": "Common Data Breach Check"
+                    },
+                    { "@type": "PropertyValue", "name": "Feature", "value": "Basic GitHub Search" }
+                  ]
+                }
+              },
+              {
+                "@type": "ListItem",
+                // "position": 12, // Optional
+                "item": {
+                  "@type": "Product",
+                  "@id": "https://profiler.me/pricing#advanced-search", // Unique ID
+                  "name": "Advanced Search",
+                  "url": "https://search.profiler.me/pricing#advanced-search",
+                  "description": "Comprehensive OSINT searches with our full toolkit and deep insights. Your Strategic Edge: Advanced OSINT Capabilities, Effortlessly Deployed.",
+                  "image": "https://res.cloudinary.com/dc05saeek/image/upload/v1747144738/9A3DE9F8-515B-4387-8BB8-874FE5FB3ACA_bophu7.png",
+                  "brand": { "@type": "Brand", "name": "Profiler" },
+                  "offers": {
+                    "@type": "Offer",
+                    "price": "0.50",
+                    "priceCurrency": "USD",
+                    "availability": "https://schema.org/InStock",
+                    "description": "Per Search"
+                  },
+                  "additionalProperty": [
+                    {
+                      "@type": "PropertyValue",
+                      "name": "Feature",
+                      "value": "Comprehensive OSINT Toolkit Access"
+                    },
+                    {
+                      "@type": "PropertyValue",
+                      "name": "Feature",
+                      "value": "In-Depth Email & Username Lookup"
+                    },
+                    {
+                      "@type": "PropertyValue",
+                      "name": "Feature",
+                      "value": "Extensive Phone & Social Network Analysis"
+                    },
+                    {
+                      "@type": "PropertyValue",
+                      "name": "Feature",
+                      "value": "Full Leak & Data Breach Database Check"
+                    },
+                    {
+                      "@type": "PropertyValue",
+                      "name": "Feature",
+                      "value": "GitHub Intelligence & Code Analysis Tools"
+                    },
+                    {
+                      "@type": "PropertyValue",
+                      "name": "Feature",
+                      "value": "Advanced Twitter & X Scanning Engine"
+                    },
+                    {
+                      "@type": "PropertyValue",
+                      "name": "Feature",
+                      "value": "Deep Intelligence Insights & Correlation"
+                    }
+                  ]
+                }
+              }
+            ]
+          }
+        }
+      ]
+    </script>
+  </head>
+
+  <body>
+    <div id="root"></div>
+    <script src="https://cdn.gpteng.co/gptengineer.js" type="module"></script>
+    <script type="module" src="/src/main.tsx"></script>
+  </body>
+</html>

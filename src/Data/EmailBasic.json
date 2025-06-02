@@ -1,0 +1,424 @@
+{
+  "hibp": [
+      {
+          "Name": "Vedantu",
+          "Title": "Vedantu",
+          "Domain": "vedantu.com",
+          "BreachDate": "2019-07-08",
+          "AddedDate": "2019-11-01T05:13:40Z",
+          "ModifiedDate": "2019-11-01T05:13:40Z",
+          "PwnCount": 686899,
+          "Description": "In mid-2019, the Indian interactive online tutoring platform <a href=\"https://www.vedantu.com/\" target=\"_blank\" rel=\"noopener\">Vedantu</a> suffered a data breach which exposed the personal data of 687k users. The JSON formatted database dump exposed extensive personal information including email and IP address, names, phone numbers, genders and passwords stored as bcrypt hashes. When contacted about the incident, Vedantu advised that they were aware of the breach and were in the process of informing their customers.",
+          "LogoPath": "https://haveibeenpwned.com/Content/Images/PwnedLogos/Vedantu.png",
+          "DataClasses": [
+              "Browser user agent details",
+              "Email addresses",
+              "Genders",
+              "IP addresses",
+              "Names",
+              "Passwords",
+              "Phone numbers",
+              "Spoken languages",
+              "Time zones",
+              "Website activity"
+          ],
+          "IsVerified": true,
+          "IsFabricated": false,
+          "IsSensitive": false,
+          "IsRetired": false,
+          "IsSpamList": false,
+          "IsMalware": false,
+          "IsSubscriptionFree": false,
+          "IsStealerLog": false
+      }
+  ],
+  "ghunt": {
+      "error": ""
+  },
+  "protonmail": {
+      "protonmail": "This is not a protonmail address."
+  },
+  "gravatar": {
+      "entry": [
+          {
+              "hash": "0164884a6e7ffecf05a52f05ae0e4c2c",
+              "requestHash": "0164884a6e7ffecf05a52f05ae0e4c2c",
+              "profileUrl": "https://gravatar.com/dheerajydv19",
+              "preferredUsername": "dheerajydv19",
+              "thumbnailUrl": "https://0.gravatar.com/avatar/0164884a6e7ffecf05a52f05ae0e4c2c",
+              "photos": [
+                  {
+                      "value": "https://0.gravatar.com/avatar/0164884a6e7ffecf05a52f05ae0e4c2c",
+                      "type": "thumbnail"
+                  }
+              ],
+              "displayName": "Dheeraj Yadav",
+              "aboutMe": "Hacker and OSINT Expert\nBuilding some awesome stuff for OSINTers",
+              "currentLocation": "India",
+              "job_title": "Founder",
+              "company": "OSINT Ambition",
+              "emails": [
+                  {
+                      "primary": "true",
+                      "value": "dheerajydv19@proton.me"
+                  }
+              ],
+              "accounts": [
+                  {
+                      "domain": "x.com",
+                      "display": "@Dheerajydv19",
+                      "url": "https://x.com/Dheerajydv19",
+                      "iconUrl": "https://gravatar.com/icons/x.svg",
+                      "is_hidden": false,
+                      "username": "Dheerajydv19",
+                      "verified": true,
+                      "name": "X",
+                      "shortname": "twitter"
+                  },
+                  {
+                      "domain": "github.com",
+                      "display": "dheerajydv19",
+                      "url": "https://github.com/dheerajydv19",
+                      "iconUrl": "https://gravatar.com/icons/github.svg",
+                      "is_hidden": false,
+                      "username": "dheerajydv19",
+                      "verified": true,
+                      "name": "GitHub",
+                      "shortname": "github"
+                  },
+                  {
+                      "domain": "instagram.com",
+                      "display": "dheerajydv19",
+                      "url": "https://instagram.com/dheerajydv19",
+                      "iconUrl": "https://gravatar.com/icons/instagram.svg",
+                      "is_hidden": false,
+                      "username": "dheerajydv19",
+                      "verified": true,
+                      "name": "Instagram",
+                      "shortname": "instagram"
+                  }
+              ],
+              "profileBackground": {
+                  "opacity": 0.01
+              }
+          }
+      ]
+  },
+  "trello": {
+      "error": "Expecting value: line 1 column 1 (char 0)"
+  },
+  "notion": {
+      "value": {
+          "value": {
+              "id": "8a119e95-63c1-42f6-ada0-abde6c6728b6",
+              "version": 8,
+              "email": "dheerajyadavmandlana@gmail.com",
+              "profile_photo": "https://lh3.googleusercontent.com/a/ALm5wu1ojdWJo8dLfXQdknBV8udO7kaz0cjVTjj2elpd9A=s100",
+              "onboarding_completed": true,
+              "mobile_onboarding_completed": true,
+              "name": "Dheeraj Yadav"
+          },
+          "role": "reader"
+      }
+  },
+  "adobe": [
+      {
+          "type": "individual",
+          "authenticationMethods": [
+              {
+                  "id": "google",
+                  "url": "https://adobeid-na1.services.adobe.com/renga-idprovider/social/v2/signin/google"
+              }
+          ],
+          "status": {
+              "code": "active",
+              "reason": null
+          },
+          "images": {
+              "50": "https://a5.behance.net/cdab7f1ecaba4fa5d6ea532685238e3ec5daf8b9/img/profile/avatars/layers-50.png?cb=264615658",
+              "100": "https://a5.behance.net/cdab7f1ecaba4fa5d6ea532685238e3ec5daf8b9/img/profile/avatars/layers-100.png?cb=264615658",
+              "115": "https://a5.behance.net/cdab7f1ecaba4fa5d6ea532685238e3ec5daf8b9/img/profile/avatars/layers-115.png?cb=264615658",
+              "138": "https://a5.behance.net/cdab7f1ecaba4fa5d6ea532685238e3ec5daf8b9/img/profile/avatars/layers-138.png?cb=264615658",
+              "230": "https://a5.behance.net/cdab7f1ecaba4fa5d6ea532685238e3ec5daf8b9/img/profile/avatars/layers-230.png?cb=264615658",
+              "276": "https://a5.behance.net/cdab7f1ecaba4fa5d6ea532685238e3ec5daf8b9/img/profile/avatars/layers-276.png?cb=264615658"
+          },
+          "hasT2ELinked": false
+      }
+  ],
+  "teams": {},
+  "linkedin": [
+      {
+          "id": "urn:li:person:DgEPmFc249TvxekVuQjR7qvtikZxaQmTw1wRpx5UHdo",
+          "displayName": "Dheeraj Yadav",
+          "firstName": "Dheeraj",
+          "lastName": "Yadav",
+          "emails": [
+              "dheerajyadavmandlana@gmail.com"
+          ],
+          "phoneNumbers": [],
+          "headline": "Founder @OSINTAmbition | Organizer @OSINTCon |  Building Profiler.Me",
+          "summary": "Developing a cutting-edge OSINT platform empowering professionals with seamless investigative tools. With a proven track record in building impactful marketing campaigns, Dheeraj combines his expertise in cybersecurity, data-driven strategies, and storytelling to drive growth and innovation. His work bridges technology and education, offering actionable insights through webinars, video guides, and community engagement. Passionate about empowering individuals and organizations, Dheeraj is committed to shaping the future of OSINT by fostering accessibility, affordability, and excellence in professional investigations.",
+          "companyName": "OSINT Ambition",
+          "location": "Delhi, India",
+          "photoUrl": "https://media.licdn.com/dms/image/v2/D5603AQFFU_82FH6ZrQ/profile-displayphoto-shrink_400_400/B56ZPtL8PJHIAk-/0/1734851152431?e=1748808000&v=beta&t=8BQ5BOtA3S55wHGsuHGKnnuIuugzfXRyJq-kFDM_EUU",
+          "linkedInUrl": "https://linkedin.com/in/dheerajydv19",
+          "reportProfileUrl": "https://linkedin.com/in/dheerajydv19/report",
+          "connectionCount": 500,
+          "isConnectionCountObfuscated": true,
+          "connectionDegree": "Self",
+          "connectionStatus": "NotConnected",
+          "skills": [
+              "Search Engine Optimization (SEO)",
+              "Business Strategy",
+              "Python Programming",
+              "Ethical Hacking",
+              "Team Leadership",
+              "Amazon Web Services (AWS)",
+              "OSINT",
+              "Osint",
+              "Cyber Threat Intelligence (CTI)",
+              "Cybersecurity",
+              "Web Content Writing",
+              "Strategic Marketing Management",
+              "Google Cloud Platform (GCP)",
+              "Competitive Analysis"
+          ],
+          "locale": {
+              "country": "us",
+              "language": "en"
+          },
+          "schools": {
+              "educationsCount": 1,
+              "educationHistory": [
+                  {
+                      "school": {
+                          "schoolName": "YSN Narnaul",
+                          "linkedInUrl": "https://www.linkedin.com/search/results/schools/?keywords=YSN Narnaul"
+                      },
+                      "degreeName": "10-12th",
+                      "startEndDate": {
+                          "start": {
+                              "month": 4,
+                              "year": 2017
+                          },
+                          "end": {
+                              "month": 3,
+                              "year": 2020
+                          }
+                      },
+                      "fieldOfStudy": "Non-medical",
+                      "schoolName": "YSN Narnaul",
+                      "linkedInUrl": "https://www.linkedin.com/search/results/schools/?keywords=YSN Narnaul"
+                  }
+              ]
+          },
+          "positions": {
+              "positionsCount": 6,
+              "positionHistory": [
+                  {
+                      "title": "Founder",
+                      "startEndDate": {
+                          "start": {
+                              "month": 6,
+                              "year": 2023
+                          },
+                          "end": {}
+                      },
+                      "description": "✯ As being the founder of The OSINT Ambition, I was responsible for building and maintaining a community of individuals interested in learning about cybersecurity and open-source intelligence.\n✯ My main responsibilities included creating and managing content, moderating discussions, and building relationships with community members.\n✯ I also worked to create a safe and inclusive environment for members to share their knowledge and experiences, and to support each other in their learning journey.",
+                      "company": {
+                          "companyName": "OSINT Ambition",
+                          "companyLocation": "Delhi, India",
+                          "companyLogo": "https://media.licdn.com/dms/image/v2/D4D0BAQE8h_X7JRE5Cw/company-logo_400_400/B4DZaWK85IGwAY-/0/1746276177154/osintambition_logo?e=1748808000&v=beta&t=9FLgDiqmcCNJdVuiLrWnUTB7p1guFOExw46NpW7Nt60",
+                          "linkedInUrl": "https://www.linkedin.com/company/osintambition"
+                      },
+                      "companyName": "OSINT Ambition",
+                      "companyLocation": "Delhi, India",
+                      "companyLogo": "https://media.licdn.com/dms/image/v2/D4D0BAQE8h_X7JRE5Cw/company-logo_400_400/B4DZaWK85IGwAY-/0/1746276177154/osintambition_logo?e=1748808000&v=beta&t=9FLgDiqmcCNJdVuiLrWnUTB7p1guFOExw46NpW7Nt60",
+                      "linkedInUrl": "https://www.linkedin.com/company/osintambition"
+                  },
+                  {
+                      "title": "Head of Marketing",
+                      "startEndDate": {
+                          "start": {
+                              "month": 10,
+                              "year": 2024
+                          },
+                          "end": {
+                              "month": 1,
+                              "year": 2025
+                          }
+                      },
+                      "description": "As the Head of Marketing, I lead strategic initiatives to elevate brand visibility, drive user engagement, and establish the company as a leader in the professional investigations and OSINT ecosystem.\n\nKey Responsibilities:\nStrategic Growth: Spearheading marketing strategies that integrate market research, competitor analysis, and trend forecasting to position UserSearch as a trusted solution for professionals and students alike.\nBrand Development: Crafting a compelling brand narrative that highlights UserSearch's ease of use, no-code integration, and cost-effective solutions.\nContent Leadership: Overseeing the creation of educational resources, including in-platform video guides, webinars, and collaborative content with influencers, to empower content creators and students.\nPartnerships: Building partnerships with major OSINT and cyber data providers like OSINT Industries, Predicta Search, FaceCheck, and GeoSpy to enhance the platform's value proposition.\nProduct Advocacy: Working closely with the product team to align marketing campaigns with UserSearch’s nine search types and seamless integration capabilities.",
+                      "company": {
+                          "companyName": "UserSearch",
+                          "companyLocation": "United Kingdom",
+                          "linkedInUrl": "https://www.linkedin.com/search/results/companies/?keywords=UserSearch"
+                      },
+                      "companyName": "UserSearch",
+                      "companyLocation": "United Kingdom",
+                      "linkedInUrl": "https://www.linkedin.com/search/results/companies/?keywords=UserSearch"
+                  },
+                  {
+                      "title": "Subject Matter Expert",
+                      "startEndDate": {
+                          "start": {
+                              "month": 9,
+                              "year": 2022
+                          },
+                          "end": {
+                              "month": 9,
+                              "year": 2024
+                          }
+                      },
+                      "description": "As a subject matter expert (SME) writer, my primary role would be to produce high-quality written content on a specific topic or subject area in that I have in-depth knowledge and expertise. Some specific responsibilities of me as a SME writer includes:\n\nResearching and gathering information about the topic I am writing about.\n\n1. Organizing and presenting the information in a clear and concise manner.\n\n2. Ensuring that the content is accurate, up-to-date, and factually correct.\n\n3. Writing in a style that is easy for the reader to understand and engage with.\n\n4. Editing and revising my own work to ensure it meets the necessary standards of quality.\n\nCollaborating with other writers, editors, and subject matter experts as needed to produce the best possible content.\n\nStaying current on developments in my subject area, and incorporating new information and ideas into my writing as appropriate.",
+                      "company": {
+                          "companyName": "KnowledgeHut upGrad",
+                          "companyLocation": "Bengaluru, Karnataka, India",
+                          "companyLogo": "https://media.licdn.com/dms/image/v2/D560BAQEoedoQ1GrM7g/company-logo_400_400/company-logo_400_400/0/1722242495107/upgradknowledgehut_logo?e=1748808000&v=beta&t=tuCdIVYYVDHzJfhhUCzYvPqw5gjrxeBqkHtxLTpMD5c",
+                          "linkedInUrl": "https://www.linkedin.com/company/upgradknowledgehut"
+                      },
+                      "companyName": "KnowledgeHut upGrad",
+                      "companyLocation": "Bengaluru, Karnataka, India",
+                      "companyLogo": "https://media.licdn.com/dms/image/v2/D560BAQEoedoQ1GrM7g/company-logo_400_400/company-logo_400_400/0/1722242495107/upgradknowledgehut_logo?e=1748808000&v=beta&t=tuCdIVYYVDHzJfhhUCzYvPqw5gjrxeBqkHtxLTpMD5c",
+                      "linkedInUrl": "https://www.linkedin.com/company/upgradknowledgehut"
+                  }
+              ]
+          },
+          "skillEndorsements": {
+              "skillEndorsementsCount": 3,
+              "skillEndorsements": [
+                  {
+                      "skillName": "Ethical Hacking",
+                      "endorsementCount": 1,
+                      "endorsers": [
+                          {
+                              "id": "urn:li:person:DgHKEg_67p3P8X60BG-Rnwsh5XbwJx_FoQDB9LVqxnU",
+                              "displayName": "Himanshu Bomble",
+                              "firstName": "Himanshu",
+                              "lastName": "Bomble",
+                              "photoUrl": "https://media.licdn.com/dms/image/v2/D4D03AQGFDWJokl4Dkw/profile-displayphoto-shrink_400_400/profile-displayphoto-shrink_400_400/0/1719220395116?e=1748808000&v=beta&t=gcel9sHQ-X8c4SdwMPn26nlEAqNNaiDRQVCNEiZxLe0",
+                              "locale": {
+                                  "country": "us",
+                                  "language": "en"
+                              },
+                              "schools": {
+                                  "educationsCount": 0,
+                                  "educationHistory": []
+                              },
+                              "positions": {
+                                  "positionsCount": 0,
+                                  "positionHistory": []
+                              },
+                              "skillEndorsements": {
+                                  "skillEndorsementsCount": 0,
+                                  "skillEndorsements": []
+                              },
+                              "newsMentions": {
+                                  "newsMentionCount": 0,
+                                  "newsMentions": []
+                              },
+                              "userGeneratedContents": {
+                                  "userGeneratedContentCount": 0,
+                                  "userGeneratedContents": []
+                              },
+                              "isPublic": false
+                          }
+                      ]
+                  },
+                  {
+                      "skillName": "Cyber Threat Intelligence (CTI)",
+                      "endorsementCount": 1,
+                      "endorsers": [
+                          {
+                              "id": "urn:li:person:DgHKEg_67p3P8X60BG-Rnwsh5XbwJx_FoQDB9LVqxnU",
+                              "displayName": "Himanshu Bomble",
+                              "firstName": "Himanshu",
+                              "lastName": "Bomble",
+                              "photoUrl": "https://media.licdn.com/dms/image/v2/D4D03AQGFDWJokl4Dkw/profile-displayphoto-shrink_400_400/profile-displayphoto-shrink_400_400/0/1719220395116?e=1748808000&v=beta&t=gcel9sHQ-X8c4SdwMPn26nlEAqNNaiDRQVCNEiZxLe0",
+                              "locale": {
+                                  "country": "us",
+                                  "language": "en"
+                              },
+                              "schools": {
+                                  "educationsCount": 0,
+                                  "educationHistory": []
+                              },
+                              "positions": {
+                                  "positionsCount": 0,
+                                  "positionHistory": []
+                              },
+                              "skillEndorsements": {
+                                  "skillEndorsementsCount": 0,
+                                  "skillEndorsements": []
+                              },
+                              "newsMentions": {
+                                  "newsMentionCount": 0,
+                                  "newsMentions": []
+                              },
+                              "userGeneratedContents": {
+                                  "userGeneratedContentCount": 0,
+                                  "userGeneratedContents": []
+                              },
+                              "isPublic": false
+                          }
+                      ]
+                  },
+                  {
+                      "skillName": "Cybersecurity",
+                      "endorsementCount": 1,
+                      "endorsers": [
+                          {
+                              "id": "urn:li:person:DgHKEg_67p3P8X60BG-Rnwsh5XbwJx_FoQDB9LVqxnU",
+                              "displayName": "Himanshu Bomble",
+                              "firstName": "Himanshu",
+                              "lastName": "Bomble",
+                              "photoUrl": "https://media.licdn.com/dms/image/v2/D4D03AQGFDWJokl4Dkw/profile-displayphoto-shrink_400_400/profile-displayphoto-shrink_400_400/0/1719220395116?e=1748808000&v=beta&t=gcel9sHQ-X8c4SdwMPn26nlEAqNNaiDRQVCNEiZxLe0",
+                              "locale": {
+                                  "country": "us",
+                                  "language": "en"
+                              },
+                              "schools": {
+                                  "educationsCount": 0,
+                                  "educationHistory": []
+                              },
+                              "positions": {
+                                  "positionsCount": 0,
+                                  "positionHistory": []
+                              },
+                              "skillEndorsements": {
+                                  "skillEndorsementsCount": 0,
+                                  "skillEndorsements": []
+                              },
+                              "newsMentions": {
+                                  "newsMentionCount": 0,
+                                  "newsMentions": []
+                              },
+                              "userGeneratedContents": {
+                                  "userGeneratedContentCount": 0,
+                                  "userGeneratedContents": []
+                              },
+                              "isPublic": false
+                          }
+                      ]
+                  }
+              ]
+          },
+          "newsMentions": {
+              "newsMentionCount": 0,
+              "newsMentions": []
+          },
+          "userGeneratedContents": {
+              "userGeneratedContentCount": 0,
+              "userGeneratedContents": []
+          },
+          "isPublic": false
+      }
+  ],
+  "goodreads": {},
+  "infostealers": {
+      "message": "This email address is not associated with a computer infected by an info-stealer. Visit https://www.hudsonrock.com/free-tools to discover additional free tools and Infostealers related data.",
+      "stealers": [],
+      "total_corporate_services": 0,
+      "total_user_services": 0
+  }
+}
