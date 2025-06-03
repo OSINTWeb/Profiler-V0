@@ -192,7 +192,7 @@ export function SearchTypes({ settypeofsearch, selected, typeofsearch }: SearchT
                   <p className="text-gray-400 text-sm mt-2">{tool.description}</p>
                   <button
                     onClick={() => {
-                      window.open(tool.link);
+                      window.location.href = tool.link;
                     }}
                     className="mt-4 w-full border border-white/10 text-teal-300  py-2 rounded-md text-sm font-medium transition-colors"
                   >
@@ -227,7 +227,7 @@ export function SearchTypes({ settypeofsearch, selected, typeofsearch }: SearchT
                 <p className="text-gray-400 text-sm mt-2">{tool.description}</p>
                 <button
                   onClick={() => {
-                    window.open(tool.link);
+                    window.location.href = tool.link;
                   }}
                   className="mt-4 w-full border border-white/10 text-teal-300  py-2 rounded-md text-sm font-medium transition-colors"
                 >
