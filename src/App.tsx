@@ -13,7 +13,7 @@ import RazorpayPayment from "@/components/AuthPages/RazorPay";
 import StripePayment from "@/components/AuthPages/stripePage/Stripe";
 import PhoneResultUI from "@/components/BasicResults/PhoneResult/BasicUi";
 import Pricing from "./components/PricingPage";
-import BasicSearch from "./pages/BasicSearch";
+import BasicSearch from "@/pages/basicSearch";
 
 const queryClient = new QueryClient();
 
