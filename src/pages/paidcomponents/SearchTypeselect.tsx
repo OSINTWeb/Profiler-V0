@@ -4,11 +4,12 @@ import { motion } from "framer-motion";
 export function SearchTypeSelector({ selected, setSelected }) {
   // Calculate the position and width of the toggle background
   const getToggleStyle = () => {
-    const baseWidth = "calc(33.33% - 8px)";
+    const baseWidth = "calc(25% - 8px)";
     const positions = {
       Free: "4px",
-      Freemium: "calc(33.33% + 4px)",
-      Paid: "calc(66.66% + 4px)",
+      Freemium: "calc(25% + 4px)",
+      Paid: "calc(50% + 4px)",
+      Offers: "calc(75% + 4px)",
     };
 
     return {
@@ -18,11 +19,11 @@ export function SearchTypeSelector({ selected, setSelected }) {
   };
 
   return (
-    <section className="relative w-full max-w-md rounded-full p-1 shadow-md bg-gradient-to-b from-gray-950 to-black my-6 sm:my-8 mx-auto border-2 hover:shadow-lg  transition-all duration-300  font- ">
+    <section className="relative w-full max-w-md rounded-full p-1 shadow-md bg-gradient-to-b from-gray-950 to-black md:my-6 sm:my-6 mx-auto border-2 hover:shadow-lg  transition-all duration-300  font- ">
       {/* Animated toggle background */}
 
       <div className="flex justify-between relative z-10 p-0.5">
-        {["Free", "Paid", "Freemium"].map((type) => (
+        {["Free", "Paid", "Freemium", "Offers"].map((type) => (
           <motion.button
             key={type}
             whileHover={{
@@ -43,7 +44,10 @@ export function SearchTypeSelector({ selected, setSelected }) {
             {type === "Freemium" && (
               <span className="text-sm sm:text-base  font-medium relative z-10 block">Premium</span>
             )}
-            {type !== "Freemium" && (
+            {type === "Offers" && (
+              <span className="text-sm sm:text-base  font-medium relative z-10 block">Offers</span>
+            )}
+            {type !== "Freemium" && type !== "Offers" && (
               <span className="text-sm sm:text-base  font-medium relative z-10 block">{type}</span>
             )}
 

@@ -1,0 +1,218 @@
+/* Glass card effect */
+.glass-card {
+  backdrop-filter: blur(8px);
+  box-shadow: 0 8px 32px 0 rgba(31, 38, 135, 0.37);
+  border: 1px solid rgba(255, 255, 255, 0.08);
+}
+
+.glass-panel {
+  position: relative;
+  overflow: hidden;
+}
+
+.glass-input:focus {
+  border-color: rgba(99, 102, 241, 0.8);
+  box-shadow: 0 0 0 2px rgba(99, 102, 241, 0.2), 0 0 15px 2px rgba(99, 102, 241, 0.2);
+}
+
+/* Rotating circles animation */
+.circle-animation {
+  position: absolute;
+  border-radius: 50%;
+  background: linear-gradient(to right, rgba(99, 102, 241, 0.1), rgba(167, 139, 250, 0.1));
+  filter: blur(8px);
+}
+
+.circle-1 {
+  width: 300px;
+  height: 300px;
+  top: -100px;
+  left: -100px;
+  animation: rotate 15s linear infinite;
+}
+
+.circle-2 {
+  width: 500px;
+  height: 500px;
+  bottom: -200px;
+  right: -150px;
+  background: linear-gradient(to right, rgba(167, 139, 250, 0.1), rgba(99, 102, 241, 0.1));
+  animation: rotate 25s linear infinite reverse;
+}
+
+.circle-3 {
+  width: 200px;
+  height: 200px;
+  top: 40%;
+  left: 30%;
+  background: linear-gradient(to right, rgba(236, 72, 153, 0.1), rgba(99, 102, 241, 0.1));
+  animation: rotate 20s linear infinite;
+}
+
+@keyframes rotate {
+  0% {
+    transform: rotate(0deg);
+  }
+  100% {
+    transform: rotate(360deg);
+  }
+}
+
+/* Shine effect for glass */
+.shine-effect, .shine-effect-reverse {
+  position: absolute;
+  top: 0;
+  width: 100%;
+  height: 100%;
+  background: linear-gradient(
+    120deg,
+    transparent 0%,
+    rgba(255, 255, 255, 0.03) 30%,
+    rgba(255, 255, 255, 0.05) 50%,
+    transparent 70%
+  );
+  pointer-events: none;
+}
+
+.shine-effect {
+  animation: shine 8s infinite linear;
+  left: -100%;
+}
+
+.shine-effect-reverse {
+  animation: shineReverse 10s infinite linear;
+  right: -100%;
+}
+
+@keyframes shine {
+  0% { transform: translateX(0%); }
+  100% { transform: translateX(200%); }
+}
+
+@keyframes shineReverse {
+  0% { transform: translateX(0%); }
+  100% { transform: translateX(-200%); }
+}
+
+/* Shine text effect */
+.shine-text {
+  background: linear-gradient(to right, #fff 20%, #a5b4fc 40%, #818cf8 60%, #fff 80%);
+  background-size: 200% auto;
+  color: #fff;
+  background-clip: text;
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  animation: textShine 5s linear infinite;
+}
+
+@keyframes textShine {
+  to { background-position: 200% center; }
+}
+
+/* Button shine effect */
+.button-shine {
+  position: relative;
+  overflow: hidden;
+}
+
+.button-shine::after {
+  content: '';
+  position: absolute;
+  top: -50%;
+  left: -50%;
+  width: 200%;
+  height: 200%;
+  background: linear-gradient(
+    to right,
+    rgba(255, 255, 255, 0) 0%,
+    rgba(255, 255, 255, 0.1) 50%,
+    rgba(255, 255, 255, 0) 100%
+  );
+  transform: rotate(30deg);
+  animation: buttonShine 6s ease-in-out infinite;
+}
+
+@keyframes buttonShine {
+  0% { left: -100%; }
+  20% { left: 100%; }
+  100% { left: 100%; }
+}
+
+/* Hover glow effect */
+.hover-glow {
+  transition: all 0.3s ease;
+}
+
+.hover-glow:hover:not(:disabled) {
+  box-shadow: 0 0 10px 2px rgba(99, 102, 241, 0.3);
+}
+
+/* Hover float effect */
+.hover-float {
+  transition: transform 0.3s ease;
+}
+
+.hover-float:hover {
+  transform: translateY(-2px);
+}
+
+/* Success pulse animation */
+.success-pulse {
+  animation: successPulse 2s infinite;
+}
+
+@keyframes successPulse {
+  0% { box-shadow: 0 0 0 0 rgba(74, 222, 128, 0.2); }
+  70% { box-shadow: 0 0 0 10px rgba(74, 222, 128, 0); }
+  100% { box-shadow: 0 0 0 0 rgba(74, 222, 128, 0); }
+}
+
+.success-glow {
+  box-shadow: 0 0 15px 5px rgba(74, 222, 128, 0.3);
+}
+
+/* Pulse animation for bonus card */
+.pulse-animation {
+  animation: pulse 2s cubic-bezier(0.4, 0, 0.6, 1) infinite;
+}
+
+@keyframes pulse {
+  0%, 100% { opacity: 1; }
+  50% { opacity: 0.8; }
+}
+
+/* Falling particles */
+.particles {
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  top: 0;
+  left: 0;
+  overflow: hidden;
+  pointer-events: none;
+}
+
+.particle {
+  position: absolute;
+  width: 10px;
+  height: 10px;
+  border-radius: 50%;
+  background-color: rgba(255, 255, 255, 0.3);
+  top: -10px;
+  animation: fall linear infinite;
+  box-shadow: 0 0 2px rgba(255, 255, 255, 0.2);
+}
+
+@keyframes fall {
+  0% { 
+    transform: translateY(0) rotate(0deg); 
+    opacity: 0.7;
+  }
+  90% { 
+    opacity: 0.5; 
+  }
+  100% { 
+    transform: translateY(100vh) rotate(720deg); 
+    opacity: 0;
+  }
+} 

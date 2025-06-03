@@ -1,5 +1,6 @@
-import React from "react";
+import React, { useState } from "react";
 import { Header } from "@/components/Header";
+import { useAuth0 } from "@auth0/auth0-react";
 
 const Pricing = () => {
   return (
@@ -85,9 +86,9 @@ const Pricing = () => {
         </div>
 
         {/* Early Bird Offer */}
-        <section className="mt-20 text-center flex flex-col  items-center rounded-xl ">
+        <section className="mt-20 text-center flex flex-col items-center rounded-xl">
           <div className="w-full max-w-4xl mx-auto border p-4 sm:p-6 md:p-8 px-4 sm:px-12 md:px-24 rounded-xl flex flex-col items-center">
-            <h2 className="text-3xl md:text-4xl font-bold mb-2 text-green-400 ">
+            <h2 className="text-3xl md:text-4xl font-bold mb-2 text-green-400">
               Early Bird Offer
             </h2>
             <p className="text-lg md:text-xl text-gray-200 mb-8">
@@ -142,11 +143,101 @@ const Pricing = () => {
 };
 
 const PricingCard = ({ title, price, description, buttonText, paymentOptions = [], features }) => {
+  const { user, isAuthenticated, loginWithRedirect } = useAuth0();
+  const [isNavigating, setIsNavigating] = useState(false);
+
+  const handlePaymentClick = (option) => {
+    // Prevent multiple clicks
+    if (isNavigating) {
+      return;
+    }
+
+    if (!isAuthenticated) {
+      // Store the intended payment destination before login
+      const paymentDestination = option.toLowerCase();
+      sessionStorage.setItem('paymentDestination', paymentDestination);
+      sessionStorage.setItem('intendedAction', 'payment');
+      
+      loginWithRedirect({
+        appState: {
+          returnTo: `/pricing`,
+          paymentOption: paymentDestination
+        }
+      });
+      return;
+    }
+
+    // Ensure we have user data before proceeding
+    if (!user?.email) {
+      console.error("User email not available");
+      return;
+    }
+
+    setIsNavigating(true);
+
+    try {
+      const email = user.email;
+      // Simple URL encoding without double encoding
+      const encodedEmail = encodeURIComponent(email);
+      
+      // Add a small delay to ensure state is updated
+      setTimeout(() => {
+        if (option.toLowerCase() === "stripe") {
+          // Use window.location.assign for better reliability
+          window.location.assign(`/stripe?email=${encodedEmail}`);
+        } else if (option.toLowerCase() === "razorpay") {
+          // Use window.location.assign for better reliability
+          window.location.assign(`/razorpay?email=${encodedEmail}`);
+        }
+      }, 100);
+    } catch (error) {
+      console.error("Error navigating to payment page:", error);
+      setIsNavigating(false);
+      // Fallback to basic navigation without email parameter
+      setTimeout(() => {
+        if (option.toLowerCase() === "stripe") {
+          window.location.assign("/stripe");
+        } else if (option.toLowerCase() === "razorpay") {
+          window.location.assign("/razorpay");
+        }
+      }, 100);
+    }
+  };
+
+  // Handle redirect after authentication
+  React.useEffect(() => {
+    // Clean up Auth0 callback parameters from URL
+    const urlParams = new URLSearchParams(window.location.search);
+    if (urlParams.has('code') && urlParams.has('state')) {
+      // Remove Auth0 callback parameters from URL
+      const cleanUrl = window.location.pathname;
+      window.history.replaceState({}, document.title, cleanUrl);
+    }
+
+    if (isAuthenticated && user?.email) {
+      const paymentDestination = sessionStorage.getItem('paymentDestination');
+      const intendedAction = sessionStorage.getItem('intendedAction');
+      
+      if (intendedAction === 'payment' && paymentDestination) {
+        // Clear the stored data
+        sessionStorage.removeItem('paymentDestination');
+        sessionStorage.removeItem('intendedAction');
+        
+        // Small delay to ensure user data is loaded
+        setTimeout(() => {
+          const encodedEmail = encodeURIComponent(user.email);
+          if (paymentDestination === 'stripe') {
+            window.location.assign(`/stripe?email=${encodedEmail}`);
+          } else if (paymentDestination === 'razorpay') {
+            window.location.assign(`/razorpay?email=${encodedEmail}`);
+          }
+        }, 500);
+      }
+    }
+  }, [isAuthenticated, user]);
+
   return (
-    <div
-      className=" rounded-2xl p-8 shadow-lg hover:scale-105 hover:shadow-white/10 
-    transition-all border border-white/50 flex flex-col justify-between"
-    >
+    <div className="rounded-2xl p-8 shadow-lg hover:scale-105 hover:shadow-white/10 transition-all border border-white/50 flex flex-col justify-between">
       <div>
         <h3 className="text-2xl md:text-3xl font-bold mb-2 text-white">{title}</h3>
         <div className="text-5xl md:text-6xl font-extrabold mb-1 text-white">{price}</div>
@@ -166,12 +257,15 @@ const PricingCard = ({ title, price, description, buttonText, paymentOptions = [
               {paymentOptions.map((option, idx) => (
                 <button
                   key={idx}
-                  className="flex-1 min-w-[120px] bg-[#232428] text-white py-3 px-6 rounded-lg font-semibold text-lg shadow-md hover:bg-[#32343a] transition-colors border border-[#32343a]"
-                  onClick={() => {
-                    window.location.href = `/${option.toLowerCase()}`;
-                  }}
+                  className={`flex-1 min-w-[120px] py-3 px-6 rounded-lg font-semibold text-lg shadow-md transition-colors border ${
+                    isNavigating 
+                      ? "bg-gray-600 text-gray-400 cursor-not-allowed border-gray-600" 
+                      : "bg-[#232428] text-white hover:bg-[#32343a] border-[#32343a]"
+                  }`}
+                  onClick={() => handlePaymentClick(option)}
+                  disabled={isNavigating}
                 >
-                  {option}
+                  {isNavigating ? "Loading..." : option}
                 </button>
               ))}
             </div>

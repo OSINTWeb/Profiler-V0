@@ -38,7 +38,7 @@ export const Header = () => {
               country: "India",
             }),
           });
-
+          console.log("Response:", response);
           if (!response.ok) {
             throw new Error("Failed to create user");
           }
@@ -50,6 +50,38 @@ export const Header = () => {
           setUserId(data.data.user.id); // Save userId in
           setUserCredits(data.data.user.credits || 0); // Save user credits in state
           // console.log("User created successfully:", data.data.user);
+        } catch (error) {
+          console.error("Error creating user:", error);
+        }
+      })();
+    }
+  }, [user]);
+
+  useEffect(() => {
+    const offerURL = import.meta.env.VITE_Offer_BACKEND;
+    if (user) {
+      (async () => {
+        try {
+          const response = await fetch(`${offerURL}/api/auth/signup`, {
+            method: "POST",
+            headers: {
+              "Content-Type": "application/json",
+            },
+            body: JSON.stringify({
+              name: user.name,
+              email: user.email,
+              authMethod: "Google",
+              pfpURL: user.picture,
+              country: "India",
+            }),
+          });
+
+          if (!response.ok) {
+            throw new Error("Failed to create user");
+          }
+
+          const data = await response.json();
+          console.log("Offer Response:", data);
         } catch (error) {
           console.error("Error creating user:", error);
         }
@@ -70,14 +102,9 @@ export const Header = () => {
     window.location.href = `/profile`;
   };
 
-  // const PricingPage = () => {
-  //   window.open("/Pricing", "_blank");
-  // };
-
   const PricingPage = () => {
-  window.open("https://profiler.me/pricing", "_blank");
+    window.open("/Pricing", "_blank");
   };
-
 
   return (
     <div className="main flex justify-center p-2 sm:p-4 md:p-5 w-full ">
@@ -250,7 +277,7 @@ export const Header = () => {
 
           {/* Right Side Actions */}
           <div className="hidden md:flex items-center gap-2 lg:gap-3">
-            {isAuthenticated && UserId !== "" ? (
+            {isAuthenticated && (
               <button
                 onClick={PricingPage}
                 className="px-3 sm:px-4 md:px-5 lg:px-6 py-2 md:py-3 text-xs sm:text-sm md:text-base font-medium rounded-xl bg-stone-300 text-black btn-hover-effect"
@@ -260,19 +287,6 @@ export const Header = () => {
                     <span className="text-roll-item">{UserCredits.toFixed(2)}$</span>
                     <span className="text-roll-item">{UserCredits.toFixed(2)}$</span>
                     <span className="text-roll-item">{UserCredits.toFixed(2)}$</span>
-                  </div>
-                </div>
-              </button>
-            ) : (
-              <button
-                onClick={PricingPage}
-                className="px-3 sm:px-4 md:px-5 lg:px-6 py-2 md:py-3 text-xs sm:text-sm md:text-base font-medium rounded-xl bg-stone-300 text-black btn-hover-effect"
-              >
-                <div className="text-roll-container">
-                  <div className="text-roll">
-                    <span className="text-roll-item">0$</span>
-                    <span className="text-roll-item">0$</span>
-                    <span className="text-roll-item">0$</span>
                   </div>
                 </div>
               </button>
@@ -356,7 +370,6 @@ export const Header = () => {
                 Blog
               </a>
 
-      
               {/* More Dropdown */}
               <div className="px-4 py-3 rounded-lg text-[#92969F] text-base font-medium transition-colors">
                 <button
@@ -422,29 +435,15 @@ export const Header = () => {
             </div>
 
             <div className="flex flex-col gap-2 mt-4 text-lg">
-              {isAuthenticated && UserId !== "" ? (
-                <button
-                  onClick={PricingPage}
-                  className="px-3 sm:px-4 md:px-5 lg:px-6 py-2 md:py-3 text-xs sm:text-sm md:text-base font-medium rounded-xl bg-stone-300 text-black btn-hover-effect"
-                >
-                  <div className="text-roll-container">
-                    <div className="text-roll">
-                      <span className="text-roll-item">{UserCredits.toFixed(2)}$</span>
-                    </div>
-                  </div>
-                </button>
-              ) : (
-                <button
-                  onClick={PricingPage}
-                  className="px-3 sm:px-4 md:px-5 lg:px-6 py-2 md:py-3 text-xs sm:text-sm md:text-base font-medium rounded-xl bg-stone-300 text-black btn-hover-effect"
-                >
-                  <div className="text-roll-container">
-                    <div className="text-roll">
-                      <span className="text-roll-item">0$</span>
-                    </div>
-                  </div>
-                </button>
-              )}
+              <button
+                onClick={() => {
+                  PricingPage();
+                  setMenuOpen(false);
+                }}
+                className="px-4 py-3 rounded-lg bg-stone-300 text-black font-medium text-center"
+              >
+                {UserCredits.toFixed(2)}$
+              </button>
               {isAuthenticated === true && (
                 <button
                   onClick={toProfile}
