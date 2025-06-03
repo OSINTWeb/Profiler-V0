@@ -10,9 +10,7 @@ const Pricing = () => {
       {/* Hero Section */}
       <section className="container mx-auto px-6 py-20">
         <div className="text-center mb-16">
-          <h1 className="text-4xl md:text-6xl font-bold mb-8">
-            Affordable Pricing Plans
-          </h1>
+          <h1 className="text-4xl md:text-6xl font-bold mb-8">Affordable Pricing Plans</h1>
           {/* <p className="text-center text-[#e5e7eb] mb-12 max-w-xl mx-auto">
             Credits will reflect within 10 minutes. Thanks for your patience!
           </p> */}
@@ -257,17 +255,22 @@ const PricingCard = ({ title, price, description, buttonText, paymentOptions = [
         {/* Action Buttons Section */}
         <div className="mb-10">
           {price === "$0" && (
-            <button className="w-full bg-[#232428] text-white py-4 px-8 rounded-xl font-semibold text-lg shadow-lg hover:bg-[#32343a] transition-colors duration-300 border border-[#32343a]">
+            <button
+              onClick={() => {
+                window.location.assign("/");
+              }}
+              className="w-full bg-[#232428] text-white py-4 px-8 rounded-xl font-semibold text-lg shadow-lg hover:bg-[#32343a] transition-colors duration-300 border border-[#32343a]"
+            >
               Try Now
             </button>
           )}
-          
+
           {paymentOptions.length > 0 && (
             <div className="space-y-6">
               <div className="text-center text-gray-300 text-base md:text-lg font-medium">
                 Select your Payment Type
               </div>
-              
+
               <div className="flex flex-col sm:flex-row gap-4">
                 {paymentOptions.map((option, idx) => (
                   <button
@@ -284,7 +287,7 @@ const PricingCard = ({ title, price, description, buttonText, paymentOptions = [
                   </button>
                 ))}
               </div>
-              
+
               <div className="text-center text-gray-400 text-sm font-medium">
                 Deep OSINT Intelligence, Intuitively Presented
               </div>
