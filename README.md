@@ -4,6 +4,7 @@ git status
 git commit -m 'search and resultpage changes + hover effect'
 git push
 ## Project info
+
  
 **URL**: https://lovable.dev/projects/4c0ddb6d-6d92-4010-b93a-e76c3b48fd1b
 
