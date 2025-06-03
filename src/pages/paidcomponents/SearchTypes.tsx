@@ -95,12 +95,12 @@ export function SearchTypes({ settypeofsearch, selected, typeofsearch }: SearchT
         "Reveal where an email is registered. We check for presence of an account linked to that email on 30+ popular platforms.",
       link: "https://emailintel.profiler.me/",
     },
-    {
-      title: "SocialMediaChecker",
-      description:
-        "Quickly identify whether an account exists on platforms such as Google, Facebook, Instagram, Snapchat, and Twitter.",
-      link: "https://socialmediachecker.profiler.me/",
-    },
+    // {
+    //   title: "SocialMediaChecker",
+    //   description:
+    //     "Quickly identify whether an account exists on platforms such as Google, Facebook, Instagram, Snapchat, and Twitter.",
+    //   link: "https://socialmediachecker.profiler.me/",
+    // },
   ];
   const drawerOptions = {
     "Phone Number Search": [
