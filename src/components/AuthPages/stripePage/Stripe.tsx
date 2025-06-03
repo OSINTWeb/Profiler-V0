@@ -5,11 +5,14 @@ import { useAuth0 } from "@auth0/auth0-react";
 import { useLocation } from "react-router-dom";
 import { currencyMapping } from "./mapcurrency";
 import { exchangeRates } from "./exchangesRates";
+import countries from "i18n-iso-countries";
+import enLocale from "i18n-iso-countries/langs/en.json";
+
 const stripePromise = loadStripe(
   "pk_live_51NqCWASAs1eyMT3VnlFf37m7dmiPIor87mcS9Oo98KNMNBgpHD5rSk4DT3f03rNCotJPMISgR2HiyOQEdzAIEQD400DTNN7tBo"
 );
 
-function CheckoutForm({ clientSecret, userId, amount, address, currency }) {
+function CheckoutForm({ clientSecret, userId, amount, address, currency, customerInfo }) {
   const API_BASE_URL = import.meta.env.VITE_AUTH_BACKEND;
   const stripe = useStripe();
   const elements = useElements();
@@ -30,11 +33,27 @@ function CheckoutForm({ clientSecret, userId, amount, address, currency }) {
     setErrorMessage("");
 
     try {
+      const confirmParams: any = {
+        return_url: window.location.href,
+        // Add required fields for international payments
+        payment_method_data: {
+          billing_details: {
+            name: customerInfo.name,
+            email: customerInfo.email,
+            address: {
+              line1: address.line1,
+              city: address.city,
+              state: address.state,
+              postal_code: address.postal_code,
+              country: address.country,
+            }
+          }
+        }
+      };
+
       const { error, paymentIntent } = await stripe.confirmPayment({
         elements,
-        confirmParams: {
-          return_url: window.location.href,
-        },
+        confirmParams,
         redirect: "if_required",
       });
 
@@ -336,6 +355,8 @@ function App() {
     }
   }, [effectiveEmail, auth0User, queryEmail, API_BASE_URL]);
 
+
+
   // Improved loading state check
   if (!userData && (isLoading || (!effectiveEmail && auth0User))) {
     return (
@@ -381,6 +402,12 @@ function App() {
       return;
     }
 
+    // Validate required fields for international payments
+    if (!name || !email || !amount || !address.line1 || !address.city || !address.country) {
+      setError("Please fill in all required fields for international payments");
+      return;
+    }
+
     setPaymentProcessing(true);
 
     try {
@@ -397,7 +424,13 @@ function App() {
           paymentDetails: {
             amount: parseInt(amount, 10),
             currency: currency.code,
-            description: "Custom payment",
+            description: "Software development services", // Fixed service description
+            // Add metadata for export transactions
+            metadata: {
+              export_transaction: "true",
+              transaction_type: "services",
+              customer_country: address.country,
+            }
           },
         }),
       });
@@ -428,6 +461,8 @@ function App() {
       },
     },
   };
+
+  countries.registerLocale(enLocale);
 
   return (
     <div className="w-screen h-screen flex items-center justify-center bg-black">
@@ -556,15 +591,16 @@ function App() {
           {!clientSecret ? (
             <div className="space-y-6 relative z-20">
               <div className="space-y-2">
-                <label className="block text-sm font-medium text-gray-300">Name</label>
+                <label className="block text-sm font-medium text-gray-300">Name *</label>
                 <input
                   type="text"
-                  placeholder="Enter your name"
+                  placeholder="Enter your full name"
                   value={name}
                   onChange={(e) => setName(e.target.value)}
                   className="w-full px-4 py-3 rounded-lg bg-gray-800 border border-gray-700 text-white focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500 transition placeholder-gray-500 hover:border-indigo-400"
                   required
                 />
+                <p className="text-xs text-gray-400">Required for international payment compliance</p>
               </div>
               
               <div className="space-y-2">
@@ -597,7 +633,7 @@ function App() {
                   </div>
                 </div>
               </div>
-              
+
               <div className="space-y-2">
                 <label className="block text-sm font-medium text-gray-300">Amount ({currency.code})</label>
                 <input
@@ -609,6 +645,70 @@ function App() {
                   required
                 />
               </div>
+
+              {/* Billing Address - Required for international payments */}
+              <div className="space-y-4">
+                <h3 className="text-lg font-medium text-gray-300">Billing Address *</h3>
+                <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                  <div className="md:col-span-2">
+                    <input
+                      type="text"
+                      placeholder="Address Line 1"
+                      value={address.line1}
+                      onChange={(e) => setAddress(prev => ({ ...prev, line1: e.target.value }))}
+                      className="w-full px-4 py-3 rounded-lg bg-gray-800 border border-gray-700 text-white focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500 transition placeholder-gray-500"
+                      required
+                    />
+                  </div>
+                  <div>
+                    <input
+                      type="text"
+                      placeholder="City"
+                      value={address.city}
+                      onChange={(e) => setAddress(prev => ({ ...prev, city: e.target.value }))}
+                      className="w-full px-4 py-3 rounded-lg bg-gray-800 border border-gray-700 text-white focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500 transition placeholder-gray-500"
+                      required
+                    />
+                  </div>
+                  <div>
+                    <input
+                      type="text"
+                      placeholder="State/Province"
+                      value={address.state}
+                      onChange={(e) => setAddress(prev => ({ ...prev, state: e.target.value }))}
+                      className="w-full px-4 py-3 rounded-lg bg-gray-800 border border-gray-700 text-white focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500 transition placeholder-gray-500"
+                    />
+                  </div>
+                  <div>
+                    <input
+                      type="text"
+                      placeholder="Postal Code"
+                      value={address.postal_code}
+                      onChange={(e) => {
+                        const numericValue = e.target.value.replace(/[^0-9]/g, '');
+                        setAddress(prev => ({ ...prev, postal_code: numericValue }))
+                      }}
+                      className="w-full px-4 py-3 rounded-lg bg-gray-800 border border-gray-700 text-white focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500 transition placeholder-gray-500"
+                    />
+                  </div>
+                  <div>
+                    <select
+                      value={address.country}
+                      onChange={(e) => setAddress(prev => ({ ...prev, country: e.target.value }))}
+                      className="w-full px-4 py-3 rounded-lg bg-gray-800 border border-gray-700 text-white focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500 transition"
+                      required
+                    >
+                      <option value="">Select Country</option>
+                      {Object.entries(countries.getNames("en")).map(([code, name]) => (
+                        <option key={code} value={code}>
+                          {name}
+                        </option>
+                      ))}
+                    </select>
+                  </div>
+                </div>
+                <p className="text-xs text-gray-400">Required for international payment compliance and fraud prevention</p>
+              </div>
                
               <button
                 onClick={handleStartPayment}
@@ -616,6 +716,9 @@ function App() {
                   !name ||
                   !email ||
                   !amount ||
+                  !address.line1 ||
+                  !address.city ||
+                  !address.country ||
                   isLoading ||
                   paymentProcessing
                     ? "bg-gray-600 text-gray-400 cursor-not-allowed"
@@ -625,6 +728,9 @@ function App() {
                   !name ||
                   !email ||
                   !amount ||
+                  !address.line1 ||
+                  !address.city ||
+                  !address.country ||
                   isLoading ||
                   paymentProcessing
                 }
@@ -645,6 +751,7 @@ function App() {
                   amount={returnAmount} 
                   address={address}
                   currency={currency}
+                  customerInfo={{ name, email }}
                 />
               </Elements>
             </div>
