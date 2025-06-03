@@ -100,7 +100,7 @@ export function SearchTypes({ settypeofsearch, selected, typeofsearch }: SearchT
     //   description:
     //     "Quickly identify whether an account exists on platforms such as Google, Facebook, Instagram, Snapchat, and Twitter.",
     //   link: "https://socialmediachecker.profiler.me/",
-    // },
+    // } ,
   ];
   const drawerOptions = {
     "Phone Number Search": [
