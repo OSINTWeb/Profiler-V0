@@ -43,10 +43,11 @@ export const SearchOptions: React.FC<SearchOptionsProps> = ({
   };
 
   const handleUpdate = (newDatatype: string) => {
-    setPaidSearch(newDatatype.toLowerCase());
-    setInput((prev) => ({ ...prev, datatype: newDatatype, value: "" }));
-    setSelectedOption(newDatatype.toLowerCase());
-    // console.log("newDatatype", PaidSearch.toLowerCase(), newDatatype.toLowerCase());
+    if (!(newDatatype === "Phone" && typeofsearch === "Basic")) {
+      setPaidSearch(newDatatype);
+      setInput((prev) => ({ ...prev, datatype: newDatatype, value: "" }));
+      setSelectedOption(newDatatype);
+    }
   };
 
   const options = [
@@ -59,7 +60,10 @@ export const SearchOptions: React.FC<SearchOptionsProps> = ({
     },
     {
       type: "Username",
-      message: "Username: Please enter the username",
+      message:
+        typeofsearch === "Advance"
+          ? "under maintenance"
+          : "Username: Please enter the username",
     },
     { type: "Email", message: "Email: Provide a valid email address" },
   ];
@@ -68,9 +72,9 @@ export const SearchOptions: React.FC<SearchOptionsProps> = ({
     <div className="w-full flex flex-col sm:flex-row items-center sm:justify-center gap-4 py-4 px-12">
       {options.map(({ type, message }) => {
         const isDisabled = type === "Phone" && typeofsearch === "Basic";
-        // con = type === "Username" && typeofsearch === "Advance";
-        const isSelected = selectedOption === type.toLowerCase();
-        const showTooltip = hoveredButton === type.toLowerCase();
+        const isDisabled2 = type === "Username" && typeofsearch === "Advance";
+        const isSelected = selectedOption === type;
+        const showTooltip = hoveredButton === type;
 
         if (type === "Username" && typeofsearch !== "Advance") return null;
 
@@ -87,14 +91,14 @@ export const SearchOptions: React.FC<SearchOptionsProps> = ({
               whileHover={{ scale: isDisabled ? 1 : 1.05 }}
               whileTap={{ scale: isDisabled ? 1 : 0.95 }}
               onClick={() => handleUpdate(type)}
-              onMouseEnter={() => handleMouseEnter(message, type)}
+              onMouseEnter={() => handleMouseEnter(message, type)} 
               onMouseLeave={handleMouseLeave}
-              disabled={isDisabled}
+              disabled={isDisabled || isDisabled2}
               title={message} // Added tooltip
               className={`w-full sm:w-[180px] h-[40px] flex items-center justify-center text-lg font-semibold rounded-lg border-b border-white/15 
                 transition-all duration-300 ease-in-out shadow-[0px_2px_0px_rgba(255,255,255,0.3)] 
                 bg-gradient-to-b from-[#677272] to-[#212121]
-                ${isDisabled ? "opacity-50 cursor-not-allowed" : ""}
+                ${isDisabled || isDisabled2 ? "opacity-50 cursor-not-allowed" : ""}
                 ${
                   isSelected
                     ? "bg-none shadow-inner shadow-teal-200 border-transparent"
