@@ -75,8 +75,11 @@ const UI = () => {
         console.log("fetching data advance");
         // console.log("PaidSearch", PaidSearch,query);
         const response = await fetch(
-          `${FetchURL}/AdvanceResult?type=${queryType}&query=${encodeURIComponent(query)}&`
+          `${FetchURL}/AdvanceResult?type=${queryType.toLowerCase()}&query=${encodeURIComponent(
+            query
+          )}&`
         );
+
         if (!response.ok) {
           throw new Error(`HTTP error! status: ${response.status}`);
         }
