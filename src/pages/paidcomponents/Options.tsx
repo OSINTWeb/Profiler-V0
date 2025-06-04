@@ -96,7 +96,7 @@ export const SearchOptions: React.FC<SearchOptionsProps> = ({
                 bg-gradient-to-b from-[#677272] to-[#212121]
                 ${isDisabled ? "opacity-50 cursor-not-allowed" : ""}
                 ${
-                  isSelected
+                  isSelected.toLowerCase() === type.toLowerCase()
                     ? "bg-none shadow-inner shadow-teal-200 border-transparent"
                     : "hover:bg-none hover:shadow-inner hover:shadow-teal-200 hover:border-transparent"
                 }`}
