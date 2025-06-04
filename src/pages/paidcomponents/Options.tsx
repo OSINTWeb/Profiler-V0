@@ -70,7 +70,7 @@ export const SearchOptions: React.FC<SearchOptionsProps> = ({
         const isDisabled = type === "Phone" && typeofsearch === "Basic";
         // con = type === "Username" && typeofsearch === "Advance";
         const isSelected = selectedOption === type.toLowerCase();
-        const showTooltip = hoveredButton === type;
+        const showTooltip = hoveredButton === type.toLowerCase();
 
         if (type === "Username" && typeofsearch !== "Advance") return null;
 
