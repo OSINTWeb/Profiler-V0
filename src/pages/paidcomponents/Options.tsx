@@ -69,7 +69,7 @@ export const SearchOptions: React.FC<SearchOptionsProps> = ({
       {options.map(({ type, message }) => {
         const isDisabled = type === "Phone" && typeofsearch === "Basic";
         // con = type === "Username" && typeofsearch === "Advance";
-        const isSelected = selectedOption === type;
+        const isSelected = selectedOption === type.toLowerCase();
         const showTooltip = hoveredButton === type;
 
         if (type === "Username" && typeofsearch !== "Advance") return null;
@@ -96,7 +96,7 @@ export const SearchOptions: React.FC<SearchOptionsProps> = ({
                 bg-gradient-to-b from-[#677272] to-[#212121]
                 ${isDisabled ? "opacity-50 cursor-not-allowed" : ""}
                 ${
-                  isSelected.toLowerCase() === type.toLowerCase()
+                  isSelected
                     ? "bg-none shadow-inner shadow-teal-200 border-transparent"
                     : "hover:bg-none hover:shadow-inner hover:shadow-teal-200 hover:border-transparent"
                 }`}
