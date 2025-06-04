@@ -17,7 +17,7 @@ const UI = () => {
   const location = useLocation();
   const navigate = useNavigate();
   const params = new URLSearchParams(location.search);
-  const PaidSearch = params.get("PaidSearch");
+  const PaidSearch = params.get("PaidSearch")?.toLowerCase();
   const query = params.get("query");
   const typeofsearch = params.get("typeofsearch");
   const UserId = params.get("userId");
@@ -35,7 +35,7 @@ const UI = () => {
 
   useEffect(() => {
     // Store search parameters in localStorage
-    if (PaidSearch) localStorage.setItem("PaidSearch", PaidSearch);
+    if (PaidSearch) localStorage.setItem("PaidSearch", PaidSearch.toLowerCase());
     if (query) localStorage.setItem("query", query);
     if (typeofsearch) localStorage.setItem("typeofsearch", typeofsearch);
     if (UserId) localStorage.setItem("userId", UserId);
@@ -54,6 +54,7 @@ const UI = () => {
       if (hasFetched) return;
 
       if (query === "45206164641316463216463164") {
+        console.log("PaidSearch", PaidSearch, query);
         let newData;
         if (PaidSearch === "Phone") {
           newData = Datta;

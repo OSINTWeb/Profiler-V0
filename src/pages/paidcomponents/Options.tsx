@@ -43,11 +43,10 @@ export const SearchOptions: React.FC<SearchOptionsProps> = ({
   };
 
   const handleUpdate = (newDatatype: string) => {
-    if (!(newDatatype === "Phone" && typeofsearch === "Basic")) {
-      setPaidSearch(newDatatype);
-      setInput((prev) => ({ ...prev, datatype: newDatatype, value: "" }));
-      setSelectedOption(newDatatype);
-    }
+    setPaidSearch(newDatatype.toLowerCase());
+    setInput((prev) => ({ ...prev, datatype: newDatatype, value: "" }));
+    setSelectedOption(newDatatype.toLowerCase());
+    // console.log("newDatatype", PaidSearch.toLowerCase(), newDatatype.toLowerCase());
   };
 
   const options = [
