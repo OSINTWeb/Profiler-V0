@@ -61,7 +61,7 @@ export const SearchOptions: React.FC<SearchOptionsProps> = ({
     {
       type: "Username",
       message:
-        typeofsearch === "Advance" ? "under maintenance" : "Username: Please enter the username",
+       "Username: Please enter the username",
     },
     { type: "Email", message: "Email: Provide a valid email address" },
   ];
