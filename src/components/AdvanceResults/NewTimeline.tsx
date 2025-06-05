@@ -49,10 +49,10 @@ const isValidDate = (dateString: string): boolean => {
 };
 
 const formatDate = (date: Date): string => {
-  return date.toLocaleDateString('en-US', {
-    year: 'numeric',
-    month: 'short',
-    day: 'numeric'
+  return date.toLocaleDateString("en-US", {
+    year: "numeric",
+    month: "short",
+    day: "numeric",
   });
 };
 
@@ -62,14 +62,14 @@ const calculateYearWidth = (itemCount: number): number => {
 
 // Type guard functions
 const getStringValue = (value: string | number | boolean | undefined): string => {
-  if (typeof value === 'string') return value;
-  if (typeof value === 'number') return value.toString();
-  if (typeof value === 'boolean') return value.toString();
-  return '';
+  if (typeof value === "string") return value;
+  if (typeof value === "number") return value.toString();
+  if (typeof value === "boolean") return value.toString();
+  return "";
 };
 
 const isStringType = (value: string | number | boolean | undefined): value is string => {
-  return typeof value === 'string';
+  return typeof value === "string";
 };
 
 export const NewTimeline: React.FC<NewTimelineProps> = ({ data }) => {
@@ -83,38 +83,37 @@ export const NewTimeline: React.FC<NewTimelineProps> = ({ data }) => {
   // Process and organize the data by year
   const timelineData = useMemo<TimelineData>(() => {
     const itemsByYear: { [key: number]: ProcessedItem[] } = {};
-    
+
     // Filter and process valid items
-    data.forEach(item => {
+    data.forEach((item) => {
       const creationDateValue = item.spec_format?.[0]?.creation_date?.value;
       const creationDateString = getStringValue(creationDateValue);
-      
+
       if (!creationDateString || !isValidDate(creationDateString)) {
         return;
       }
 
       const creationDate = new Date(creationDateString);
       const year = creationDate.getFullYear();
-      
+
       if (!itemsByYear[year]) {
         itemsByYear[year] = [];
       }
 
       const lastSeenValue = item.spec_format[0].last_seen?.value;
       const lastSeenString = getStringValue(lastSeenValue);
-      const lastSeen = lastSeenString && isValidDate(lastSeenString) 
-        ? new Date(lastSeenString) 
-        : null;
+      const lastSeen =
+        lastSeenString && isValidDate(lastSeenString) ? new Date(lastSeenString) : null;
 
       itemsByYear[year].push({
         ...item,
         creation_date: creationDate,
-        last_seen: lastSeen
+        last_seen: lastSeen,
       });
     });
 
     // Sort items within each year chronologically
-    Object.values(itemsByYear).forEach(yearItems => {
+    Object.values(itemsByYear).forEach((yearItems) => {
       yearItems.sort((a, b) => a.creation_date.getTime() - b.creation_date.getTime());
     });
 
@@ -123,10 +122,10 @@ export const NewTimeline: React.FC<NewTimelineProps> = ({ data }) => {
       .map(Number)
       .sort((a, b) => b - a); // Most recent first
 
-    const yearGroups: YearGroup[] = years.map(year => ({
+    const yearGroups: YearGroup[] = years.map((year) => ({
       year,
       items: itemsByYear[year],
-      width: calculateYearWidth(itemsByYear[year].length)
+      width: calculateYearWidth(itemsByYear[year].length),
     }));
 
     const totalWidth = yearGroups.reduce((sum, group) => sum + group.width, 0);
@@ -136,11 +135,11 @@ export const NewTimeline: React.FC<NewTimelineProps> = ({ data }) => {
 
   // Zoom handlers
   const handleZoomIn = useCallback(() => {
-    setZoom(prev => Math.min(prev + ZOOM_STEP, ZOOM_MAX));
+    setZoom((prev) => Math.min(prev + ZOOM_STEP, ZOOM_MAX));
   }, []);
 
   const handleZoomOut = useCallback(() => {
-    setZoom(prev => Math.max(prev - ZOOM_STEP, ZOOM_MIN));
+    setZoom((prev) => Math.max(prev - ZOOM_STEP, ZOOM_MIN));
   }, []);
 
   // Item selection handler
@@ -151,29 +150,39 @@ export const NewTimeline: React.FC<NewTimelineProps> = ({ data }) => {
 
   // Collapse toggle handler
   const toggleCollapse = useCallback(() => {
-    setIsCollapsed(prev => !prev);
+    setIsCollapsed((prev) => !prev);
   }, []);
 
-  // Horizontal scroll with mouse wheel
   useEffect(() => {
     const container = timelineContainerRef.current;
     if (!container) return;
 
     const handleWheel = (e: WheelEvent) => {
-      if (e.deltaY !== 0) {
-        e.preventDefault();
-        container.scrollLeft += e.deltaY * 2;
+      // Prevent the default page scroll
+      e.preventDefault();
+      
+      // Simple and direct: convert any wheel movement to horizontal scroll
+      // Use deltaY (vertical wheel) or deltaX (horizontal trackpad)
+      const scrollDelta = e.deltaY || e.deltaX;
+      
+      if (scrollDelta !== 0) {
+        // Direct horizontal scroll with good sensitivity
+        container.scrollLeft += scrollDelta * 2;
       }
     };
 
-    container.addEventListener('wheel', handleWheel, { passive: false });
-    return () => container.removeEventListener('wheel', handleWheel);
+    // Simple event listener - no complexity
+    container.addEventListener("wheel", handleWheel, { passive: false });
+
+    return () => {
+      container.removeEventListener("wheel", handleWheel);
+    };
   }, []);
 
   // Style constants
   const timelineStyles = {
     transform: `scale(${zoom})`,
-    transformOrigin: 'top left'
+    transformOrigin: "top left",
   };
 
   if (timelineData.years.length === 0) {
@@ -185,7 +194,7 @@ export const NewTimeline: React.FC<NewTimelineProps> = ({ data }) => {
   }
 
   return (
-    <motion.div 
+    <motion.div
       initial={{ opacity: 0, y: 20 }}
       animate={{ opacity: 1, y: 0 }}
       transition={{ duration: 0.5 }}
@@ -193,8 +202,8 @@ export const NewTimeline: React.FC<NewTimelineProps> = ({ data }) => {
     >
       {/* Header */}
       <div className="flex items-center justify-between p-6 border-b border-gray-800 bg-black/80 backdrop-blur-sm">
-        <button 
-          className="flex items-center gap-3 cursor-pointer hover:text-white transition-colors group" 
+        <button
+          className="flex items-center gap-3 cursor-pointer hover:text-white transition-colors group"
           onClick={toggleCollapse}
           aria-expanded={!isCollapsed}
           aria-label={isCollapsed ? "Expand timeline" : "Collapse timeline"}
@@ -208,14 +217,11 @@ export const NewTimeline: React.FC<NewTimelineProps> = ({ data }) => {
             </h2>
             <p className="text-sm text-gray-400">Connected timeline visualization</p>
           </div>
-          <motion.div
-            animate={{ rotate: isCollapsed ? 180 : 0 }}
-            transition={{ duration: 0.3 }}
-          >
+          <motion.div animate={{ rotate: isCollapsed ? 180 : 0 }} transition={{ duration: 0.3 }}>
             <ChevronDown className="h-5 w-5 text-gray-400 group-hover:text-gray-300 transition-colors" />
           </motion.div>
         </button>
-        
+
         <div className="flex gap-2">
           <Button
             variant="ghost"
@@ -249,21 +255,17 @@ export const NewTimeline: React.FC<NewTimelineProps> = ({ data }) => {
             transition={{ duration: 0.4, ease: "easeInOut" }}
             className="overflow-hidden bg-gradient-to-br from-[#0f0f0f] to-[#1a1a1a]"
           >
-            <div 
+            <div
               ref={timelineContainerRef}
               className="timeline-container"
-              style={{ height: TIMELINE_HEIGHT }}
             >
-              <div 
-                className="absolute left-0 right-0 bottom-0 top-0 p-8"
-                style={timelineStyles}
-              >
-                <div className="relative min-w-full">
+              <div className="absolute left-0 right-0 bottom-0 top-0 p-8" style={timelineStyles}>
+                <div className="relative" style={{ minWidth: `${timelineData.totalWidth + 200}px` }}>
                   {/* Years Header - Card Style */}
                   <div className="flex mb-16 gap-16 relative">
                     {timelineData.yearGroups.map((group, index) => (
-                      <motion.div 
-                        key={group.year} 
+                      <motion.div
+                        key={group.year}
                         initial={{ opacity: 0, y: -20 }}
                         animate={{ opacity: 1, y: 0 }}
                         transition={{ delay: index * 0.1 }}
@@ -275,7 +277,7 @@ export const NewTimeline: React.FC<NewTimelineProps> = ({ data }) => {
                             {group.year}
                           </div>
                           <div className="text-sm text-gray-400 mt-1">
-                            {group.items.length} {group.items.length === 1 ? 'account' : 'accounts'}
+                            {group.items.length} {group.items.length === 1 ? "account" : "accounts"}
                           </div>
                         </div>
                       </motion.div>
@@ -285,12 +287,12 @@ export const NewTimeline: React.FC<NewTimelineProps> = ({ data }) => {
                   {/* Map Content */}
                   <div className="relative px-2">
                     {/* Main Connection Flow */}
-                    <svg 
+                    <svg
                       className="absolute top-0 left-0 w-full h-full pointer-events-none"
                       style={{
                         width: "100%",
                         height: "100%",
-                        zIndex: 1
+                        zIndex: 1,
                       }}
                     >
                       <defs>
@@ -302,41 +304,47 @@ export const NewTimeline: React.FC<NewTimelineProps> = ({ data }) => {
                           <stop offset="100%" stopColor="rgb(59 130 246 / 0.8)" />
                         </linearGradient>
                         <filter id="glow">
-                          <feGaussianBlur stdDeviation="3" result="coloredBlur"/>
-                          <feMerge> 
-                            <feMergeNode in="coloredBlur"/>
-                            <feMergeNode in="SourceGraphic"/>
+                          <feGaussianBlur stdDeviation="3" result="coloredBlur" />
+                          <feMerge>
+                            <feMergeNode in="coloredBlur" />
+                            <feMergeNode in="SourceGraphic" />
                           </feMerge>
                         </filter>
                       </defs>
-                      
+
                       {/* Draw connections between nodes */}
                       {timelineData.yearGroups.map((group, yearIndex) => (
                         <g key={group.year}>
                           {group.items.map((item, itemIndex) => {
                             // Calculate current node position
-                            const currentX = yearIndex * (group.width + 64) + (itemIndex + 1) * (group.width / (group.items.length + 1));
+                            const currentX =
+                              yearIndex * (group.width + 64) +
+                              (itemIndex + 1) * (group.width / (group.items.length + 1));
                             const currentY = 150;
-                            
+
                             // Calculate next node position if it exists
                             let nextX, nextY;
                             if (itemIndex < group.items.length - 1) {
                               // Next item in same year
-                              nextX = yearIndex * (group.width + 64) + (itemIndex + 2) * (group.width / (group.items.length + 1));
+                              nextX =
+                                yearIndex * (group.width + 64) +
+                                (itemIndex + 2) * (group.width / (group.items.length + 1));
                               nextY = 150;
                             } else if (yearIndex < timelineData.yearGroups.length - 1) {
                               // First item in next year
                               const nextGroup = timelineData.yearGroups[yearIndex + 1];
-                              nextX = (yearIndex + 1) * (nextGroup.width + 64) + (nextGroup.width / (nextGroup.items.length + 1));
+                              nextX =
+                                (yearIndex + 1) * (nextGroup.width + 64) +
+                                nextGroup.width / (nextGroup.items.length + 1);
                               nextY = 150;
                             }
-                            
+
                             if (nextX && nextY) {
                               const controlX1 = currentX + (nextX - currentX) * 0.5;
                               const controlY1 = currentY - 30;
                               const controlX2 = currentX + (nextX - currentX) * 0.5;
                               const controlY2 = nextY - 30;
-                              
+
                               return (
                                 <path
                                   key={`connection-${yearIndex}-${itemIndex}`}
@@ -358,36 +366,38 @@ export const NewTimeline: React.FC<NewTimelineProps> = ({ data }) => {
                     {/* Node Items */}
                     <div className="relative flex gap-16" style={{ zIndex: 10 }}>
                       {timelineData.yearGroups.map((group, yearIndex) => (
-                        <div 
-                          key={group.year} 
+                        <div
+                          key={group.year}
                           className="flex-none px-8"
                           style={{ width: `${group.width}px` }}
                         >
                           <div className="flex items-center justify-center gap-12 relative">
                             {group.items.map((item, itemIndex) => {
                               const nameValue = getStringValue(item.spec_format?.[0]?.name?.value);
-                              const pictureValue = getStringValue(item.spec_format?.[0]?.picture_url?.value);
+                              const pictureValue = getStringValue(
+                                item.spec_format?.[0]?.picture_url?.value
+                              );
                               const itemId = `${group.year}-${itemIndex}`;
                               const isHovered = hoveredItem === itemId;
-                              
+
                               return (
                                 <div key={itemId} className="relative">
                                   <motion.div
                                     initial={{ scale: 0, opacity: 0 }}
                                     animate={{ scale: 1, opacity: 1 }}
-                                    transition={{ 
-                                      delay: (yearIndex * 0.2) + (itemIndex * 0.15),
+                                    transition={{
+                                      delay: yearIndex * 0.2 + itemIndex * 0.15,
                                       type: "spring",
-                                      stiffness: 200
+                                      stiffness: 200,
                                     }}
                                     className="relative z-25"
                                   >
                                     {/* Node Card */}
                                     <motion.div
                                       className={`bg-gradient-to-br  from-gray-900 to-black rounded-2xl shadow-2xl border-2 p-6 cursor-pointer transition-all duration-300 ${
-                                        isHovered 
-                                          ? 'border-blue-400 shadow-2xl shadow-blue-500/30 scale-105' 
-                                          : 'border-gray-700 hover:border-gray-600 hover:shadow-xl hover:shadow-purple-500/10'
+                                        isHovered
+                                          ? "border-blue-400 shadow-2xl shadow-blue-500/30 scale-105"
+                                          : "border-gray-700 hover:border-gray-600 hover:shadow-xl hover:shadow-purple-500/10"
                                       }`}
                                       style={{ width: NODE_SIZE, height: NODE_SIZE }}
                                       onClick={() => handleItemClick(item)}
@@ -398,10 +408,17 @@ export const NewTimeline: React.FC<NewTimelineProps> = ({ data }) => {
                                     >
                                       {/* Profile Image */}
                                       <div className="flex flex-col items-center gap-2">
-                                        <div className={`w-12 h-12 rounded-xl overflow-hidden transition-all duration-300 ${
-                                          isHovered ? 'ring-2 ring-blue-400 ring-offset-2 ring-offset-black' : ''
-                                        }`}>
-                                          {pictureValue && isStringType(item.spec_format?.[0]?.picture_url?.value) ? (
+                                        <div
+                                          className={`w-12 h-12 rounded-xl overflow-hidden transition-all duration-300 ${
+                                            isHovered
+                                              ? "ring-2 ring-blue-400 ring-offset-2 ring-offset-black"
+                                              : ""
+                                          }`}
+                                        >
+                                          {pictureValue &&
+                                          isStringType(
+                                            item.spec_format?.[0]?.picture_url?.value
+                                          ) ? (
                                             <img
                                               src={pictureValue}
                                               alt={nameValue || item.module}
@@ -414,17 +431,24 @@ export const NewTimeline: React.FC<NewTimelineProps> = ({ data }) => {
                                             </div>
                                           )}
                                         </div>
-                                        
+
                                         {/* Node Info */}
                                         <div className="text-center">
-                                          <h3 className="text-xs font-semibold text-white truncate max-w-[80px]" title={nameValue || item.module}>
-                                            {(nameValue || item.module).length > 8 
-                                              ? `${(nameValue || item.module).substring(0, 8)}...` 
-                                              : (nameValue || item.module)
-                                            }
+                                          <h3
+                                            className="text-xs font-semibold text-white truncate max-w-[80px]"
+                                            title={nameValue || item.module}
+                                          >
+                                            {(nameValue || item.module).length > 8
+                                              ? `${(nameValue || item.module).substring(0, 8)}...`
+                                              : nameValue || item.module}
                                           </h3>
-                                          <p className="text-xs text-gray-400 truncate max-w-[80px]" title={item.module}>
-                                            {item.module.length > 8 ? `${item.module.substring(0, 8)}...` : item.module}
+                                          <p
+                                            className="text-xs text-gray-400 truncate max-w-[80px]"
+                                            title={item.module}
+                                          >
+                                            {item.module.length > 8
+                                              ? `${item.module.substring(0, 8)}...`
+                                              : item.module}
                                           </p>
                                         </div>
                                       </div>
@@ -445,17 +469,21 @@ export const NewTimeline: React.FC<NewTimelineProps> = ({ data }) => {
                                             <div className="flex items-center gap-2 text-xs">
                                               <Calendar className="h-3 w-3 text-green-400" />
                                               <span className="text-gray-300">Created</span>
-                                              <span className="font-medium text-white">{formatDate(item.creation_date)}</span>
+                                              <span className="font-medium text-white">
+                                                {formatDate(item.creation_date)}
+                                              </span>
                                             </div>
                                           </div>
-                                          
+
                                           {/* Last Seen */}
                                           {item.last_seen && (
                                             <div className="bg-gradient-to-br from-gray-900 to-black rounded-lg shadow-2xl border border-gray-700 px-3 py-2 backdrop-blur-sm">
                                               <div className="flex items-center gap-2 text-xs">
                                                 <Clock className="h-3 w-3 text-blue-400" />
                                                 <span className="text-gray-300">Last seen</span>
-                                                <span className="font-medium text-white">{formatDate(item.last_seen)}</span>
+                                                <span className="font-medium text-white">
+                                                  {formatDate(item.last_seen)}
+                                                </span>
                                               </div>
                                             </div>
                                           )}
@@ -480,16 +508,17 @@ export const NewTimeline: React.FC<NewTimelineProps> = ({ data }) => {
 
       {/* Details Modal */}
       {selectedItem && (
-        <Expand 
-          isDetailsOpen={isDetailsOpen} 
-          setIsDetailsOpen={setIsDetailsOpen} 
+        <Expand
+          isDetailsOpen={isDetailsOpen}
+          setIsDetailsOpen={setIsDetailsOpen}
           selectedItem={{
             module: selectedItem.module,
-            pretty_name: getStringValue(selectedItem.spec_format?.[0]?.name?.value) || selectedItem.module,
+            pretty_name:
+              getStringValue(selectedItem.spec_format?.[0]?.name?.value) || selectedItem.module,
             query: selectedItem.query || "",
             spec_format: selectedItem.spec_format || [],
-            category: { name: selectedItem.module, description: "" }
-          }} 
+            category: { name: selectedItem.module, description: "" },
+          }}
         />
       )}
 
@@ -497,10 +526,15 @@ export const NewTimeline: React.FC<NewTimelineProps> = ({ data }) => {
         .timeline-container {
           position: relative;
           width: 100%;
-          overflow-x: auto;
-          overflow-y: hidden;
-          scroll-behavior: smooth;
+          height: ${TIMELINE_HEIGHT}px;
+          overflow-x: auto !important;
+          overflow-y: hidden !important;
           background: linear-gradient(135deg, #0f0f0f 0%, #1a1a1a 100%);
+          /* Ensure direct, immediate scrolling */
+          scroll-behavior: auto !important;
+          -webkit-overflow-scrolling: touch;
+          /* Ensure content doesn't interfere with scrolling */
+          touch-action: pan-x;
         }
 
         .timeline-container::-webkit-scrollbar {
@@ -530,4 +564,4 @@ export const NewTimeline: React.FC<NewTimelineProps> = ({ data }) => {
   );
 };
 
-export default NewTimeline; 
+export default NewTimeline;

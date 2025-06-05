@@ -536,7 +536,7 @@ const InfoCardsContainer = ({ data }: { data: PlatformData[] }): JSX.Element => 
             transition={{ duration: 0.3 }}
             className="flex-1 overflow-y-auto max-h-[350px] sm:max-h-[400px] scrollbar-thin scrollbar-thumb-white/20 scrollbar-track-transparent p-3 sm:p-4"
           >
-            <div className="grid grid-cols-1 gap-2 sm:gap-4 py-2 sm:py-6">
+            <div className="grid grid-cols-1 gap-2 sm:gap-4 py-10">
               {data?.map((item, index) =>
                 item.spec_format
                   ?.map((spec, specIndex) => {
@@ -549,7 +549,7 @@ const InfoCardsContainer = ({ data }: { data: PlatformData[] }): JSX.Element => 
                         animate={{ opacity: 1, x: 0 }}
                         transition={{ duration: 0.2, delay: specIndex * 0.05 }}
                         whileHover={{ scale: 1.01 }}
-                        className="relative group flex flex-row w-full border border-white/20 justify-between p-4 rounded-2xl hover:bg-white/10 hover:border-white/40 transition-all duration-300 gap-3 sm:gap-4 bg-gradient-to-br from-[#171719] to-black/80 backdrop-blur-sm shadow-xl"
+                        className="relative group flex flex-row w-full border border-white/20 justify-between p-4 rounded-2xl hover:bg-white/10 hover:border-white/40 transition-all duration-300 gap-3 sm:gap-4 bg-gradient-to-br from-[#171719] to-black/80 backdrop-blur-sm shadow-xl "
                       >
                         <div className="flex items-start gap-3 flex-1 cursor-pointer">
                           <div className="flex-1 min-w-0">
