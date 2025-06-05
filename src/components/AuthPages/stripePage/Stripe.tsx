@@ -465,30 +465,30 @@ function App() {
   countries.registerLocale(enLocale);
 
   return (
-    <div className="w-screen h-screen flex items-center justify-center bg-black">
-      <div className="w-full max-w-7xl h-full md:h-auto md:max-h-[90vh] flex flex-col md:flex-row rounded-xl overflow-hidden shadow-2xl bg-gray-900 shine-card relative">
+    <div className="w-screen min-h-screen flex items-center justify-center bg-black p-2 sm:p-4">
+      <div className="w-full max-w-7xl min-h-screen sm:min-h-0 sm:h-auto sm:max-h-[90vh] flex flex-col lg:flex-row rounded-none sm:rounded-xl overflow-hidden shadow-2xl bg-gray-900 shine-card relative">
         {/* Left: Summary Panel */}
-        <div className="w-full md:w-2/5 bg-gradient-to-br from-gray-800 to-black text-white p-8 flex flex-col relative shine-panel overflow-hidden">
+        <div className="w-full lg:w-2/5 bg-gradient-to-br from-gray-800 to-black text-white p-4 sm:p-6 lg:p-8 flex flex-col relative shine-panel overflow-hidden order-2 lg:order-1">
           {/* Bonus Notification */}
           {showNotification && (
-            <div className="absolute top-4 left-4 right-4 p-4 bg-indigo-600/80 backdrop-blur-sm rounded-lg shadow-lg z-50 animate-fadeIn">
-              <div className="flex items-center">
-                <div className="flex-shrink-0 bg-indigo-500 rounded-full p-2">
-                  <svg className="h-6 w-6 text-white" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+            <div className="absolute top-2 sm:top-4 left-2 sm:left-4 right-2 sm:right-4 p-3 sm:p-4 bg-indigo-600/80 backdrop-blur-sm rounded-lg shadow-lg z-50 animate-fadeIn">
+              <div className="flex items-start sm:items-center">
+                <div className="flex-shrink-0 bg-indigo-500 rounded-full p-1.5 sm:p-2">
+                  <svg className="h-4 w-4 sm:h-6 sm:w-6 text-white" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                     <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 8v13m0-13V6a2 2 0 112 2h-2zm0 0V5.5A2.5 2.5 0 109.5 8H12zm-7 4h14M5 12a2 2 0 110-4h14a2 2 0 110 4M5 12v7a2 2 0 002 2h10a2 2 0 002-2v-7" />
                   </svg>
                 </div>
-                <div className="ml-3">
-                  <h3 className="text-sm font-medium text-white">Congratulations!</h3>
-                  <div className="mt-1 text-sm text-indigo-100">
+                <div className="ml-2 sm:ml-3 flex-1">
+                  <h3 className="text-xs sm:text-sm font-medium text-white">Congratulations!</h3>
+                  <div className="mt-1 text-xs sm:text-sm text-indigo-100">
                     You qualify for a {getBonusPercentage(usdEquivalent)}% bonus on your credits!
                   </div>
                 </div>
                 <button 
                   onClick={() => setShowNotification(false)}
-                  className="ml-auto bg-indigo-500/50 rounded-full p-1 hover:bg-indigo-500/80 transition-colors"
+                  className="ml-2 bg-indigo-500/50 rounded-full p-1 hover:bg-indigo-500/80 transition-colors flex-shrink-0"
                 >
-                  <svg className="h-4 w-4 text-white" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                  <svg className="h-3 w-3 sm:h-4 sm:w-4 text-white" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                     <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M6 18L18 6M6 6l12 12" />
                   </svg>
                 </button>
@@ -496,44 +496,41 @@ function App() {
             </div>
           )}
 
-          <div className="mb-8 relative z-10">
+          <div className="mb-6 sm:mb-8 relative z-10">
             <img
               src="https://res.cloudinary.com/dc05saeek/image/upload/v1747128047/favicon_512x512_ewoo3q.png"
               alt="OSINT Ambitions"
-              className="w-16 h-16 mb-6"
+              className="w-12 h-12 sm:w-16 sm:h-16 mb-4 sm:mb-6"
             />
-            <h2 className="text-2xl font-bold mb-2">Intermediate Subscription</h2>
-            <div className="flex items-baseline mb-6">
-              <span className="text-4xl font-bold">{currency.symbol}{amount || "0"}</span>
-              <span className="ml-2 opacity-80">per payment</span>
+            <h2 className="text-xl sm:text-2xl font-bold mb-2">Intermediate Subscription</h2>
+            <div className="flex items-baseline mb-4 sm:mb-6">
+              <span className="text-2xl sm:text-3xl lg:text-4xl font-bold">{currency.symbol}{amount || "0"}</span>
+              <span className="ml-2 opacity-80 text-sm sm:text-base">per payment</span>
             </div>
           </div>
           
-          <div className="flex-grow bg-gray-800/50 backdrop-blur-sm rounded-lg p-6 shine-card relative z-10">
-            <div className="flex justify-between items-center py-3 border-b border-gray-700">
-              <span>Intermediate Subscription</span>
-              <span className="font-medium">{currency.symbol}{amount || "0"}</span>
+          <div className="flex-grow bg-gray-800/50 backdrop-blur-sm rounded-lg p-4 sm:p-6 shine-card relative z-10 space-y-3">
+            <div className="flex justify-between items-center py-2 sm:py-3 border-b border-gray-700">
+              <span className="text-sm sm:text-base">Intermediate Subscription</span>
+              <span className="font-medium text-sm sm:text-base">{currency.symbol}{amount || "0"}</span>
             </div>
-            <div className="flex justify-between items-center py-3 border-b border-gray-700">
-              <span>Subtotal</span>
-              <span className="font-medium">{currency.symbol}{amount || "0"}</span>
+            <div className="flex justify-between items-center py-2 sm:py-3 border-b border-gray-700">
+              <span className="text-sm sm:text-base">Subtotal</span>
+              <span className="font-medium text-sm sm:text-base">{currency.symbol}{amount || "0"}</span>
             </div>
-            {/* <div className="py-3 border-b border-gray-700">
-              <span className="text-blue-400 cursor-pointer hover:text-white transition">Add promotion code</span>
-            </div> */}
-            <div className="flex justify-between items-center py-3 font-bold">
-              <span>Total due today</span>
-              <span>{currency.symbol}{amount || "0"}</span>
+            <div className="flex justify-between items-center py-2 sm:py-3 font-bold">
+              <span className="text-sm sm:text-base">Total due today</span>
+              <span className="text-sm sm:text-base">{currency.symbol}{amount || "0"}</span>
             </div>
             
             {showBonus && (
-              <div className="mt-4 bg-indigo-600/30 backdrop-blur-sm rounded-lg p-4 flex items-center shine-card border border-indigo-500/50">
-                <span className="text-xl mr-3">🎁</span>
-                <div>
-                  <h4 className="font-bold text-indigo-300">
+              <div className="bg-indigo-600/30 backdrop-blur-sm rounded-lg p-3 sm:p-4 flex items-start sm:items-center shine-card border border-indigo-500/50">
+                <span className="text-lg sm:text-xl mr-2 sm:mr-3 flex-shrink-0">🎁</span>
+                <div className="min-w-0 flex-1">
+                  <h4 className="font-bold text-indigo-300 text-sm sm:text-base">
                     {getBonusPercentage(usdEquivalent)}% Bonus Credits!
                   </h4>
-                  <p className="text-sm text-indigo-200">
+                  <p className="text-xs sm:text-sm text-indigo-200 break-words">
                     {getBonusMessage(usdEquivalent)}
                   </p>
                   <p className="text-xs text-indigo-300 mt-1">
@@ -544,18 +541,18 @@ function App() {
             )}
             
             {returnAmount != 0 && (
-              <div className="mt-4 bg-gray-700/50 rounded-lg p-3 shine-card">
-                <span>Total Credits you will get: {(Number(returnAmount) * (showBonus ? 1.05 : 1)).toFixed(3)}$</span>
+              <div className="bg-gray-700/50 rounded-lg p-3 shine-card">
+                <span className="text-xs sm:text-sm">Total Credits you will get: {(Number(returnAmount) * (showBonus ? 1.05 : 1)).toFixed(3)}$</span>
               </div>
             )}
             
-            <div className="mt-4 p-3 rounded-lg bg-gray-700/30">
+            <div className="p-3 rounded-lg bg-gray-700/30">
               <div className="flex justify-between items-center">
-                <span>Currency</span>
-                <span className="font-medium">{currency.code} ({currency.symbol})</span>
+                <span className="text-sm">Currency</span>
+                <span className="font-medium text-sm">{currency.code} ({currency.symbol})</span>
               </div>
               {isLoading && (
-                <div className="text-sm text-blue-400 mt-1">Detecting your currency...</div>
+                <div className="text-xs sm:text-sm text-blue-400 mt-1">Detecting your currency...</div>
               )}
               {usdEquivalent > 0 && (
                 <div className="text-xs text-gray-400 mt-1">≈ ${usdEquivalent.toFixed(2)} USD</div>
@@ -563,7 +560,7 @@ function App() {
             </div>
           </div>
           
-          <div className="mt-6 text-sm opacity-80 relative z-10">
+          <div className="mt-4 sm:mt-6 text-xs sm:text-sm opacity-80 relative z-10">
             <p>Secure payment processed by Stripe</p>
             <p className="mt-1">© {new Date().getFullYear()} OSINT Ambitions. All rights reserved.</p>
           </div>
@@ -573,23 +570,23 @@ function App() {
         </div>
         
         {/* Right: Payment Form */}
-        <div className="w-full md:w-3/5 p-8 md:p-12 overflow-y-auto bg-gray-900 text-white relative">
-          <div className="mb-8 flex flex-col relative z-20">
+        <div className="w-full lg:w-3/5 p-4 sm:p-6 lg:p-8 xl:p-12 overflow-y-auto bg-gray-900 text-white relative order-1 lg:order-2">
+          <div className="mb-6 sm:mb-8 flex flex-col relative z-20">
             <button 
               onClick={() => (window.location.href = "/")} 
-              className="self-start flex items-center text-gray-400 hover:text-gray-200 transition mb-6"
+              className="self-start flex items-center text-gray-400 hover:text-gray-200 transition mb-4 sm:mb-6 text-sm sm:text-base"
             >
-              <svg xmlns="http://www.w3.org/2000/svg" className="h-5 w-5 mr-2" viewBox="0 0 20 20" fill="currentColor">
+              <svg xmlns="http://www.w3.org/2000/svg" className="h-4 w-4 sm:h-5 sm:w-5 mr-1 sm:mr-2" viewBox="0 0 20 20" fill="currentColor">
                 <path fillRule="evenodd" d="M9.707 14.707a1 1 0 01-1.414 0l-4-4a1 1 0 010-1.414l4-4a1 1 0 011.414 1.414L7.414 9H15a1 1 0 110 2H7.414l2.293 2.293a1 1 0 010 1.414z" clipRule="evenodd" />
               </svg>
               Back to Home
             </button>
-            <h1 className="text-3xl font-bold text-white">Complete your payment</h1>
-            <p className="text-gray-400 mt-2">Payment will be processed in {currency.code}</p>
+            <h1 className="text-2xl sm:text-3xl font-bold text-white">Complete your payment</h1>
+            <p className="text-gray-400 mt-2 text-sm sm:text-base">Payment will be processed in {currency.code}</p>
           </div>
           
           {!clientSecret ? (
-            <div className="space-y-6 relative z-20">
+            <div className="space-y-4 sm:space-y-6 relative z-20">
               <div className="space-y-2">
                 <label className="block text-sm font-medium text-gray-300">Name *</label>
                 <input
@@ -597,7 +594,7 @@ function App() {
                   placeholder="Enter your full name"
                   value={name}
                   onChange={(e) => setName(e.target.value)}
-                  className="w-full px-4 py-3 rounded-lg bg-gray-800 border border-gray-700 text-white focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500 transition placeholder-gray-500 hover:border-indigo-400"
+                  className="w-full px-3 sm:px-4 py-2.5 sm:py-3 text-sm sm:text-base rounded-lg bg-gray-800 border border-gray-700 text-white focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500 transition placeholder-gray-500 hover:border-indigo-400"
                   required
                 />
                 <p className="text-xs text-gray-400">Required for international payment compliance</p>
@@ -609,13 +606,13 @@ function App() {
                   <input
                     type="email"
                     value={email}
-                    className="w-full px-4 py-3 rounded-lg bg-gray-800/30 border border-gray-600 text-gray-400 focus:ring-0 transition placeholder-gray-500 cursor-not-allowed"
+                    className="w-full px-3 sm:px-4 py-2.5 sm:py-3 text-sm sm:text-base rounded-lg bg-gray-800/30 border border-gray-600 text-gray-400 focus:ring-0 transition placeholder-gray-500 cursor-not-allowed pr-10 sm:pr-12"
                     readOnly
                   />
-                  <div className="absolute right-3 top-1/2 -translate-y-1/2 flex items-center text-gray-400 group">
+                  <div className="absolute right-2 sm:right-3 top-1/2 -translate-y-1/2 flex items-center text-gray-400 group">
                     <svg
                       xmlns="http://www.w3.org/2000/svg"
-                      className="h-5 w-5"
+                      className="h-4 w-4 sm:h-5 sm:w-5"
                       fill="none"
                       viewBox="0 0 24 24"
                       stroke="currentColor"
@@ -627,7 +624,7 @@ function App() {
                         d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"
                       />
                     </svg>
-                    <div className="absolute bottom-full right-0 mb-2 w-48 p-2 bg-gray-900 rounded-lg text-xs opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all duration-200 text-gray-300 border border-gray-700">
+                    <div className="absolute bottom-full right-0 mb-2 w-48 sm:w-56 p-2 bg-gray-900 rounded-lg text-xs opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all duration-200 text-gray-300 border border-gray-700">
                       In given Email the payment will be reflected in your given account section
                     </div>
                   </div>
@@ -641,22 +638,22 @@ function App() {
                   placeholder={`Enter amount in ${currency.code}`}
                   value={amount}
                   onChange={(e) => setAmount(e.target.value)}
-                  className="w-full px-4 py-3 rounded-lg bg-gray-800 border border-gray-700 text-white focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500 transition placeholder-gray-500 hover:border-indigo-400"
+                  className="w-full px-3 sm:px-4 py-2.5 sm:py-3 text-sm sm:text-base rounded-lg bg-gray-800 border border-gray-700 text-white focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500 transition placeholder-gray-500 hover:border-indigo-400"
                   required
                 />
               </div>
 
               {/* Billing Address - Required for international payments */}
               <div className="space-y-4">
-                <h3 className="text-lg font-medium text-gray-300">Billing Address *</h3>
-                <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-                  <div className="md:col-span-2">
+                <h3 className="text-base sm:text-lg font-medium text-gray-300">Billing Address *</h3>
+                <div className="grid grid-cols-1 sm:grid-cols-2 gap-3 sm:gap-4">
+                  <div className="sm:col-span-2">
                     <input
                       type="text"
                       placeholder="Address Line 1"
                       value={address.line1}
                       onChange={(e) => setAddress(prev => ({ ...prev, line1: e.target.value }))}
-                      className="w-full px-4 py-3 rounded-lg bg-gray-800 border border-gray-700 text-white focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500 transition placeholder-gray-500"
+                      className="w-full px-3 sm:px-4 py-2.5 sm:py-3 text-sm sm:text-base rounded-lg bg-gray-800 border border-gray-700 text-white focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500 transition placeholder-gray-500"
                       required
                     />
                   </div>
@@ -666,7 +663,7 @@ function App() {
                       placeholder="City"
                       value={address.city}
                       onChange={(e) => setAddress(prev => ({ ...prev, city: e.target.value }))}
-                      className="w-full px-4 py-3 rounded-lg bg-gray-800 border border-gray-700 text-white focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500 transition placeholder-gray-500"
+                      className="w-full px-3 sm:px-4 py-2.5 sm:py-3 text-sm sm:text-base rounded-lg bg-gray-800 border border-gray-700 text-white focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500 transition placeholder-gray-500"
                       required
                     />
                   </div>
@@ -676,7 +673,7 @@ function App() {
                       placeholder="State/Province"
                       value={address.state}
                       onChange={(e) => setAddress(prev => ({ ...prev, state: e.target.value }))}
-                      className="w-full px-4 py-3 rounded-lg bg-gray-800 border border-gray-700 text-white focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500 transition placeholder-gray-500"
+                      className="w-full px-3 sm:px-4 py-2.5 sm:py-3 text-sm sm:text-base rounded-lg bg-gray-800 border border-gray-700 text-white focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500 transition placeholder-gray-500"
                     />
                   </div>
                   <div>
@@ -688,14 +685,14 @@ function App() {
                         const numericValue = e.target.value.replace(/[^0-9]/g, '');
                         setAddress(prev => ({ ...prev, postal_code: numericValue }))
                       }}
-                      className="w-full px-4 py-3 rounded-lg bg-gray-800 border border-gray-700 text-white focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500 transition placeholder-gray-500"
+                      className="w-full px-3 sm:px-4 py-2.5 sm:py-3 text-sm sm:text-base rounded-lg bg-gray-800 border border-gray-700 text-white focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500 transition placeholder-gray-500"
                     />
                   </div>
-                  <div>
+                  <div className="sm:col-span-2">
                     <select
                       value={address.country}
                       onChange={(e) => setAddress(prev => ({ ...prev, country: e.target.value }))}
-                      className="w-full px-4 py-3 rounded-lg bg-gray-800 border border-gray-700 text-white focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500 transition"
+                      className="w-full px-3 sm:px-4 py-2.5 sm:py-3 text-sm sm:text-base rounded-lg bg-gray-800 border border-gray-700 text-white focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500 transition"
                       required
                     >
                       <option value="">Select Country</option>
@@ -712,7 +709,7 @@ function App() {
                
               <button
                 onClick={handleStartPayment}
-                className={`w-full font-medium py-3 px-4 rounded-lg transition-colors shadow-md shine-button relative overflow-hidden ${
+                className={`w-full font-medium py-3 sm:py-3.5 px-4 text-sm sm:text-base rounded-lg transition-colors shadow-md shine-button relative overflow-hidden ${
                   !name ||
                   !email ||
                   !amount ||
@@ -743,7 +740,7 @@ function App() {
               </button>
             </div>
           ) : (
-            <div className="bg-gray-800 p-6 rounded-xl shine-card relative z-20">
+            <div className="bg-gray-800 p-4 sm:p-6 rounded-xl shine-card relative z-20">
               <Elements stripe={stripePromise} options={options}>
                 <CheckoutForm
                   clientSecret={clientSecret}

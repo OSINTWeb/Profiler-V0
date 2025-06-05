@@ -361,27 +361,27 @@ const RazorpayPayment: React.FC = () => {
   }
 
   return (
-    <div className="w-screen h-screen bg-black text-gray-100 flex items-center justify-center p-0 m-0 relative overflow-hidden">
+    <div className="w-screen min-h-screen bg-black text-gray-100 flex items-center justify-center p-2 sm:p-4 relative overflow-hidden">
       {/* Notification */}
       {showNotification && (
-        <div className="absolute top-4 left-4 right-4 p-4 bg-indigo-600/80 backdrop-blur-sm rounded-lg shadow-lg z-50 animate-fadeIn">
-          <div className="flex items-center">
-            <div className="flex-shrink-0 bg-indigo-500 rounded-full p-2">
-              <svg className="h-6 w-6 text-white" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+        <div className="absolute top-2 sm:top-4 left-2 sm:left-4 right-2 sm:right-4 p-3 sm:p-4 bg-indigo-600/80 backdrop-blur-sm rounded-lg shadow-lg z-50 animate-fadeIn">
+          <div className="flex items-start sm:items-center">
+            <div className="flex-shrink-0 bg-indigo-500 rounded-full p-1.5 sm:p-2">
+              <svg className="h-4 w-4 sm:h-6 sm:w-6 text-white" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                 <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 8v13m0-13V6a2 2 0 112 2h-2zm0 0V5.5A2.5 2.5 0 109.5 8H12zm-7 4h14M5 12a2 2 0 110-4h14a2 2 0 110 4M5 12v7a2 2 0 002 2h10a2 2 0 002-2v-7" />
               </svg>
             </div>
-            <div className="ml-3">
-              <h3 className="text-sm font-medium text-white">Congratulations!</h3>
-              <div className="mt-1 text-sm text-indigo-100">
+            <div className="ml-2 sm:ml-3 flex-1">
+              <h3 className="text-xs sm:text-sm font-medium text-white">Congratulations!</h3>
+              <div className="mt-1 text-xs sm:text-sm text-indigo-100">
                 You qualify for a {getBonusPercentage(usdEquivalent)}% bonus on your credits!
               </div>
             </div>
             <button 
               onClick={() => setShowNotification(false)}
-              className="ml-auto bg-indigo-500/50 rounded-full p-1 hover:bg-indigo-500/80 transition-colors"
+              className="ml-2 bg-indigo-500/50 rounded-full p-1 hover:bg-indigo-500/80 transition-colors flex-shrink-0"
             >
-              <svg className="h-4 w-4 text-white" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+              <svg className="h-3 w-3 sm:h-4 sm:w-4 text-white" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                 <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M6 18L18 6M6 6l12 12" />
               </svg>
             </button>
@@ -413,54 +413,54 @@ const RazorpayPayment: React.FC = () => {
         <div className="absolute inset-0 bg-gradient-to-br from-indigo-900/30 to-black/80 z-0"></div>
       </div>
       
-      <div className="w-full max-w-7xl h-full md:h-auto md:max-h-[90vh] flex flex-col md:flex-row rounded-xl overflow-hidden shadow-2xl bg-gray-900/40 backdrop-blur-md z-10 relative glass-card">
+      <div className="w-full max-w-7xl min-h-screen sm:min-h-0 sm:h-auto sm:max-h-[90vh] flex flex-col lg:flex-row rounded-none sm:rounded-xl overflow-hidden shadow-2xl bg-gray-900/40 backdrop-blur-md z-10 relative glass-card">
         {/* Left Panel: Summary */}
-        <div className="w-full md:w-2/5 bg-gradient-to-br from-gray-800/80 to-black/80 text-white p-8 flex flex-col relative overflow-hidden glass-panel">
-          <div className="mb-8 relative z-10">
-            <h1 className="text-3xl font-bold mb-2">OSINT Ambition</h1>
-            <p className="text-gray-400 mb-6">Secure payment processing</p>
+        <div className="w-full lg:w-2/5 bg-gradient-to-br from-gray-800/80 to-black/80 text-white p-4 sm:p-6 lg:p-8 flex flex-col relative overflow-hidden glass-panel order-2 lg:order-1">
+          <div className="mb-6 sm:mb-8 relative z-10">
+            <h1 className="text-2xl sm:text-3xl font-bold mb-2">OSINT Ambition</h1>
+            <p className="text-gray-400 mb-4 sm:mb-6 text-sm sm:text-base">Secure payment processing</p>
             
-            <div className="flex items-baseline mb-6">
-              <span className="text-4xl font-bold shine-text">₹{amount || "0"}</span>
-              <span className="ml-2 opacity-80">credits</span>
+            <div className="flex items-baseline mb-4 sm:mb-6">
+              <span className="text-2xl sm:text-3xl lg:text-4xl font-bold shine-text">₹{amount || "0"}</span>
+              <span className="ml-2 opacity-80 text-sm sm:text-base">credits</span>
             </div>
           </div>
           
-          <div className="flex-grow bg-gray-800/40 backdrop-blur-md rounded-lg p-6 relative z-10 glass-card">
-            <div className="flex justify-between items-center py-3 border-b border-gray-700/50">
-              <span>Credits purchase</span>
-              <span className="font-medium">₹{amount || "0"}</span>
+          <div className="flex-grow bg-gray-800/40 backdrop-blur-md rounded-lg p-4 sm:p-6 relative z-10 glass-card space-y-3">
+            <div className="flex justify-between items-center py-2 sm:py-3 border-b border-gray-700/50">
+              <span className="text-sm sm:text-base">Credits purchase</span>
+              <span className="font-medium text-sm sm:text-base">₹{amount || "0"}</span>
             </div>
             
-            <div className="flex justify-between items-center py-3 border-b border-gray-700/50">
-              <span>Subtotal</span>
-              <span className="font-medium">₹{amount || "0"}</span>
+            <div className="flex justify-between items-center py-2 sm:py-3 border-b border-gray-700/50">
+              <span className="text-sm sm:text-base">Subtotal</span>
+              <span className="font-medium text-sm sm:text-base">₹{amount || "0"}</span>
             </div>
             
-            <div className="flex justify-between items-center py-3 font-bold">
-              <span>Total due today</span>
-              <span>₹{amount || "0"}</span>
+            <div className="flex justify-between items-center py-2 sm:py-3 font-bold">
+              <span className="text-sm sm:text-base">Total due today</span>
+              <span className="text-sm sm:text-base">₹{amount || "0"}</span>
             </div>
             
             {/* Bonus Card */}
             {showBonus && (
-              <div className="mt-4 bg-indigo-600/30 backdrop-blur-md rounded-lg p-4 flex items-center border border-indigo-500/50 glass-card pulse-animation">
-                <span className="text-xl mr-3">🎁</span>
-                <div>
-                  <h4 className="font-bold text-indigo-300">{getBonusPercentage(usdEquivalent)}% Bonus Credits!</h4>
-                  <p className="text-sm text-indigo-200">{getBonusMessage(usdEquivalent)}</p>
+              <div className="bg-indigo-600/30 backdrop-blur-md rounded-lg p-3 sm:p-4 flex items-start sm:items-center border border-indigo-500/50 glass-card pulse-animation">
+                <span className="text-lg sm:text-xl mr-2 sm:mr-3 flex-shrink-0">🎁</span>
+                <div className="min-w-0 flex-1">
+                  <h4 className="font-bold text-indigo-300 text-sm sm:text-base">{getBonusPercentage(usdEquivalent)}% Bonus Credits!</h4>
+                  <p className="text-xs sm:text-sm text-indigo-200 break-words">{getBonusMessage(usdEquivalent)}</p>
                   <p className="text-xs text-indigo-300 mt-1">Current amount: ${usdEquivalent.toFixed(2)} USD</p>
                 </div>
               </div>
             )}
           </div>
           
-          <div className="mt-6 text-sm opacity-80 relative z-10">
+          <div className="mt-4 sm:mt-6 text-xs sm:text-sm opacity-80 relative z-10">
             <div className="flex items-center gap-2 mb-3">
-              <svg className="w-5 h-5 text-indigo-400" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+              <svg className="w-4 h-4 sm:w-5 sm:h-5 text-indigo-400" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
                 <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M12 15v2m-6 4h12a2 2 0 002-2v-6a2 2 0 00-2-2H6a2 2 0 00-2 2v6a2 2 0 002 2zm10-10V7a4 4 0 00-8 0v4h8z"></path>
               </svg>
-              <span className="text-indigo-200">Powered by Razorpay Payment Gateway</span>
+              <span className="text-indigo-200 text-xs sm:text-sm">Powered by Razorpay Payment Gateway</span>
             </div>
             <p>© {new Date().getFullYear()} OSINT Ambitions. All rights reserved.</p>
           </div>
@@ -470,33 +470,33 @@ const RazorpayPayment: React.FC = () => {
         </div>
         
         {/* Right Panel: Payment Form */}
-        <div className="w-full md:w-3/5 p-8 md:p-12 overflow-y-auto bg-gray-900/60 backdrop-blur-md text-white relative glass-panel">
-          <div className="mb-8 flex flex-col">
+        <div className="w-full lg:w-3/5 p-4 sm:p-6 lg:p-8 xl:p-12 overflow-y-auto bg-gray-900/60 backdrop-blur-md text-white relative glass-panel order-1 lg:order-2">
+          <div className="mb-6 sm:mb-8 flex flex-col">
             <button
               onClick={() => navigate("/")}
-              className="self-start flex items-center text-gray-400 hover:text-indigo-300 transition mb-6 hover-float"
+              className="self-start flex items-center text-gray-400 hover:text-indigo-300 transition mb-4 sm:mb-6 hover-float text-sm sm:text-base"
             >
-              <svg className="w-5 h-5 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <svg className="w-4 h-4 sm:w-5 sm:h-5 mr-1 sm:mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                 <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M15 19l-7-7 7-7" />
               </svg>
               Back to Home
             </button>
-            <h1 className="text-3xl font-bold text-white mb-2 shine-text">Complete your payment</h1>
+            <h1 className="text-2xl sm:text-3xl font-bold text-white mb-2 shine-text">Complete your payment</h1>
           </div>
 
           {paymentSuccess ? (
-            <div className="bg-gray-800/40 backdrop-blur-md rounded-xl p-8 border border-green-500/30 glass-card success-pulse">
-              <div className="w-16 h-16 bg-green-500 rounded-full flex items-center justify-center mx-auto mb-6 success-glow">
-                <svg className="w-8 h-8 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <div className="bg-gray-800/40 backdrop-blur-md rounded-xl p-6 sm:p-8 border border-green-500/30 glass-card success-pulse">
+              <div className="w-12 h-12 sm:w-16 sm:h-16 bg-green-500 rounded-full flex items-center justify-center mx-auto mb-4 sm:mb-6 success-glow">
+                <svg className="w-6 h-6 sm:w-8 sm:h-8 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                   <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M5 13l4 4L19 7" />
                 </svg>
               </div>
-              <h3 className="text-2xl font-semibold text-green-400 text-center mb-4">Payment Successful!</h3>
+              <h3 className="text-xl sm:text-2xl font-semibold text-green-400 text-center mb-4">Payment Successful!</h3>
               <div className="space-y-2 text-center mb-6">
-                <p className="text-white text-lg">₹{amount} credits added to your account</p>
-                <p className="text-gray-400">New balance: {userData.credits} credits</p>
-                <p className="text-gray-300 mt-4">Redirecting to homepage...</p>
-                <div className="w-8 h-8 mx-auto mt-4">
+                <p className="text-white text-base sm:text-lg">₹{amount} credits added to your account</p>
+                <p className="text-gray-400 text-sm sm:text-base">New balance: {userData.credits} credits</p>
+                <p className="text-gray-300 mt-4 text-sm sm:text-base">Redirecting to homepage...</p>
+                <div className="w-6 h-6 sm:w-8 sm:h-8 mx-auto mt-4">
                   <svg className="animate-spin text-indigo-400 w-full h-full" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
                     <circle className="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="4"></circle>
                     <path className="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path>
@@ -507,19 +507,19 @@ const RazorpayPayment: React.FC = () => {
           ) : (
             <>
               {errorMessage && (
-                <div className="mb-6 p-4 bg-red-900/20 border border-red-800/50 rounded-lg text-red-400 glass-card">
+                <div className="mb-4 sm:mb-6 p-3 sm:p-4 bg-red-900/20 border border-red-800/50 rounded-lg text-red-400 glass-card text-sm sm:text-base">
                   {errorMessage}
                 </div>
               )}
 
-              <div className="space-y-6">
+              <div className="space-y-4 sm:space-y-6">
                 <div>
                   <label className="block text-sm font-medium text-gray-300 mb-2">Name</label>
                   <input
                     type="text"
                     value={name}
                     onChange={(e) => setName(e.target.value)}
-                    className="w-full px-4 py-3 rounded-lg bg-gray-800/50 backdrop-blur-sm border border-gray-700 text-white focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500 transition hover-glow glass-input"
+                    className="w-full px-3 sm:px-4 py-2.5 sm:py-3 text-sm sm:text-base rounded-lg bg-gray-800/50 backdrop-blur-sm border border-gray-700 text-white focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500 transition hover-glow glass-input"
                     placeholder="Enter your name"
                     required
                   />
@@ -531,13 +531,13 @@ const RazorpayPayment: React.FC = () => {
                     <input
                       type="email"
                       value={email}
-                      className="w-full px-4 py-3 rounded-lg bg-gray-800/30 backdrop-blur-sm border border-gray-600 text-gray-400 transition hover-glow glass-input cursor-not-allowed"
+                      className="w-full px-3 sm:px-4 py-2.5 sm:py-3 text-sm sm:text-base rounded-lg bg-gray-800/30 backdrop-blur-sm border border-gray-600 text-gray-400 transition hover-glow glass-input cursor-not-allowed pr-10 sm:pr-12"
                       readOnly
                     />
-                    <div className="absolute right-3 top-1/2 -translate-y-1/2 flex items-center text-gray-400 group">
+                    <div className="absolute right-2 sm:right-3 top-1/2 -translate-y-1/2 flex items-center text-gray-400 group">
                       <svg
                         xmlns="http://www.w3.org/2000/svg"
-                        className="h-5 w-5"
+                        className="h-4 w-4 sm:h-5 sm:w-5"
                         fill="none"
                         viewBox="0 0 24 24"
                         stroke="currentColor"
@@ -549,7 +549,7 @@ const RazorpayPayment: React.FC = () => {
                           d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"
                         />
                       </svg>
-                      <div className="absolute bottom-full right-0 mb-2 w-48 p-2 bg-gray-900 rounded-lg text-xs opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all duration-200 text-gray-300 border border-gray-700">
+                      <div className="absolute bottom-full right-0 mb-2 w-48 sm:w-56 p-2 bg-gray-900 rounded-lg text-xs opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all duration-200 text-gray-300 border border-gray-700">
                         In given Email the payment will be reflected in your given account section
                       </div>
                     </div>
@@ -559,7 +559,7 @@ const RazorpayPayment: React.FC = () => {
                 <div>
                   <label className="block text-sm font-medium text-gray-300 mb-2">Amount (INR)</label>
                   <div className="relative">
-                    <span className="absolute left-4 top-1/2 transform -translate-y-1/2 text-gray-400">₹</span>
+                    <span className="absolute left-3 sm:left-4 top-1/2 transform -translate-y-1/2 text-gray-400 text-sm sm:text-base">₹</span>
                     <input
                       type="number"
                       value={amount}
@@ -567,7 +567,7 @@ const RazorpayPayment: React.FC = () => {
                         setAmount(e.target.value);
                         setErrorMessage("");
                       }}
-                      className="w-full pl-8 pr-4 py-3 rounded-lg bg-gray-800/50 backdrop-blur-sm border border-gray-700 text-white focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500 transition hover-glow glass-input"
+                      className="w-full pl-7 sm:pl-8 pr-3 sm:pr-4 py-2.5 sm:py-3 text-sm sm:text-base rounded-lg bg-gray-800/50 backdrop-blur-sm border border-gray-700 text-white focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500 transition hover-glow glass-input"
                       placeholder="10 - 100000"
                       min="10"
                       max="100000"
@@ -582,7 +582,7 @@ const RazorpayPayment: React.FC = () => {
                   <button
                     onClick={payNow}
                     disabled={isLoading || !amount || !name || !email}
-                    className={`w-full py-3 px-4 rounded-lg font-medium flex items-center justify-center transition-all ${
+                    className={`w-full py-3 sm:py-3.5 px-4 text-sm sm:text-base rounded-lg font-medium flex items-center justify-center transition-all ${
                       isLoading || !amount || !name || !email
                         ? "bg-indigo-700/50 cursor-not-allowed"
                         : "bg-indigo-600/80 hover:bg-indigo-700 text-white hover-glow button-shine"
@@ -591,7 +591,7 @@ const RazorpayPayment: React.FC = () => {
                     {isLoading ? (
                       <>
                         <svg
-                          className="animate-spin -ml-1 mr-2 h-5 w-5 text-white"
+                          className="animate-spin -ml-1 mr-2 h-4 w-4 sm:h-5 sm:w-5 text-white"
                           xmlns="http://www.w3.org/2000/svg"
                           fill="none"
                           viewBox="0 0 24 24"
@@ -610,7 +610,7 @@ const RazorpayPayment: React.FC = () => {
                             d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"
                           ></path>
                         </svg>
-                        Processing...
+                        <span className="text-sm sm:text-base">Processing...</span>
                       </>
                     ) : (
                       <>
@@ -618,7 +618,7 @@ const RazorpayPayment: React.FC = () => {
                         <img 
                           src="https://cdn.razorpay.com/static/assets/razorpay-favicon.png"
                           alt="Razorpay"
-                          className="ml-2 h-5 w-5 bg-white rounded-full p-0.5 relative z-10"
+                          className="ml-2 h-4 w-4 sm:h-5 sm:w-5 bg-white rounded-full p-0.5 relative z-10"
                           onError={(e) => {
                             e.currentTarget.onerror = null;
                             e.currentTarget.src = "https://razorpay.com/favicon.png";
@@ -630,16 +630,16 @@ const RazorpayPayment: React.FC = () => {
                 </div>
               </div>
 
-              <div className="mt-8 pt-6 border-t border-gray-800/50">
-                <div className="flex flex-col md:flex-row md:items-center md:justify-between text-sm text-gray-400 gap-4">
+              <div className="mt-6 sm:mt-8 pt-4 sm:pt-6 border-t border-gray-800/50">
+                <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between text-xs sm:text-sm text-gray-400 gap-3 sm:gap-4">
                   <div className="flex items-center hover-float">
-                    <svg className="w-5 h-5 mr-2 text-gray-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <svg className="w-4 h-4 sm:w-5 sm:h-5 mr-2 text-gray-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                       <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M12 15v2m-6 4h12a2 2 0 002-2v-6a2 2 0 00-2-2H6a2 2 0 00-2 2v6a2 2 0 002 2zm10-10V7a4 4 0 00-8 0v4h8z" />
                     </svg>
                     <span>Secure payment</span>
                   </div>
                   <div className="flex items-center hover-float">
-                    <svg className="w-5 h-5 mr-2 text-gray-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <svg className="w-4 h-4 sm:w-5 sm:h-5 mr-2 text-gray-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                       <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M3 10h18M7 15h1m4 0h1m-7 4h12a3 3 0 003-3V8a3 3 0 00-3-3H6a3 3 0 00-3 3v8a3 3 0 003 3z" />
                     </svg>
                     <span>Multiple payment options</span>
