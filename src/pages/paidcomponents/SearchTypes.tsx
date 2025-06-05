@@ -20,7 +20,7 @@ export function SearchTypes({ settypeofsearch, selected, typeofsearch }: SearchT
   };
 
   const options = ["Basic", "Advance"];
-  
+
   const FreeTools: Tool[] = [
     // {
     //   title: "UserFindr",
@@ -33,11 +33,11 @@ export function SearchTypes({ settypeofsearch, selected, typeofsearch }: SearchT
       description: "Find public Gravatar profile associated with any email address",
       link: "https://gravaton.profiler.me/",
     },
-    {
-      title: "Ignorant",
-      description: "Find if that phone number has an instagram or Amazon Account.",
-      link: "https://ignorant.profiler.me/",
-    },
+    // {
+    //   title: "Ignorant",
+    //   description: "Find if that phone number has an instagram or Amazon Account.",
+    //   link: "https://ignorant.profiler.me/",
+    // },
 
     {
       title: "Linkook",
@@ -64,15 +64,16 @@ export function SearchTypes({ settypeofsearch, selected, typeofsearch }: SearchT
       description: "Quickly identify whether a TikTok account exists for a given username.",
       link: "https://tiktokerfinder.profiler.me/",
     },
-  ];
-
-  const FreemiumTools: Tool[] = [
-    // Phone/Email/LinkedIn tools
     {
       title: "CallSpy",
       description: "Most affordable Phone Number lookup tool",
       link: "https://callspy.profiler.me/",
     },
+  ];
+
+  const FreemiumTools: Tool[] = [
+    // Phone/Email/LinkedIn tools
+
     {
       title: "SimSpy",
       description: "Check phone number details such as line type, carrier, and country information",
@@ -134,7 +135,11 @@ export function SearchTypes({ settypeofsearch, selected, typeofsearch }: SearchT
     "Reverse Image Search": <Image size={18} />,
   };
   return (
-    <div className={`flex flex-col items-center justify-center gap-4 px-2 ${selected !== "Paid" ? "pb-56" : ""}`} >
+    <div
+      className={`flex flex-col items-center justify-center gap-4 px-2 ${
+        selected !== "Paid" ? "pb-56" : ""
+      }`}
+    >
       <div className="flex gap-4 max-w-full w-full px-10 relative justify-center">
         {selected === "Paid" &&
           options.map((type, index) => (
@@ -171,7 +176,9 @@ export function SearchTypes({ settypeofsearch, selected, typeofsearch }: SearchT
                   initial={{ opacity: 0, y: 10 }}
                   animate={{ opacity: 1, y: 0 }}
                   transition={{ delay: index * 0.1 }}
-                  className={`bg-[#131315] rounded-lg w-64 p-4 border border-white/10 hover:border-gray-500 transition-colors relative ${isUserFindr ? "border-2 border-teal-400 shadow-lg shadow-teal-200/40" : ""}`}
+                  className={`bg-[#131315] rounded-lg w-64 p-4 border border-white/10 hover:border-gray-500 transition-colors relative ${
+                    isUserFindr ? "border-2 border-teal-400 shadow-lg shadow-teal-200/40" : ""
+                  }`}
                 >
                   {isUserFindr && (
                     <span className="absolute top-2 right-2 bg-gradient-to-r from-teal-400 to-teal-600 text-white text-sm font-bold px-1 py-1 rounded shadow-md  z-10">
