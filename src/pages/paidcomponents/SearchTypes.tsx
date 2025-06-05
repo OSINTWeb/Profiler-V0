@@ -22,6 +22,11 @@ export function SearchTypes({ settypeofsearch, selected, typeofsearch }: SearchT
   const options = ["Basic", "Advance"];
 
   const FreeTools: Tool[] = [
+    {
+      title: "CallSpy",
+      description: "Most affordable Phone Number lookup tool",
+      link: "https://callspy.profiler.me/",
+    },
     // {
     //   title: "UserFindr",
     //   description:
@@ -63,11 +68,6 @@ export function SearchTypes({ settypeofsearch, selected, typeofsearch }: SearchT
       title: "TiktokerFinder",
       description: "Quickly identify whether a TikTok account exists for a given username.",
       link: "https://tiktokerfinder.profiler.me/",
-    },
-    {
-      title: "CallSpy",
-      description: "Most affordable Phone Number lookup tool",
-      link: "https://callspy.profiler.me/",
     },
   ];
 
@@ -170,6 +170,7 @@ export function SearchTypes({ settypeofsearch, selected, typeofsearch }: SearchT
           <div className="flex flex-wrap gap-4  justify-center items-center w-full">
             {FreeTools.map((tool, index) => {
               const isUserFindr = tool.title.toLowerCase() === "userfindr";
+              const isCallSpy = tool.title.toLowerCase() === "callspy";
               return (
                 <motion.div
                   key={index}
@@ -178,11 +179,18 @@ export function SearchTypes({ settypeofsearch, selected, typeofsearch }: SearchT
                   transition={{ delay: index * 0.1 }}
                   className={`bg-[#131315] rounded-lg w-64 p-4 border border-white/10 hover:border-gray-500 transition-colors relative ${
                     isUserFindr ? "border-2 border-teal-400 shadow-lg shadow-teal-200/40" : ""
+                  } ${
+                    isCallSpy ? "border-2 border-orange-400 shadow-lg shadow-orange-400/60 shadow-2xl" : ""
                   }`}
                 >
                   {isUserFindr && (
                     <span className="absolute top-2 right-2 bg-gradient-to-r from-teal-400 to-teal-600 text-white text-sm font-bold px-1 py-1 rounded shadow-md  z-10">
                       NEW
+                    </span>
+                  )}
+                  {isCallSpy && (
+                    <span className="absolute top-2 right-2 bg-gradient-to-r from-orange-400 to-orange-600 text-white text-sm font-bold px-2 py-1 rounded shadow-md z-10">
+                      OFFER
                     </span>
                   )}
                   <h3 className="font-bold text-lg flex items-center justify-start">
