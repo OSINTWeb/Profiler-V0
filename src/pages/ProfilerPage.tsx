@@ -143,7 +143,7 @@ export default function Profile() {
   };
   return (
     <div className="h-screen flex flex-col  items-center  overflow-y-auto scrollbar">
-      {selected === "Paid" && (
+      {/* {selected === "Paid" && (
         <div className="absolute w-full h-screen bg-black z-[-1] overflow-hidden md:object-cover  ">
           {!isUser && (
             <video
@@ -168,7 +168,7 @@ export default function Profile() {
             </video>
           )}
         </div>
-      )}
+      )} */}
       <div className="flex h-full w-full flex-col items-center overflow-x-hidden ">
         <Header />
         <div className="form  text-white h-full flex mb-56  w-full  flex-col items-center mt-[8%] gap-4 px-1 ">
