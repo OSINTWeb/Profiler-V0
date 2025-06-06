@@ -22,11 +22,11 @@ export function SearchTypes({ settypeofsearch, selected, typeofsearch }: SearchT
   const options = ["Basic", "Advance"];
 
   const FreeTools: Tool[] = [
-    {
-      title: "CallSpy",
-      description: "Most affordable Phone Number lookup tool",
-      link: "https://callspy.profiler.me/",
-    },
+    // {
+    //   title: "CallSpy",
+    //   description: "Most affordable Phone Number lookup tool",
+    //   link: "https://callspy.profiler.me/",
+    // },
     // {
     //   title: "UserFindr",
     //   description:
