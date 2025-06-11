@@ -43,29 +43,11 @@ interface SelectInfoProps {
   hidebutton: boolean;
 }
 
-export const SelectInfo: React.FC<SelectInfoProps> = ({
-  data,
-  hidebutton,
-  sethidebutton,
-  setenableselect,
-  enableselect,
-}) => {
+export const SelectInfo: React.FC<SelectInfoProps> = ({ data, hidebutton }) => {
   return (
-    <section
-      className=" flex flex-col overflow-hidden items-center pt-[39px]"
-      aria-label="Search Results"
-    >
-      <div className="w-full  max-md:max-w-full">
-        <ActionBar
-          data={data}
-          hidebutton={hidebutton}
-          sethidebutton={sethidebutton}
-          setenableselect={setenableselect}
-          enableselect={enableselect}
-          resultCount={data.length}
-        />
-      </div>
-    </section>
+    <div className="w-full  max-md:max-w-full">
+      <ActionBar data={data} hidebutton={hidebutton} resultCount={data?.length} />
+    </div>
   );
 };
 

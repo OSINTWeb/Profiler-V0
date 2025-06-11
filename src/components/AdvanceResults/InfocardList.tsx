@@ -104,7 +104,7 @@ const InfoCardList: React.FC<InfoCardListProps> = ({
     <div>
       {/* Button to delete selected cards */}
       <SelectInfo
-        data={filteredUsers}
+        data={users}
         hidebutton={hidebutton}
         sethidebutton={sethidebutton}
         enableselect={enableselect}
