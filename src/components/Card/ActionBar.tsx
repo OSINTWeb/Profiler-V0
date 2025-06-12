@@ -82,7 +82,7 @@ interface ActionBarProps {
   resultCount: number;
 }
 
-type ExportType = "pdf" | "csv" | "docx" | "json";
+type ExportType = "pdf" | "pdf-plus" | "csv" | "docx" | "json";
 
 export const ActionBar: React.FC<ActionBarProps> = ({
   data,
@@ -433,6 +433,262 @@ export const ActionBar: React.FC<ActionBarProps> = ({
     }
   };
 
+  const exportToPDFWithImages = async () => {
+    try {
+      const doc = new jsPDF();
+
+      // Set up fonts and styling
+      doc.setFont("helvetica", "normal");
+
+      // Add title
+      doc.setFontSize(24);
+      doc.text("Platform Data Report with Images", 105, 20, { align: "center" });
+
+      // Add generation date
+      doc.setFontSize(12);
+      doc.text(`Generated on ${new Date().toLocaleString()}`, 105, 30, { align: "center" });
+
+      let yPos = 50;
+      const margin = 20;
+      const pageWidth = doc.internal.pageSize.width;
+
+      // Enhanced image handling function
+      const addImageEnhanced = async (imageUrl: string, y: number) => {
+        try {
+          const response = await fetch(imageUrl);
+          const blob = await response.blob();
+          return new Promise<number>((resolve) => {
+            const reader = new FileReader();
+            reader.onload = function (event) {
+              if (event.target?.result) {
+                const imgData = event.target.result as string;
+                // Add larger image with better quality
+                const imgWidth = 60;
+                const imgHeight = 60;
+                const xPos = margin;
+                doc.addImage(imgData, "JPEG", xPos, y, imgWidth, imgHeight);
+                resolve(imgHeight + 10); // Return height + padding
+              } else {
+                resolve(0);
+              }
+            };
+            reader.readAsDataURL(blob);
+          });
+        } catch (error) {
+          console.error("Error loading image:", error);
+          return 0;
+        }
+      };
+
+      // Process each record with enhanced image display
+      for (const item of data) {
+        // Check if we need a new page
+        if (yPos > 230) {
+          doc.addPage();
+          yPos = 20;
+        }
+
+        // Record header with background
+        doc.setFillColor(240, 240, 240);
+        doc.rect(margin, yPos, pageWidth - 2 * margin, 10, "F");
+        doc.setFontSize(14);
+        doc.setFont("helvetica", "bold");
+        doc.text(item.module || "Unknown Platform", margin + 2, yPos + 7);
+        yPos += 15;
+
+        // Add profile images with enhanced display
+        const imageUrl =
+          item.spec_format?.[0]?.picture_url?.value || item.front_schemas?.[0]?.image;
+
+        if (imageUrl) {
+          const imageHeight = await addImageEnhanced(imageUrl, yPos);
+          yPos += imageHeight;
+        }
+
+        // Add all available images from data
+        if (item.data?.profile_pic) {
+          const imageHeight = await addImageEnhanced(item.data.profile_pic as string, yPos);
+          yPos += imageHeight;
+        }
+
+        // Basic Information Section
+        doc.setFontSize(12);
+        doc.setFont("helvetica", "bold");
+        doc.text("Basic Information", margin, yPos);
+        yPos += 7;
+        doc.setFont("helvetica", "normal");
+
+        const addField = (label: string, value: unknown) => {
+          if (value !== undefined && value !== null && typeof value !== "object") {
+            if (yPos > 270) {
+              doc.addPage();
+              yPos = 20;
+            }
+            doc.setFont("helvetica", "bold");
+            doc.text(`${label}:`, margin, yPos);
+            doc.setFont("helvetica", "normal");
+            const valueStr = String(value);
+            // Handle long text with word wrap
+            const splitText = doc.splitTextToSize(valueStr, pageWidth - 2 * margin - 40);
+            doc.text(splitText, margin + 40, yPos);
+            yPos += splitText.length * 7;
+          }
+        };
+
+        // Add basic fields
+        addField("Module", item.module);
+        addField("Pretty Name", item.front_schemas?.[0]?.module || item.pretty_name || item.module);
+        addField("Query", item.query);
+        addField("Category", item.category?.name);
+        addField("Category Description", item.category?.description);
+        addField("Status", item.status);
+        addField("Source", item.from);
+        addField("Reliable Source", item.reliable_source ? "Yes" : "No");
+
+        // Add all data fields
+        if (item.data) {
+          Object.entries(item.data).forEach(([key, value]) => {
+            if (value !== undefined && value !== null) {
+              const formattedKey = key.replace(/_/g, " ").replace(/\b\w/g, (l) => l.toUpperCase());
+              const formattedValue =
+                typeof value === "boolean"
+                  ? value
+                    ? "Yes"
+                    : "No"
+                  : Array.isArray(value)
+                  ? `${value.length} items`
+                  : String(value);
+              addField(formattedKey, formattedValue);
+            }
+          });
+        }
+
+        // Add front_schemas body data
+        if (item.front_schemas?.[0]?.body) {
+          Object.entries(item.front_schemas[0].body).forEach(([key, value]) => {
+            if (value !== undefined && value !== null) {
+              addField(key, String(value));
+            }
+          });
+        }
+
+        // Account Status Section
+        if (item.spec_format?.[0]) {
+          yPos += 5;
+          doc.setFont("helvetica", "bold");
+          doc.text("Account Status", margin, yPos);
+          yPos += 7;
+
+          const spec = item.spec_format[0];
+          if (spec.registered?.value !== undefined) {
+            addField("Registered", spec.registered.value ? "Yes" : "No");
+          }
+          if (spec.breach?.value !== undefined) {
+            addField("Breached", spec.breach.value ? "Yes" : "No");
+          }
+        }
+
+        // Personal Information Section
+        if (item.spec_format?.[0]) {
+          const spec = item.spec_format[0];
+          const personalInfo = {
+            Name: spec.name?.value,
+            Username: spec.username?.value,
+            ID: spec.id?.value,
+            Bio: spec.bio?.value,
+            Website: spec.website?.value,
+            Location: spec.location?.value,
+            "Phone Number": spec.phone_number?.value || spec.phone?.value,
+            Email: spec.email?.value,
+            Gender: spec.gender?.value,
+            Age: spec.age?.value,
+            Language: spec.language?.value,
+          };
+
+          const hasPersonalInfo = Object.values(personalInfo).some((v) => v !== undefined);
+
+          if (hasPersonalInfo) {
+            yPos += 5;
+            doc.setFont("helvetica", "bold");
+            doc.text("Personal Information", margin, yPos);
+            yPos += 7;
+
+            Object.entries(personalInfo).forEach(([key, value]) => {
+              if (value !== undefined) {
+                addField(key, value);
+              }
+            });
+          }
+        }
+
+        // Dates Section
+        if (item.spec_format?.[0]) {
+          const spec = item.spec_format[0];
+          const dates = {
+            "Creation Date": spec.creation_date?.value,
+            "Last Seen": spec.last_seen?.value,
+            Birthday: spec.birthday?.value,
+          };
+
+          const hasDates = Object.values(dates).some((v) => v !== undefined);
+
+          if (hasDates) {
+            yPos += 5;
+            doc.setFont("helvetica", "bold");
+            doc.text("Dates", margin, yPos);
+            yPos += 7;
+
+            Object.entries(dates).forEach(([key, value]) => {
+              if (value !== undefined) {
+                addField(key, value);
+              }
+            });
+          }
+        }
+
+        // Platform Variables Section
+        if (item.spec_format?.[0]?.platform_variables?.length) {
+          yPos += 5;
+          doc.setFont("helvetica", "bold");
+          doc.text("Platform Variables", margin, yPos);
+          yPos += 7;
+
+          item.spec_format[0].platform_variables.forEach((variable) => {
+            const key = variable.proper_key || 
+              variable.key.replace(/_/g, " ").replace(/\b\w/g, (l) => l.toUpperCase());
+            addField(key, variable.value);
+          });
+        }
+
+        // Tags Section
+        if (item.front_schemas?.[0]?.tags?.length) {
+          yPos += 5;
+          doc.setFont("helvetica", "bold");
+          doc.text("Tags", margin, yPos);
+          yPos += 7;
+
+          item.front_schemas[0].tags.forEach((tag, index) => {
+            addField(`Tag ${index + 1}`, tag.tag);
+            if (tag.url) {
+              addField(`Tag ${index + 1} URL`, tag.url);
+            }
+          });
+        }
+
+        // Add separator
+        yPos += 10;
+        doc.setDrawColor(200, 200, 200);
+        doc.line(margin, yPos, pageWidth - margin, yPos);
+        yPos += 15;
+      }
+
+      // Save the PDF
+      doc.save("platform_data_with_images.pdf");
+    } catch (error) {
+      console.error("Error generating PDF with images:", error);
+    }
+  };
+
   const exportToDOCX = async () => {
     try {
       // Create document with title and timestamp
@@ -584,7 +840,7 @@ export const ActionBar: React.FC<ActionBarProps> = ({
   const handleExport = (type: ExportType) => {
     switch (type) {
       case "pdf":
-        exportToPDF();
+        exportToPDFWithImages();
         break;
       case "csv":
         exportToCSV();
@@ -621,7 +877,6 @@ export const ActionBar: React.FC<ActionBarProps> = ({
             <FileText className="w-4 h-4" />
             <span>PDF</span>
           </button>
-
           <button
             className={`flex bg-[rgba(19,19,21,1)] gap-1 border whitespace-nowrap px-4 py-2.5 rounded-lg border-[#163941] transition-all duration-200 ease-in-out hover:scale-105 hover:shadow-lg hover:shadow-[rgba(84,143,155,0.5)] justify-center items-center max-md:flex-1 max-md:min-w-[120px] ${
               hidebutton ? "shadow-lg shadow-[rgba(84,143,155,0.5)]" : ""

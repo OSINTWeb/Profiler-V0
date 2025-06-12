@@ -72,19 +72,10 @@ export const SearchOptions: React.FC<SearchOptionsProps> = ({
         const isDisabled = type === "Phone" && typeofsearch === "Basic";
         //  = type === "Username" && typeofsearch === "Advance";
         const isSelected = selectedOption === type;
-        const showTooltip = hoveredButton === type;
-
         if (type === "Username" && typeofsearch !== "Advance") return null;
 
         return (
           <div key={type} className="relative flex flex-col items-center w-full sm:w-auto">
-            {showTooltip && (
-              <div className="absolute -top-12 z-10 bg-white/90 text-black text-sm px-3 py-1 rounded-lg shadow-md whitespace-nowrap">
-                {tooltip}
-                <div className="absolute bottom-[-6px] left-1/2 transform -translate-x-1/2 w-2 h-2 bg-gray-800 rotate-45"></div>
-              </div>
-            )}
-
             <motion.button
               whileHover={{ scale: isDisabled ? 1 : 1.05 }}
               whileTap={{ scale: isDisabled ? 1 : 0.95 }}
