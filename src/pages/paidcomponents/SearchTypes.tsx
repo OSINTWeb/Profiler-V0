@@ -64,11 +64,11 @@ export function SearchTypes({ settypeofsearch, selected, typeofsearch }: SearchT
       description: "Check if your email or username has been compromised by info-stealing malware",
       link: "https://infostealer.profiler.me/",
     },
-    // {
-    //   title: "TiktokerFinder",
-    //   description: "Quickly identify whether a TikTok account exists for a given username.",
-    //   link: "https://tiktokerfinder.profiler.me/",
-    // },
+    {
+      title: "TiktokerFinder",
+      description: "Quickly identify whether a TikTok account exists for a given username.",
+      link: "https://tiktokerfinder.profiler.me/",
+    },
   ];
 
   const FreemiumTools: Tool[] = [
