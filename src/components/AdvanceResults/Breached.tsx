@@ -2,7 +2,6 @@ import React, { useState } from "react";
 import { Download, Calendar, Globe, Clock, X } from "lucide-react";
 import { useImageLoader, getFallbackInitials } from "../Card/imageLoader";
 import { cn } from "@/lib/utils";
-import DateObject from "react-date-object";
 import { Expand } from "./expand";
 import { motion, AnimatePresence } from "framer-motion";
 
@@ -98,10 +97,13 @@ const PlatformCard = ({ spec, module }: { spec: SpecFormat; module: string }) =>
         onClick={handleClick}
       >
         {/* Glass reflection effect */}
-        <div className="absolute -inset-[400px] bg-gradient-to-b from-blue-500/20 to-purple-500/20 opacity-[15%] transition-all duration-500"
-             style={{
-               transform: isHovered ? 'translate(200px, 200px) rotate(45deg)' : 'translate(500px, 500px) rotate(45deg)',
-             }}
+        <div
+          className="absolute -inset-[400px] bg-gradient-to-b from-blue-500/20 to-purple-500/20 opacity-[15%] transition-all duration-500"
+          style={{
+            transform: isHovered
+              ? "translate(200px, 200px) rotate(45deg)"
+              : "translate(500px, 500px) rotate(45deg)",
+          }}
         />
 
         {/* Content */}
@@ -113,11 +115,9 @@ const PlatformCard = ({ spec, module }: { spec: SpecFormat; module: string }) =>
               className="w-full h-full object-cover"
             />
           </div>
-          
-          <h3 className="text-base font-medium text-white mb-2">
-            {spec.name?.value || "Unknown"}
-          </h3>
-          
+
+          <h3 className="text-base font-medium text-white mb-2">{spec.name?.value || "Unknown"}</h3>
+
           <div className="flex items-center gap-2 px-3 py-1.5 rounded-full bg-black/20 backdrop-blur-md border border-white/10">
             <Globe size={12} className="text-blue-400" />
             <span className="text-xs text-gray-300">{module}</span>
@@ -134,7 +134,7 @@ const PlatformCard = ({ spec, module }: { spec: SpecFormat; module: string }) =>
             pretty_name: spec.name?.value || module,
             query: "",
             spec_format: [spec],
-            category: { name: module, description: "" }
+            category: { name: module, description: "" },
           }}
         />
       )}
@@ -142,10 +142,14 @@ const PlatformCard = ({ spec, module }: { spec: SpecFormat; module: string }) =>
   );
 };
 
-const ViewMoreModal = ({ isOpen, onClose, items }: { 
-  isOpen: boolean; 
-  onClose: () => void; 
-  items: { spec: SpecFormat; module: string }[] 
+const ViewMoreModal = ({
+  isOpen,
+  onClose,
+  items,
+}: {
+  isOpen: boolean;
+  onClose: () => void;
+  items: { spec: SpecFormat; module: string }[];
 }) => {
   if (!isOpen) return null;
 
@@ -163,19 +167,17 @@ const ViewMoreModal = ({ isOpen, onClose, items }: {
           animate={{ scale: 1, opacity: 1 }}
           exit={{ scale: 0.95, opacity: 0 }}
           className="relative w-full max-w-5xl max-h-[85vh] overflow-hidden rounded-3xl"
-          onClick={e => e.stopPropagation()}
+          onClick={(e) => e.stopPropagation()}
         >
           {/* Glassmorphism background */}
           <div className="absolute inset-0 bg-white/10 backdrop-blur-2xl backdrop-saturate-150 border border-white/20" />
-          
+
           {/* Content */}
           <div className="relative">
             <div className="flex items-center justify-between p-6 border-b border-white/10">
               <div className="flex items-center gap-4">
                 <div className="h-8 w-1 bg-gradient-to-b from-blue-400 to-purple-400 rounded-full" />
-                <h2 className="text-2xl font-medium text-white">
-                  All Breached Accounts
-                </h2>
+                <h2 className="text-2xl font-medium text-white">All Breached Accounts</h2>
               </div>
               <button
                 onClick={onClose}
@@ -212,9 +214,7 @@ const BreachedAccount = ({ userData }: BreachedAccountProps) => {
   }
 
   // Filter data to only include breached accounts
-  const breachedAccounts = userData.filter((item) =>
-    item?.spec_format?.some((spec) => spec?.breach?.value === true)
-  );
+  const breachedAccounts = userData;
 
   // Create a flat array of all breached items
   const allBreachedItems = breachedAccounts.flatMap((item) =>
@@ -222,7 +222,7 @@ const BreachedAccount = ({ userData }: BreachedAccountProps) => {
       .filter((spec) => spec?.picture_url?.value && spec?.breach?.value)
       .map((spec) => ({
         spec,
-        module: item?.module || ""
+        module: item?.module || "",
       }))
   );
 
@@ -240,15 +240,13 @@ const BreachedAccount = ({ userData }: BreachedAccountProps) => {
       <div className="relative rounded-2xl border border-white/50 overflow-hidden">
         {/* Glassmorphism background */}
         <div className="absolute inset-0 bg-[#131315] backdrop-blur-2xl backdrop-saturate-150 " />
-        
+
         {/* Content */}
         <div className="relative p-8">
           <div className="flex items-center justify-between mb-8">
             <div className="flex items-center gap-4">
               <div className="h-8 w-1 bg-gradient-to-b from-blue-400 to-purple-400 rounded-full" />
-              <h2 className="text-2xl font-medium text-white">
-                Breached Accounts
-              </h2>
+              <h2 className="text-2xl font-medium text-white">Breached Accounts</h2>
             </div>
             {hasMoreItems && (
               <motion.button
@@ -258,7 +256,7 @@ const BreachedAccount = ({ userData }: BreachedAccountProps) => {
                 className="px-6 py-2.5 rounded-xl text-white/90 text-sm font-medium
                           backdrop-blur-lg backdrop-saturate-150
                          border border-white/20  
-                         transition-all duration-300 hover:bg-white/20" 
+                         transition-all duration-300 hover:bg-white/20"
               >
                 View All
               </motion.button>
@@ -267,11 +265,7 @@ const BreachedAccount = ({ userData }: BreachedAccountProps) => {
 
           <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-6">
             {initialItems.map((item, index) => (
-              <PlatformCard
-                key={`platform-${index}`}
-                spec={item.spec}
-                module={item.module}
-              />
+              <PlatformCard key={`platform-${index}`} spec={item.spec} module={item.module} />
             ))}
           </div>
         </div>

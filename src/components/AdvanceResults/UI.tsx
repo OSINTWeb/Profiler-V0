@@ -117,18 +117,25 @@ const UI = () => {
   }, [query, PaidSearch, hasFetched]);
 
   useEffect(() => {
-    if (DATA.length > 0) {
-      const hibpItems = DATA.filter((item) => item.module === "hibp");
-      const nonHibpItems = DATA.filter((item) => item.module !== "hibp");
+    if (Array.isArray(DATA) && DATA.length > 0) {
+      
+      const hibpItems = DATA.filter((item) => item && item.module === "hibp");
+      const nonHibpItems = DATA.filter((item) => item && item.module !== "hibp");
       setNonHibpData(nonHibpItems);
       if (hibpItems.length > 0) {
         setHibpData(hibpItems);
-        // console.log("HIBP ITEMS", hibpItems[0].data.length);
-        setHibpCount(hibpItems[0].data.length);
+        // Safely access hibpItems[0].data and its length
+        setHibpCount(Array.isArray(hibpItems[0]?.data) ? hibpItems[0].data.length : 0);
+      } else {
+        setHibpData([]);
+        setHibpCount(0);
       }
+    } else {
+      setNonHibpData([]);
+      setHibpData([]);
+      setHibpCount(0);
     }
   }, [DATA]);
-
   return (
     <div className="flex flex-col text-white gap-10 justify-center items-center mx-auto  sm:px-12 md:px-16 lg:px-36 scrollbar py-3 scrollbar-hidden w-full overflow-x-hidden px-2">
       <div className="h-screen absolute top-0 left-0 w-full z-[-1] scrollbar-hidden">
@@ -183,6 +190,7 @@ const UI = () => {
           <div className="w-full">
             <InfoCardList
               users={nonHibpData}
+              fulldata={DATA}
               hidebutton={hidebutton}
               PaidSearch={PaidSearch}
               sethidebutton={sethidebutton}

@@ -55,6 +55,7 @@ interface InfoCardListProps {
   hidebutton: boolean;
   PaidSearch: string;
   sethidebutton: React.Dispatch<React.SetStateAction<boolean>>;
+  fulldata: PlatformData[];
 }
 
 const InfoCardList: React.FC<InfoCardListProps> = ({
@@ -62,6 +63,7 @@ const InfoCardList: React.FC<InfoCardListProps> = ({
   hidebutton,
   PaidSearch,
   sethidebutton,
+  fulldata,
 }) => {
   const [enableselect, setenableselect] = useState(false);
   const [selectedIndices, setSelectedIndices] = useState<number[]>([]);
@@ -99,17 +101,10 @@ const InfoCardList: React.FC<InfoCardListProps> = ({
   const handleDelete = (index: number) => {
     setFilteredUsers(filteredUsers.filter((_, i) => i !== index));
   };
-
   return (
     <div>
       {/* Button to delete selected cards */}
-      <SelectInfo
-        data={users}
-        hidebutton={hidebutton}
-        sethidebutton={sethidebutton}
-        enableselect={enableselect}
-        setenableselect={setenableselect}
-      />
+      <SelectInfo data={fulldata} hidebutton={hidebutton} />
       {/* {enableselect && (
         <div className="text-white w-full  text-xl p-10 text-center">
           Export or Delete Selected Data

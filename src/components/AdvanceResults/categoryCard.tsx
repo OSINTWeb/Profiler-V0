@@ -45,10 +45,10 @@ const CategoryCard: React.FC<CategoryCardProps> = memo(({ CardData }) => {
 
   const groupedByCategory = useMemo(() => {
     return CardData.reduce((acc, item) => {
-      const categoryName = item.category.name;
+      const categoryName = item.category?.name || 'Uncategorized';
       if (!acc[categoryName]) {
         acc[categoryName] = {
-          description: item.category.description,
+          description: item.category?.description || 'No description available',
           items: [],
         };
       }

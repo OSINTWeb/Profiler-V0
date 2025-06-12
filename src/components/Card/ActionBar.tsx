@@ -7,8 +7,31 @@ import { CheckSquare, FileText, FileSpreadsheet, FileJson, FileEdit } from "luci
 
 interface PlatformData {
   module: string;
-  pretty_name: string;
+  pretty_name?: string;
+  pretty_data?: Record<string, unknown>;
   query: string;
+  status: string;
+  from: string;
+  reliable_source: boolean;
+  data?: {
+    phone_number?: string;
+    qq_id?: string;
+    email?: string;
+    region?: string;
+    league_of_legends_id?: string;
+    weibo_link?: string;
+    weibo_id?: string;
+    profile_pic?: string;
+    first_name?: string;
+    last_name?: string;
+    user?: string;
+    avatar?: string;
+    active?: boolean;
+    private?: boolean;
+    objectID?: string;
+    friends_with?: unknown[];
+    [key: string]: unknown;
+  };
   category: {
     name: string;
     description: string;
@@ -27,16 +50,26 @@ interface PlatformData {
     username?: { value: string };
     location?: { value: string };
     phone_number?: { value: string };
+    phone?: { value: string };
+    email?: { value: string };
     birthday?: { value: string };
     language?: { value: string };
     age?: { value: number };
     platform_variables?: Array<{
       key: string;
+      proper_key?: string;
       value: string;
+      type?: string;
     }>;
   }[];
   front_schemas?: {
+    module?: string;
     image?: string;
+    body?: Record<string, unknown>;
+    tags?: Array<{
+      tag: string;
+      url?: string;
+    }>;
   }[];
 }
 
@@ -54,15 +87,13 @@ type ExportType = "pdf" | "csv" | "docx" | "json";
 export const ActionBar: React.FC<ActionBarProps> = ({
   data,
   hidebutton,
-  sethidebutton,
-  setenableselect,
-  enableselect,
+
   resultCount,
 }) => {
   const flattenData = (item: PlatformData) => {
-    const baseFields = {
+    const baseFields: Record<string, unknown> = {
       Module: item.module,
-      "Pretty Name": item.front_schemas?.[0]?.module || item.module,
+      "Pretty Name": item.front_schemas?.[0]?.module || item.pretty_name || item.module,
       Query: item.query,
       Category: item.category?.name,
       "Category Description": item.category?.description,
@@ -70,19 +101,35 @@ export const ActionBar: React.FC<ActionBarProps> = ({
       "Reliable Source": item.reliable_source ? "Yes" : "No",
       Source: item.from,
       "Profile Image": item.front_schemas?.[0]?.image,
-      "Profile Data": item.data ? JSON.stringify(item.data) : undefined,
-      "First Name": item.data?.first_name,
-      "Last Name": item.data?.last_name,
-      Email: item.data?.email,
-      Username: item.data?.user,
-      Avatar: item.data?.avatar,
-      Active: item.data?.active ? "Yes" : "No",
-      Private: item.data?.private ? "Yes" : "No",
-      "Object ID": item.data?.objectID,
-      Friends: item.data?.friends_with?.length || 0,
     };
 
-    const specFields = item.spec_format?.[0]
+    // Add data fields if they exist
+    if (item.data) {
+      Object.entries(item.data).forEach(([key, value]) => {
+        if (value !== undefined && value !== null) {
+          const formattedKey = key.replace(/_/g, " ").replace(/\b\w/g, (l) => l.toUpperCase());
+          baseFields[formattedKey] =
+            typeof value === "boolean"
+              ? value
+                ? "Yes"
+                : "No"
+              : Array.isArray(value)
+              ? value.length.toString()
+              : String(value);
+        }
+      });
+    }
+
+    // Add front_schemas body data if it exists
+    if (item.front_schemas?.[0]?.body) {
+      Object.entries(item.front_schemas[0].body).forEach(([key, value]) => {
+        if (value !== undefined && value !== null) {
+          baseFields[key] = String(value);
+        }
+      });
+    }
+
+    const specFields: Record<string, unknown> = item.spec_format?.[0]
       ? {
           Registered: item.spec_format[0].registered?.value ? "Yes" : "No",
           Breached: item.spec_format[0].breach?.value ? "Yes" : "No",
@@ -95,12 +142,17 @@ export const ActionBar: React.FC<ActionBarProps> = ({
           "Last Seen": item.spec_format[0].last_seen?.value,
           Username: item.spec_format[0].username?.value,
           Location: item.spec_format[0].location?.value,
-          "Phone Number": item.spec_format[0].phone_number?.value,
+          "Phone Number":
+            item.spec_format[0].phone_number?.value || item.spec_format[0].phone?.value,
+          Email: item.spec_format[0].email?.value,
           Birthday: item.spec_format[0].birthday?.value,
           Language: item.spec_format[0].language?.value,
           Age: item.spec_format[0].age?.value,
           ...(item.spec_format[0].platform_variables?.reduce((acc, variable) => {
-            acc[variable.key] = variable.value;
+            const key =
+              variable.proper_key ||
+              variable.key.replace(/_/g, " ").replace(/\b\w/g, (l) => l.toUpperCase());
+            acc[key] = variable.value;
             return acc;
           }, {} as Record<string, string>) || {}),
         }
@@ -169,7 +221,7 @@ export const ActionBar: React.FC<ActionBarProps> = ({
         doc.rect(margin, yPos, pageWidth - 2 * margin, 10, "F");
         doc.setFontSize(14);
         doc.setFont("helvetica", "bold");
-        doc.text(item.pretty_name || "Unknown Platform", margin + 2, yPos + 7);
+        doc.text(item.module || "Unknown Platform", margin + 2, yPos + 7);
         yPos += 15;
 
         // Add profile image if available
@@ -188,7 +240,7 @@ export const ActionBar: React.FC<ActionBarProps> = ({
         yPos += 7;
         doc.setFont("helvetica", "normal");
 
-        const addField = (label: string, value: any) => {
+        const addField = (label: string, value: unknown) => {
           if (value !== undefined && value !== null) {
             if (yPos > 270) {
               doc.addPage();
@@ -209,6 +261,36 @@ export const ActionBar: React.FC<ActionBarProps> = ({
         addField("Module", item.module);
         addField("Query", item.query);
         addField("Category", item.category?.name);
+        addField("Status", item.status);
+        addField("Source", item.from);
+        addField("Reliable Source", item.reliable_source ? "Yes" : "No");
+
+        // Add all data fields
+        if (item.data) {
+          Object.entries(item.data).forEach(([key, value]) => {
+            if (value !== undefined && value !== null) {
+              const formattedKey = key.replace(/_/g, " ").replace(/\b\w/g, (l) => l.toUpperCase());
+              const formattedValue =
+                typeof value === "boolean"
+                  ? value
+                    ? "Yes"
+                    : "No"
+                  : Array.isArray(value)
+                  ? `${value.length} items`
+                  : String(value);
+              addField(formattedKey, formattedValue);
+            }
+          });
+        }
+
+        // Add front_schemas body data
+        if (item.front_schemas?.[0]?.body) {
+          Object.entries(item.front_schemas[0].body).forEach(([key, value]) => {
+            if (value !== undefined && value !== null) {
+              addField(key, String(value));
+            }
+          });
+        }
 
         // Account Status Section
         if (item.spec_format?.[0]) {
@@ -301,18 +383,32 @@ export const ActionBar: React.FC<ActionBarProps> = ({
     try {
       // Get all possible keys from all records
       const allKeys = new Set<string>();
-      data.forEach((item) => {
+      const flattenedData = data.map((item) => {
         const flattened = flattenData(item);
         Object.keys(flattened).forEach((key) => allKeys.add(key));
+        return flattened;
       });
 
       const headers = Array.from(allKeys);
-      const csvRows = data.map((item) => {
-        const flattened = flattenData(item);
+
+      // Create CSV content with proper escaping
+      const csvRows = flattenedData.map((flattened) => {
         return headers.map((header) => {
           const value = flattened[header as keyof typeof flattened];
-          // Handle values that might contain commas
-          return typeof value === "string" && value.includes(",") ? `"${value}"` : value;
+          if (value === undefined || value === null) {
+            return "";
+          }
+
+          const stringValue = String(value);
+          // Escape double quotes and wrap in quotes if contains comma, newline, or quote
+          if (
+            stringValue.includes(",") ||
+            stringValue.includes("\n") ||
+            stringValue.includes('"')
+          ) {
+            return `"${stringValue.replace(/"/g, '""')}"`;
+          }
+          return stringValue;
         });
       });
 
@@ -322,6 +418,18 @@ export const ActionBar: React.FC<ActionBarProps> = ({
       saveAs(blob, "platform_data.csv");
     } catch (error) {
       console.error("Error generating CSV:", error);
+    }
+  };
+
+  const exportToJSON = () => {
+    try {
+      const exportData = data;
+      const blob = new Blob([JSON.stringify(exportData, null, 2)], {
+        type: "application/json",
+      });
+      saveAs(blob, "platform_data.json");
+    } catch (error) {
+      console.error("Error generating JSON:", error);
     }
   };
 
@@ -389,9 +497,30 @@ export const ActionBar: React.FC<ActionBarProps> = ({
         // Basic Information
         addSectionHeader("Basic Information");
         addField("Module", recordData["Module"]);
+        addField("Pretty Name", recordData["Pretty Name"]);
         addField("Query", recordData["Query"]);
         addField("Category", recordData["Category"]);
-
+        addField("Category Description", recordData["Category Description"]);
+        addField("Status", recordData["Status"]);
+        addField("Reliable Source", recordData["Reliable Source"]);
+        addField("Source", recordData["Source"]);
+        addField("Profile Image", recordData["Profile Image"]);
+        addField("Registered", recordData["Registered"]);
+        addField("Breached", recordData["Breached"]);
+        addField("Name", recordData["Name"]);
+        addField("Website", recordData["Website"]);
+        addField("ID", recordData["ID"]);
+        addField("Bio", recordData["Bio"]);
+        addField("Creation Date", recordData["Creation Date"]);
+        addField("Gender", recordData["Gender"]);
+        addField("Last Seen", recordData["Last Seen"]);
+        addField("Username", recordData["Username"]);
+        addField("Location", recordData["Location"]);
+        addField("Phone Number", recordData["Phone Number"]);
+        addField("Email", recordData["Email"]);
+        addField("Birthday", recordData["Birthday"]);
+        addField("Language", recordData["Language"]);
+        addField("Age", recordData["Age"]);
         // Account Status
         if (recordData["Registered"] || recordData["Breached"]) {
           addSectionHeader("Account Status");
@@ -452,19 +581,6 @@ export const ActionBar: React.FC<ActionBarProps> = ({
       console.error("Error generating DOCX:", error);
     }
   };
-
-  const exportToJSON = () => {
-    try {
-      const exportData = data;
-      const blob = new Blob([JSON.stringify(exportData, null, 2)], {
-        type: "application/json",
-      });
-      saveAs(blob, "platform_data.json");
-    } catch (error) {
-      console.error("Error generating JSON:", error);
-    }
-  };
-
   const handleExport = (type: ExportType) => {
     switch (type) {
       case "pdf":
@@ -494,9 +610,18 @@ export const ActionBar: React.FC<ActionBarProps> = ({
           <div>{resultCount} Results</div>
         </div>
 
-        <div
-        className="flex items-stretch gap-[13px] text-sm text-[rgba(207,207,207,1)]"
-        >
+        <div className="flex items-stretch gap-[13px] text-sm text-[rgba(207,207,207,1)]">
+          <button
+            className={`flex bg-[rgba(19,19,21,1)] gap-1 border whitespace-nowrap px-4 py-2.5 rounded-lg border-[#163941] transition-all duration-200 ease-in-out hover:scale-105 hover:shadow-lg hover:shadow-[rgba(84,143,155,0.5)] justify-center items-center ${
+              hidebutton ? "shadow-lg shadow-[rgba(84,143,155,0.5)]" : ""
+            }`}
+            aria-label="Export PDF"
+            onClick={() => handleExport("pdf")}
+          >
+            <FileText className="w-4 h-4" />
+            <span>PDF</span>
+          </button>
+
           <button
             className={`flex bg-[rgba(19,19,21,1)] gap-1 border whitespace-nowrap px-4 py-2.5 rounded-lg border-[#163941] transition-all duration-200 ease-in-out hover:scale-105 hover:shadow-lg hover:shadow-[rgba(84,143,155,0.5)] justify-center items-center ${
               hidebutton ? "shadow-lg shadow-[rgba(84,143,155,0.5)]" : ""

@@ -33683,9 +33683,10 @@
     "spec_format": [
       {
         "registered": {
-           "type": "bool", 
-           "proper_key": "Registered", 
-           "value": true },
+          "type": "bool",
+          "proper_key": "Registered",
+          "value": true
+        },
         "platform_variables": []
       }
     ],

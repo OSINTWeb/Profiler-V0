@@ -270,7 +270,7 @@ const renderItemDetails = (item: PlatformData) => {
               Platform:
             </span>
             <span className="text-white text-sm sm:text-base font-medium bg-gray-900/50 px-4 py-2 rounded-lg border border-gray-800">
-              {website || platformName}
+              {website }
             </span>
           </div>
 
@@ -290,26 +290,26 @@ const renderItemDetails = (item: PlatformData) => {
           </div>
 
           {/* Query */}
-           {query && (
-             <div className="flex flex-col sm:flex-row sm:items-center sm:justify-start gap-4 border-b border-gray-800 pb-4 bg-gradient-to-br from-[#0f0f12] to-[#131315] rounded-lg p-4">
-               <span className="text-gray-300 text-sm sm:text-base font-semibold min-w-[120px]">
-                 Query Searched:
-               </span>
-               <div className="flex items-center gap-3 flex-1">
-                 <span className="font-mono text-sm sm:text-base break-all bg-black border border-gray-700 px-4 py-2 rounded-lg flex-1">
-                   {query}
-                 </span>
-                 <motion.button
-                   whileHover={{ scale: 1.05 }}
-                   whileTap={{ scale: 0.95 }}
-                   onClick={() => navigator.clipboard.writeText(query)}
-                   className="hover:bg-gray-800 rounded-lg transition-colors p-2 border border-gray-700"
-                 >
-                   <Copy size={16} className="text-gray-300" />
-                 </motion.button>
-               </div>
-             </div>
-           )}
+          {query && (
+            <div className="flex flex-col sm:flex-row sm:items-center sm:justify-start gap-4 border-b border-gray-800 pb-4 bg-gradient-to-br from-[#0f0f12] to-[#131315] rounded-lg p-4">
+              <span className="text-gray-300 text-sm sm:text-base font-semibold min-w-[120px]">
+                Query Searched:
+              </span>
+              <div className="flex items-center gap-3 flex-1">
+                <span className="font-mono text-sm sm:text-base break-all bg-black border border-gray-700 px-4 py-2 rounded-lg flex-1">
+                  {query}
+                </span>
+                <motion.button
+                  whileHover={{ scale: 1.05 }}
+                  whileTap={{ scale: 0.95 }}
+                  onClick={() => navigator.clipboard.writeText(query)}
+                  className="hover:bg-gray-800 rounded-lg transition-colors p-2 border border-gray-700"
+                >
+                  <Copy size={16} className="text-gray-300" />
+                </motion.button>
+              </div>
+            </div>
+          )}
 
           {/* ID */}
           {id && (

@@ -39,7 +39,7 @@ interface PlatformData {
 }
 
 interface SelectInfoProps {
-  data?: PlatformData; // Specify a proper type if `data` has a defined structure
+  data?: PlatformData[]; // Specify a proper type if `data` has a defined structure
   hidebutton: boolean;
 }
 
