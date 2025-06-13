@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { Link, useLocation, useNavigate } from "react-router-dom";
 import emailData from "@/Data/EmailBasic.json";
-
+import { useAuth0 } from "@auth0/auth0-react";
 // TypeScript interfaces
 interface LinkedInProfile {
   displayName?: string;
@@ -166,12 +166,204 @@ const UserProfileCard = () => {
   const navigate = useNavigate();
   const params = new URLSearchParams(location.search);
   const query = params.get("query");
-  const typeofsearch = params.get("typeofsearch");
-  const PaidSearch = params.get("PaidSearch");
-  const UserId = params.get("userId");
   const FetchURL = import.meta.env.VITE_ADVANCE_BACKEND;
   const AUTH_URL = import.meta.env.VITE_AUTH_BACKEND;
+  const [userData, setUserData] = useState(null);
+  const [userId, setUserId] = useState(null);
+  const { user, isAuthenticated, loginWithRedirect, isLoading: authLoading } = useAuth0();
+  const [isLoading, setIsLoading] = useState(true);
+  const [apiData, setApiData] = useState(null);
+  const [usingFallback, setUsingFallback] = useState(false);
+  const [authStep, setAuthStep] = useState("checking"); // 'checking', 'authenticating', 'fetching_user', 'checking_credits', 'fetching_data', 'complete', 'error'
+  const [errorMessage, setErrorMessage] = useState("");
+
   // Helper function to check if Trello data is safe to use
+  const API_BASE_URL = import.meta.env.VITE_AUTH_BACKEND;
+
+  // Step 1: Handle Auth0 authentication
+  useEffect(() => {
+    const handleAuthentication = async () => {
+      if (authLoading) {
+        setAuthStep("checking");
+        return;
+      }
+
+      if (!isAuthenticated || !user) {
+        setAuthStep("authenticating");
+        // console.log('User not authenticated, redirecting to login...');
+        loginWithRedirect();
+        return;
+      }
+
+      // User is authenticated, proceed to fetch user data
+      setAuthStep("fetching_user");
+      await fetchUserData();
+    };
+
+    handleAuthentication();
+  }, [user, isAuthenticated, authLoading]);
+
+  // Step 2: Fetch user data from database
+  const fetchUserData = async () => {
+    try {
+      setAuthStep("fetching_user");
+      // console.log('Fetching user data for:', user.email);
+
+      const res = await fetch(
+        `${API_BASE_URL}/api/auth/findbyemail?email=${encodeURIComponent(user.email)}`
+      );
+
+      if (!res.ok) {
+        throw new Error(`Failed to fetch user: ${res.status} ${res.statusText}`);
+      }
+
+      const data = await res.json();
+      const userInfo = data.data;
+
+      if (!userInfo?._id) {
+        throw new Error("User data incomplete - missing user ID");
+      }
+
+      const userDataObj = {
+        id: userInfo._id,
+        email: userInfo.email,
+        name: userInfo.name || "",
+        credits: userInfo.credits || 0,
+      };
+
+      setUserData(userDataObj);
+      setUserId(userInfo._id);
+
+      // console.log('User data fetched successfully:', userDataObj);
+
+      // Proceed to check credits
+      setAuthStep("checking_credits");
+      await checkCreditsAndFetchData(userDataObj);
+    } catch (err) {
+      // console.error("User fetch error:", err);
+      setErrorMessage(`Failed to fetch user data: ${err.message}`);
+      setAuthStep("error");
+      setIsLoading(false);
+    }
+  };
+
+  // Step 3: Check credits and fetch profile data
+  const checkCreditsAndFetchData = async (userInfo) => {
+    try {
+      // Check if user has sufficient credits (minimum 0.05 for basic search)
+      const requiredCredits = 0.05;
+
+      if (userInfo.credits < requiredCredits) {
+        setErrorMessage(
+          `Insufficient credits. You need at least ${requiredCredits} credits to perform this search. Current balance: ${userInfo.credits}`
+        );
+        setAuthStep("error");
+        setIsLoading(false);
+        return;
+      }
+
+      // console.log(`Credits check passed. Current balance: ${userInfo.credits}, Required: ${requiredCredits}`);
+
+      // Add a delay before fetching data (as requested)
+      setAuthStep("fetching_data");
+      await new Promise((resolve) => setTimeout(resolve, 1500)); // 1.5 second delay
+
+      await fetchProfileData(userInfo);
+    } catch (err) {
+      // console.error("Credits check error:", err);
+      setErrorMessage(`Credits check failed: ${err.message}`);
+      setAuthStep("error");
+      setIsLoading(false);
+    }
+  };
+
+  // Step 4: Fetch profile data
+  const fetchProfileData = async (userInfo) => {
+    try {
+      if (!query) {
+        setErrorMessage("No email query provided");
+        setAuthStep("error");
+        setIsLoading(false);
+        return;
+      }
+
+      console.log("Fetching profile data for email:", query);
+
+      // Handle demo data case
+      if (query === "dheerajydv19@proton.me") {
+        // console.log('Using demo data for specified email');
+        setApiData(emailData);
+        setUsingFallback(false);
+        setAuthStep("complete");
+        setIsLoading(false);
+        return;
+      }
+
+      try {
+        const backendUrl = FetchURL;
+        const response = await fetch(
+          `${backendUrl}/BasicSearch?email=${encodeURIComponent(query)}`
+        );
+
+        if (response.ok) {
+          const data = await response.json();
+          // console.log("API success:", data);
+          setApiData(data);
+          setUsingFallback(false);
+
+          // Deduct credits after successful API call
+          await deductCredits(userInfo.id, 0.05);
+
+          setAuthStep("complete");
+          setIsLoading(false);
+        } else {
+          // console.error(`API error: ${response.status}`);
+          throw new Error(`API returned ${response.status}`);
+        }
+      } catch (apiErr) {
+        // console.error("Error with server API call:", apiErr);
+        // console.log("API attempt failed. Using fallback data from EmailBasic.json");
+        setApiData(emailData);
+        setUsingFallback(true);
+        setAuthStep("complete");
+        setIsLoading(false);
+      }
+    } catch (err) {
+      // console.error("Failed to fetch profile data:", err);
+      setErrorMessage(`Failed to fetch profile data: ${err.message}`);
+      setAuthStep("error");
+      setIsLoading(false);
+    }
+  };
+
+  // Step 5: Deduct credits after successful API call
+  const deductCredits = async (userId, amount) => {
+    try {
+      const creditsResponse = await fetch(`${AUTH_URL}/api/credits/remove/`, {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({
+          userId: userId,
+          amount: amount,
+        }),
+      });
+
+      if (creditsResponse.ok) {
+        // console.log(`Successfully deducted ${amount} credits`);
+        // Update local user data
+        setUserData((prev) => ({
+          ...prev,
+          credits: prev.credits - amount,
+        }));
+      } else {
+        // console.error("Failed to deduct credits:", creditsResponse.status);
+      }
+    } catch (creditErr) {
+      // console.error("Failed to update credits:", creditErr);
+    }
+  };
   const isTrelloDataValid = (trelloData) => {
     if (!trelloData || !Array.isArray(trelloData) || trelloData.length === 0) {
       return false;
@@ -192,89 +384,75 @@ const UserProfileCard = () => {
       return;
     }
   }, [navigate]);
-  const [isLoading, setIsLoading] = useState(true);
-  const [apiData, setApiData] = useState(null);
-  const [usingFallback, setUsingFallback] = useState(false);
 
-  useEffect(() => {
-    const fetchData = async () => {
-      try {
-        if (!query) {
-          setIsLoading(false);
-          return;
-        }
-        if (query === "dheerajydv19@proton.me") {
-          setApiData(emailData);
-          // setUsingFallback(true);
-          setIsLoading(false);
-          return;
-        }
-        console.log("Fetching data for email:", query);
-        setIsLoading(true);
-
-        try {
-          const backendUrl = FetchURL;
-          const response = await fetch(
-            `${backendUrl}/BasicSearch?email=${encodeURIComponent(query)}`
-          );
-
-          if (response.ok) {
-            const data = await response.json();
-            console.log("API success:", data);
-            setApiData(data);
-            setUsingFallback(false);
-            setIsLoading(false);
-            if (UserId) {
-              try {
-                const creditsResponse = await fetch(`${AUTH_URL}/api/credits/remove/`, {
-                  method: "POST",
-                  headers: {
-                    "Content-Type": "application/json",
-                  },
-                  body: JSON.stringify({
-                    userId: UserId,
-                    amount: 0.05,
-                  }),
-                });
-                if (creditsResponse.ok) {
-                  console.log("Credits removed successfully");
-                }
-              } catch (creditErr) {
-                console.error("Failed to update credits:", creditErr);
-              }
-            }
-          } else {
-            console.error(`API error: ${response.status}`);
-            throw new Error(`API returned ${response.status}`);
-          }
-        } catch (err) {
-          console.error("Error with server API call:", err);
-          console.log("API attempt failed. Using fallback data from EmailBasic.json");
-          setApiData(emailData);
-          setUsingFallback(true);
-        }
-
-        setIsLoading(false);
-      } catch (error) {
-        console.error("Failed to fetch data:", error);
-        // Fallback to static data on error
-        console.log("Using fallback data from EmailBasic.json");
-        setApiData(emailData);
-        setUsingFallback(true);
-        setIsLoading(false);
+  // Loading states
+  if (isLoading || authStep !== "complete") {
+    const getLoadingMessage = () => {
+      switch (authStep) {
+        case "checking":
+          return "Checking authentication...";
+        case "authenticating":
+          return "Redirecting to login...";
+        case "fetching_user":
+          return "Fetching user data...";
+        case "checking_credits":
+          return "Checking credits...";
+        case "fetching_data":
+          return "Loading profile data...";
+        case "error":
+          return errorMessage || "An error occurred";
+        default:
+          return "Loading...";
       }
     };
 
-    fetchData();
-  }, [query, AUTH_URL, UserId]);
-
-  if (isLoading) {
     return (
       <div className="flex flex-col justify-center items-center h-screen px-4">
         <div className="text-white text-lg sm:text-xl md:text-2xl mb-4 text-center">
-          Loading data...
+          {getLoadingMessage()}
         </div>
-        <div className="animate-spin rounded-full h-8 w-8 sm:h-10 sm:w-10 md:h-12 md:w-12 border-t-2 border-b-2 border-blue-500"></div>
+        {authStep === "error" ? (
+          <div className="bg-red-900 bg-opacity-20 border border-red-500 text-white p-4 rounded-lg max-w-md text-center">
+            <h3 className="text-lg font-medium text-red-400 mb-2">Error</h3>
+            <p className="text-sm text-white mb-4">{errorMessage}</p>
+            <button
+              onClick={() => {
+                setErrorMessage("");
+                setAuthStep("checking");
+                setIsLoading(true);
+                window.location.reload();
+              }}
+              className="bg-red-600 hover:bg-red-700 text-white px-4 py-2 rounded-md text-sm transition-colors duration-200"
+            >
+              Retry
+            </button>
+          </div>
+        ) : (
+          <div className="animate-spin rounded-full h-8 w-8 sm:h-10 sm:w-10 md:h-12 md:w-12 border-t-2 border-b-2 border-blue-500"></div>
+        )}
+
+        {/* Progress indicator */}
+        {authStep !== "error" && (
+          <div className="mt-6 w-64 bg-gray-700 rounded-full h-2">
+            <div
+              className="bg-blue-500 h-2 rounded-full transition-all duration-500"
+              style={{
+                width:
+                  authStep === "checking"
+                    ? "20%"
+                    : authStep === "authenticating"
+                    ? "40%"
+                    : authStep === "fetching_user"
+                    ? "60%"
+                    : authStep === "checking_credits"
+                    ? "80%"
+                    : authStep === "fetching_data"
+                    ? "90%"
+                    : "100%",
+              }}
+            />
+          </div>
+        )}
       </div>
     );
   }
@@ -349,15 +527,49 @@ const UserProfileCard = () => {
                 </div>
               </div>
               <button
-                onClick={() => {
-                  setIsLoading(true);
+                onClick={async () => {
                   setUsingFallback(false);
-                  setTimeout(() => {}, 100);
+                  setApiData(null);
+                  setAuthStep("fetching_data");
+                  setIsLoading(true);
+
+                  if (userData) {
+                    await fetchProfileData(userData);
+                  }
                 }}
                 className="bg-white text-orange-600 px-2 sm:px-3 py-1 rounded hover:bg-orange-100 transition-colors duration-200 font-medium text-xs sm:text-sm w-full sm:w-auto"
               >
                 Retry API
               </button>
+            </div>
+          )}
+
+          {/* User Credits Header */}
+          {userData && (
+            <div className="mb-4 sm:mb-6 bg-gray-900 p-3 sm:p-4 rounded-lg border border-gray-700">
+              <div className="flex flex-col sm:flex-row items-center justify-between">
+                <div className="flex items-center mb-2 sm:mb-0">
+                  <div className="w-8 h-8 sm:w-10 sm:h-10 rounded-full bg-blue-600 flex items-center justify-center mr-3">
+                    <span className="text-white font-bold text-sm">
+                      {userData.name ? userData.name.charAt(0).toUpperCase() : "U"}
+                    </span>
+                  </div>
+                  <div>
+                    <h3 className="text-white font-medium text-sm sm:text-base">
+                      Welcome, {userData.name || "User"}
+                    </h3>
+                    <p className="text-gray-400 text-xs sm:text-sm">{userData.email}</p>
+                  </div>
+                </div>
+                <div className="text-center sm:text-right">
+                  <p className="text-white font-medium text-sm sm:text-base">
+                    Credits: <span className="text-green-400">{userData.credits.toFixed(2)}</span>
+                  </p>
+                  <p className="text-gray-400 text-xs">
+                    Search cost: {query === "dheerajydv19@proton.me" ? "0.00" : "0.05"} credits
+                  </p>
+                </div>
+              </div>
             </div>
           )}
 
