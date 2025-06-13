@@ -118,12 +118,6 @@ const UI = () => {
         return;
       }
 
-      // Store search parameters in localStorage
-      if (PaidSearch) localStorage.setItem("PaidSearch", PaidSearch);
-      if (query) localStorage.setItem("query", query);
-      if (typeofsearch) localStorage.setItem("typeofsearch", typeofsearch);
-      if (userInfo.id) localStorage.setItem("userId", userInfo.id);
-
       // Update URL if parameters are missing
       if ((!params.get("PaidSearch") || !params.get("query")) && PaidSearch && query) {
         const newParams = new URLSearchParams();
@@ -204,7 +198,7 @@ const UI = () => {
       } catch (apiErr) {
         console.error("Error with server API call:", apiErr);
         console.log("API attempt failed. Using fallback data");
-        
+
         // Use fallback data based on search type
         let fallbackData;
         if (PaidSearch === "Phone") {
@@ -216,7 +210,7 @@ const UI = () => {
         } else {
           fallbackData = Datta; // Default fallback
         }
-        
+
         setDATA(fallbackData);
         setUsingFallback(true);
         setAuthStep("complete");
@@ -245,14 +239,11 @@ const UI = () => {
       });
 
       if (creditsResponse.ok) {
-        console.log(`Successfully deducted ${amount} credits`);
         // Update local user data
         setUserData((prev) => ({
           ...prev,
           credits: prev.credits - amount,
         }));
-      } else {
-        console.error("Failed to deduct credits:", creditsResponse.status);
       }
     } catch (creditErr) {
       console.error("Failed to update credits:", creditErr);
@@ -473,9 +464,7 @@ const UI = () => {
         </>
       ) : (
         <div className="flex justify-center items-center h-64">
-          <div className="text-white text-lg sm:text-xl md:text-2xl">
-            No data available
-          </div>
+          <div className="text-white text-lg sm:text-xl md:text-2xl">No data available</div>
         </div>
       )}
     </div>
