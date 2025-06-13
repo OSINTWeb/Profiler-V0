@@ -38,7 +38,6 @@ export const Header = () => {
               country: "India",
             }),
           });
-          console.log("Response:", response);
           if (!response.ok) {
             throw new Error("Failed to create user");
           }
@@ -51,7 +50,6 @@ export const Header = () => {
           setUserCredits(data.data.user.credits || 0); // Save user credits in state
           // console.log("User created successfully:", data.data.user);
         } catch (error) {
-          console.error("Error creating user:", error);
         }
       })();
     }
@@ -81,9 +79,7 @@ export const Header = () => {
           }
 
           const data = await response.json();
-          console.log("Offer Response:", data);
         } catch (error) {
-          console.error("Error creating user:", error);
         }
       })();
     }
