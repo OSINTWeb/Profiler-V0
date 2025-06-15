@@ -136,7 +136,7 @@ export default function Profile() {
     const regex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
     return regex.test(email);
   };
-
+  console.log("userCredits", countryCode,countryCodeDigits);
   const validatePhone = (phone) => {
     const phoneRegex = new RegExp(`^[0-9]{${countryCodeDigits}}$`);
     return phoneRegex.test(phone);
