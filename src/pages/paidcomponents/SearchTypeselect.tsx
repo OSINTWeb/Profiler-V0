@@ -23,7 +23,12 @@ export function SearchTypeSelector({ selected, setSelected }) {
       {/* Animated toggle background */}
 
       <div className="flex justify-between relative z-10 p-0.5">
-        {["Free", "Paid", "Freemium", "Offers"].map((type) => (
+        {["Free",
+         "Paid", 
+         "Freemium", 
+        //  "Offers"
+        
+        ].map((type) => (
           <motion.button
             key={type}
             whileHover={{
