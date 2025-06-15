@@ -260,6 +260,7 @@ export default function Profile() {
             settypeofsearch={settypeofsearch}
             selected={selected}
             typeofsearch={typeofsearch}
+
           />
           {selected === "Paid" && (
             <div className="p-6 w-full flex flex-col justify-center items-center gap-3 ">

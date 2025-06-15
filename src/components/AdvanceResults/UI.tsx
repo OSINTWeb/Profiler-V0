@@ -21,7 +21,7 @@ const UI = () => {
   const PaidSearch = params.get("PaidSearch");
   const query = params.get("query");
   const typeofsearch = params.get("typeofsearch");
-  const userId = params.get("userId");
+  const UserId = params.get("userId");
   const [DATA, setDATA] = useState([]);
   const [hidebutton, sethidebutton] = useState(false);
   const [isloading, setisloading] = useState(true);
@@ -69,7 +69,7 @@ const UI = () => {
       setAuthStep("fetching_user");
 
       const res = await fetch(
-        `${AUTH_URL}/api/auth/finduser/${userId}`
+        `${AUTH_URL}/api/auth/findbyemail?email=${encodeURIComponent(user.email)}`
       );
 
       if (!res.ok) {

@@ -166,10 +166,10 @@ const UserProfileCard = () => {
   const navigate = useNavigate();
   const params = new URLSearchParams(location.search);
   const query = params.get("query");
-  const userId = params.get("userId");
   const FetchURL = import.meta.env.VITE_ADVANCE_BACKEND;
   const AUTH_URL = import.meta.env.VITE_AUTH_BACKEND;
   const [userData, setUserData] = useState(null);
+  const [userId, setUserId] = useState(null);
   const { user, isAuthenticated, loginWithRedirect, isLoading: authLoading } = useAuth0();
   const [isLoading, setIsLoading] = useState(true);
   const [apiData, setApiData] = useState(null);
@@ -210,7 +210,7 @@ const UserProfileCard = () => {
       // console.log('Fetching user data for:', user.email);
 
       const res = await fetch(
-        `${API_BASE_URL}/api/auth/finduser/${userId}`
+        `${API_BASE_URL}/api/auth/findbyemail?email=${encodeURIComponent(user.email)}`
       );
 
       if (!res.ok) {
@@ -219,7 +219,7 @@ const UserProfileCard = () => {
 
       const data = await res.json();
       const userInfo = data.data;
-      console.log("User Info:", userInfo);
+
       if (!userInfo?._id) {
         throw new Error("User data incomplete - missing user ID");
       }
@@ -232,6 +232,7 @@ const UserProfileCard = () => {
       };
 
       setUserData(userDataObj);
+      setUserId(userInfo._id);
 
       // console.log('User data fetched successfully:', userDataObj);
 

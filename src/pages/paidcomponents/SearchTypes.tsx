@@ -183,16 +183,8 @@ export function SearchTypes({ settypeofsearch, selected, typeofsearch }: SearchT
                     isCallSpy ? "border-2 border-orange-400 shadow-lg shadow-orange-400/60 shadow-2xl" : ""
                   }`}
                 >
-                  {isUserFindr && (
-                    <span className="absolute top-2 right-2 bg-gradient-to-r from-teal-400 to-teal-600 text-white text-sm font-bold px-1 py-1 rounded shadow-md  z-10">
-                      NEW
-                    </span>
-                  )}
-                  {isCallSpy && (
-                    <span className="absolute top-2 right-2 bg-gradient-to-r from-orange-400 to-orange-600 text-white text-sm font-bold px-2 py-1 rounded shadow-md z-10">
-                      OFFER
-                    </span>
-                  )}
+              
+                
                   <h3 className="font-bold text-lg flex items-center justify-start">
                     {tool.title}
                     {/* <a
@@ -207,7 +199,7 @@ export function SearchTypes({ settypeofsearch, selected, typeofsearch }: SearchT
                   <p className="text-gray-400 text-sm mt-2">{tool.description}</p>
                   <button
                     onClick={() => {
-                      window.location.href = tool.link;
+                        window.open(tool.link, "_blank");
                     }}
                     className="mt-4 w-full border border-white/10 text-teal-300  py-2 rounded-md text-sm font-medium transition-colors"
                   >
