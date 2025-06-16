@@ -6,7 +6,7 @@ interface SearchOptionsProps {
   input: { datatype: string; value: string };
   setPaidSearch: (val: string) => void;
   PaidSearch: string;
-  typeofsearch: "Basic" | "Advance";
+  typeofsearch: string;
 }
 
 export const SearchOptions: React.FC<SearchOptionsProps> = ({

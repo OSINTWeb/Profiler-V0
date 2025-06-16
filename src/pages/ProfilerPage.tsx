@@ -392,6 +392,7 @@ export default function Profile() {
                     query: "45206164641316463216463164",
                     type: "Adv xance",
                     PaidSearch: PaidSearch,
+                    userId: userData._id,
                   });
                   window.open(`/result/Advance?${params.toString()}`, "_blank");
                 }}
@@ -420,6 +421,7 @@ export default function Profile() {
                     query: "dheerajydv19@proton.me",
                     type: "Basic",
                     PaidSearch: PaidSearch,
+                    userId: userData._id,
                   });
                   window.open(`/result/Basic?${params.toString()}`, "_blank");
                 }}

@@ -1,6 +1,6 @@
 import React from "react";
 import { motion } from "framer-motion";
-import { Copy, X, Download, Calendar, Globe, Clock } from "lucide-react";
+import { Copy, X, Download, Calendar, Globe, Clock, CheckCircle, Circle } from "lucide-react";
 import { Badge } from "@/components/ui/badge";
 import { Card } from "@/components/ui/card";
 import CompanyLogo from "../Logo";
@@ -155,7 +155,7 @@ const InfoCard: React.FC<InfoCardProps> = ({
   };
 
   return (
-    <Card className="bg-gradient-to-br from-[#0f0f12] to-[#131315] border border-gray-700 flex flex-col w-full rounded-xl transition-all duration-300 hover:scale-[1.02] hover:shadow-2xl hover:shadow-black/40 hover:border-gray-600 h-[700px]">
+    <Card className="bg-gradient-to-br from-[#0f0f12] to-[#131315] border border-gray-700 flex flex-col w-full rounded-xl transition-all duration-300 hover:scale-[1.02] hover:shadow-2xl hover:shadow-black/40 hover:border-gray-600 h-[700px] relative">
       {/* Header Section */}
       <div className="flex items-center gap-4 p-6 border-b border-gray-800 bg-gradient-to-r from-gray-900/50 to-black/50 rounded-t-xl">
         <div className="w-12 h-12 rounded-xl bg-gradient-to-br from-gray-600 to-gray-800 flex items-center justify-center border border-gray-700 shadow-lg">
