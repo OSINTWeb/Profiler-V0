@@ -69,7 +69,7 @@ const UI = () => {
       setAuthStep("fetching_user");
 
       const res = await fetch(
-        `${AUTH_URL}/api/auth/findUser/${UserId}`
+        `${AUTH_URL}/api/auth/findbyemail?email=${encodeURIComponent(user.email)}`
       );
 
       if (!res.ok) {
