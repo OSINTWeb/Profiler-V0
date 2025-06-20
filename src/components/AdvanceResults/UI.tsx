@@ -20,7 +20,7 @@ const UI = () => {
   const PaidSearch = params.get("PaidSearch");
   const query = params.get("query");
   const typeofsearch = params.get("typeofsearch");
-  const UserId = params.get("userId");
+  const UserId = params.get("Token");
   const [DATA, setDATA] = useState([]);
   const [hidebutton, sethidebutton] = useState(false);
   const [isloading, setisloading] = useState(true);

@@ -169,7 +169,7 @@ const UserProfileCard = () => {
   const FetchURL = import.meta.env.VITE_ADVANCE_BACKEND;
   const AUTH_URL = import.meta.env.VITE_AUTH_BACKEND;
   const [userData, setUserData] = useState(null);
-  const userId=params.get('userId')
+  const userId=params.get('Token')
   const { user, isAuthenticated, loginWithRedirect, isLoading: authLoading } = useAuth0();
   const [isLoading, setIsLoading] = useState(true);
   const [apiData, setApiData] = useState(null);
@@ -177,8 +177,6 @@ const UserProfileCard = () => {
   const [authStep, setAuthStep] = useState("checking"); // 'checking', 'authenticating', 'fetching_user', 'checking_credits', 'fetching_data', 'complete', 'error'
   const [errorMessage, setErrorMessage] = useState("");
 
-  // Helper function to check if Trello data is safe to use
-  const API_BASE_URL = import.meta.env.VITE_AUTH_BACKEND;
 
   // Step 1: Handle Auth0 authentication
   useEffect(() => {

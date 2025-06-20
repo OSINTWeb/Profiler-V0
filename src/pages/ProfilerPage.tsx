@@ -306,7 +306,7 @@ export default function Profile() {
                       PaidSearch: PaidSearch,
                       query: query,
                       typeofsearch: typeofsearch,
-                      userId: userData._id,
+                      Token: userData._id,
                     });
                     if (query != "") {
                       if (typeofsearch === "Basic") {
@@ -364,7 +364,7 @@ export default function Profile() {
                     query: "45206164641316463216463164",
                     type: "Advance",
                     PaidSearch: PaidSearch,
-                    userId: userData._id,
+                    Token: userData._id,
                   });
                   window.open(`/result/Advance?${params.toString()}`, "_blank");
                 }}
@@ -393,7 +393,7 @@ export default function Profile() {
                     query: "dheerajydv19@proton.me",
                     type: "Basic",
                     PaidSearch: PaidSearch,
-                    userId: userData._id,
+                    Token: userData._id,
                   });
                   window.open(`/result/Basic?${params.toString()}`, "_blank");
                 }}
