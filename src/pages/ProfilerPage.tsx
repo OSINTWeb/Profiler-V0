@@ -96,7 +96,7 @@ export default function Profile() {
       setIsLoading(true);
       const API_BASE_URL = import.meta.env.VITE_AUTH_BACKEND;
       const response = await fetch(
-       `${API_BASE_URL}/api/auth/findbyemail?email=${encodeURIComponent(user.email)}`
+       `${API_BASE_URL}/api/auth/findbyemail?email=${user.email}`
       );
 
       if (!response.ok) {
