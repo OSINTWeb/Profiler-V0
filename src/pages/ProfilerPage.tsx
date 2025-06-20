@@ -95,10 +95,8 @@ export default function Profile() {
       }
       setIsLoading(true);
       const API_BASE_URL = import.meta.env.VITE_AUTH_BACKEND;
-      const effectiveEmail = user.email;
-
       const response = await fetch(
-        `${API_BASE_URL}/api/auth/findbyemail?email=${encodeURIComponent(effectiveEmail)}`
+       `${API_BASE_URL}/api/auth/finduser?email=${encodeURIComponent(user.email)}`
       );
 
       if (!response.ok) {
@@ -143,32 +141,6 @@ export default function Profile() {
   };
   return (
     <div className="h-screen flex flex-col  items-center  overflow-y-auto scrollbar">
-      {/* {selected === "Paid" && (
-        <div className="absolute w-full h-screen bg-black z-[-1] overflow-hidden md:object-cover  ">
-          {!isUser && (
-            <video
-              className="w-full  h-full absolute top-0 left-0   object-cover lg:scale-105 md:scale-150 sm:scale-100"
-              autoPlay
-              loop
-              muted
-              playsInline
-            >
-              <source src={background} type="video/mp4" />
-            </video>
-          )}
-          {isUser && (
-            <video
-              className="w-full   h-full absolute top-0 left-0   object-cover lg:scale-105 md:scale-150 sm:scale-100"
-              autoPlay
-              loop
-              muted
-              playsInline
-            >
-              <source src={searchbg} type="video/mp4" />
-            </video>
-          )}
-        </div>
-      )} */}
       <div className="flex h-full w-full flex-col items-center overflow-x-hidden ">
         <Header />
         <div className="form  text-white h-full flex mb-56  w-full  flex-col items-center mt-[8%] gap-4 px-1 ">
