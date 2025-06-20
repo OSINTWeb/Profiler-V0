@@ -1,7 +1,6 @@
 import React, { useState, useEffect } from "react";
 import InfoCard from "./ProfileSection";
 import SelectInfo from "./SelectInfo";
-import FakeCardList from "./fake";
 import CategoryCard from "./categoryCard";
 import {
   AlertDialog,
@@ -15,7 +14,6 @@ import {
   AlertDialogTrigger,
 } from "@/components/ui/alert-dialog";
 import { Tooltip, TooltipContent, TooltipProvider, TooltipTrigger } from "@/components/ui/tooltip";
-
 interface PlatformVariable {
   key: string;
   proper_key?: string;

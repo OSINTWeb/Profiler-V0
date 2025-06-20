@@ -186,7 +186,7 @@ export const ActionBar: React.FC<ActionBarProps> = ({
 
       // Add title
       doc.setFontSize(24);
-      doc.text("Platform Data Report", 105, 20, { align: "center" });
+      doc.text("Profiler Platform Data Report", 105, 20, { align: "center" });
 
       // Add generation date and selection info
       doc.setFontSize(12);
@@ -470,7 +470,7 @@ export const ActionBar: React.FC<ActionBarProps> = ({
 
       // Add title
       doc.setFontSize(24);
-      doc.text("Platform Data Report with Images", 105, 20, { align: "center" });
+      doc.text("Profiler Platform Data Report with Images", 105, 20, { align: "center" });
 
       // Add generation date and selection info
       doc.setFontSize(12);
@@ -731,7 +731,7 @@ export const ActionBar: React.FC<ActionBarProps> = ({
           properties: {},
           children: [
             new Paragraph({
-              text: "Platform Data Report",
+              text: "Profiler Platform Data Report",
               heading: HeadingLevel.TITLE,
               spacing: { before: 240, after: 240 },
             }),

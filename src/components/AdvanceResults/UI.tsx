@@ -5,7 +5,6 @@ import InfoCardList from "./InfocardList";
 import "@/index.css";
 import Datta from "@/Data/export_test@gmail.com.json";
 import PhoneData from "@/Data/+918318943598.json";
-import user from "@/Data/Aditya.json";
 import ActivityProfileCard from "./ActivityProfileCard";
 import BreachedAccount from "./Breached";
 import LoadingSkeleton from "../LoadingSkeleton";
@@ -464,6 +463,7 @@ const UI = () => {
               hidebutton={hidebutton}
               PaidSearch={PaidSearch}
               sethidebutton={sethidebutton}
+              fulldata={Datta}
             />
           </div>
           <Footer />

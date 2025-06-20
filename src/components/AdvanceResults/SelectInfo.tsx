@@ -83,28 +83,29 @@ interface SelectInfoProps {
   exportCount?: number;
 }
 
-export const SelectInfo: React.FC<SelectInfoProps> = ({ 
-  data, 
+export const SelectInfo: React.FC<SelectInfoProps> = ({
+  data,
   selectedData,
-  hidebutton, 
+  hidebutton,
   sethidebutton,
   setenableselect,
   enableselect,
   filteredUsers,
   selectedCount = 0,
   exportMode = "all",
-  exportCount = 0
+  exportCount = 0,
 }) => {
   return (
     <div className="w-full max-md:max-w-full">
-      <ActionBar 
-        data={data || []} 
+      {/* <div className="text-white">{JSON.stringify(selectedData)}</div> */}
+      <ActionBar
+        data={data || []}
         selectedData={selectedData}
         hidebutton={hidebutton}
         sethidebutton={sethidebutton}
         setenableselect={setenableselect}
         enableselect={enableselect}
-        resultCount={data?.length || 0}
+        resultCount={data?.length}
         selectedCount={selectedCount}
         exportMode={exportMode}
         exportCount={exportCount}
