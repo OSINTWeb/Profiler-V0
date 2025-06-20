@@ -210,7 +210,7 @@ const UserProfileCard = () => {
       // console.log('Fetching user data for:', user.email);
 
       const res = await fetch(
-         `${AUTH_URL}/api/auth/finduser?email=${encodeURIComponent(user.email)}`
+         `${AUTH_URL}/api/auth/finduser/${userId}`
       );
 
       if (!res.ok) {
