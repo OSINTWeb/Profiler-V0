@@ -390,7 +390,7 @@ export default function Profile() {
                   }
                   const params = new URLSearchParams({
                     query: "45206164641316463216463164",
-                    type: "Adv xance",
+                    type: "Advance",
                     PaidSearch: PaidSearch,
                     userId: userData._id,
                   });

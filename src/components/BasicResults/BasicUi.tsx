@@ -169,7 +169,7 @@ const UserProfileCard = () => {
   const FetchURL = import.meta.env.VITE_ADVANCE_BACKEND;
   const AUTH_URL = import.meta.env.VITE_AUTH_BACKEND;
   const [userData, setUserData] = useState(null);
-  const [userId, setUserId] = useState(null);
+  const userId=params.get('userId')
   const { user, isAuthenticated, loginWithRedirect, isLoading: authLoading } = useAuth0();
   const [isLoading, setIsLoading] = useState(true);
   const [apiData, setApiData] = useState(null);
@@ -210,7 +210,7 @@ const UserProfileCard = () => {
       // console.log('Fetching user data for:', user.email);
 
       const res = await fetch(
-        `${API_BASE_URL}/api/auth/findbyemail?email=${encodeURIComponent(user.email)}`
+         `${AUTH_URL}/api/auth/finduser/${userId}`
       );
 
       if (!res.ok) {
@@ -232,9 +232,6 @@ const UserProfileCard = () => {
       };
 
       setUserData(userDataObj);
-      setUserId(userInfo._id);
-
-      // console.log('User data fetched successfully:', userDataObj);
 
       // Proceed to check credits
       setAuthStep("checking_credits");
