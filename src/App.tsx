@@ -13,7 +13,6 @@ import RazorpayPayment from "@/components/AuthPages/RazorPay";
 import StripePayment from "@/components/AuthPages/stripePage/Stripe";
 import PhoneResultUI from "@/components/BasicResults/PhoneResult/BasicUi";
 import Pricing from "./components/PricingPage";
-import BasicSearch from "@/pages/basicSearch";
 
 const queryClient = new QueryClient();
 
@@ -28,7 +27,6 @@ const App = () => (
           <Route path="/result/Advance" element={<UI />} />
           <Route path="/result/Basic" element={<BasicUI />} />
           <Route path="/result/phone" element={<PhoneResultUI />} /> {/* */}
-          <Route path="/basicsearch" element={<BasicSearch />} />
           <Route path="*" element={<NotFound />} />
           <Route path="/Profile" element={<Profilepage />} />
           <Route path="/paypal" element={<PayPalPaymentForm />} />

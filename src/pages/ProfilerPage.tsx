@@ -143,9 +143,35 @@ export default function Profile() {
     <div className="h-screen flex flex-col  items-center  overflow-y-auto scrollbar">
       <div className="flex h-full w-full flex-col items-center overflow-x-hidden ">
         <Header />
+         {selected === "Paid" && (
+        <div className="absolute w-full h-screen bg-black z-[-1] overflow-hidden md:object-cover  ">
+          {!isUser && (
+            <video
+              className="w-full  h-full absolute top-0 left-0   object-cover lg:scale-105 md:scale-150 sm:scale-100"
+              autoPlay
+              loop
+              muted
+              playsInline
+            >
+              <source src={background} type="video/mp4" />
+            </video>
+          )}
+          {isUser && (
+            <video
+              className="w-full   h-full absolute top-0 left-0   object-cover lg:scale-105 md:scale-150 sm:scale-100"
+              autoPlay
+              loop
+              muted
+              playsInline
+            >
+              <source src={searchbg} type="video/mp4" />
+            </video>
+          )}
+        </div>
+      )}
         <div className="form  text-white h-full flex mb-56  w-full  flex-col items-center mt-[8%] gap-4 px-1 ">
           <SearchTypeSelector selected={selected} setSelected={setSelected} />
-
+          
           {selected === "Offers" && (
             <div className="w-full mx-auto mb-2">
               <div className="rounded-lg py-3 px-6 flex flex-col items-center justify-center">
