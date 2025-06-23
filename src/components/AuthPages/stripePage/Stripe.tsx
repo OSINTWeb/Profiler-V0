@@ -316,7 +316,7 @@ function App() {
 
       try {
         const res = await fetch(
-          `${API_BASE_URL}/api/auth/findbyemail?email=${encodeURIComponent(effectiveEmail)}`
+          `${API_BASE_URL}/api/auth/findbyemail?email=${effectiveEmail}`
         );
         
         if (!res.ok) {
