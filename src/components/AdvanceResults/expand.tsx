@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import { format } from "date-fns";
-import { Copy } from "lucide-react";
+import { Copy, Check } from "lucide-react";
 import { motion } from "framer-motion";
 import { Dialog, DialogContent, DialogHeader, DialogTitle } from "@/components/ui/dialog";
 import JSONPretty from "react-json-pretty";
@@ -68,12 +68,15 @@ const scrollbarStyles = `
 
 const CodeBlock = ({ data }) => {
   const [toggle, settoggle] = useState(true);
+  const [isCopied, setIsCopied] = useState(false);
+  
   const handleCopy = () => {
     const jsonString = JSON.stringify(data, null, 2);
     navigator.clipboard
       .writeText(jsonString)
       .then(() => {
-        alert("JSON copied to clipboard!");
+        setIsCopied(true);
+        setTimeout(() => setIsCopied(false), 2000);
       })
       .catch((err) => {
         console.error("Failed to copy JSON: ", err);
@@ -101,9 +104,14 @@ const CodeBlock = ({ data }) => {
         </button>
         <button
           onClick={handleCopy}
-          className="rounded-xl border border-gray-700 bg-gradient-to-r from-gray-600 to-gray-700 hover:from-gray-500 hover:to-gray-600 text-white px-6 py-2 flex items-center gap-2 text-sm md:text-base font-semibold transition-all duration-300 hover:shadow-lg hover:shadow-gray-500/30"
+          className={`rounded-xl border border-gray-700 text-white px-6 py-2 flex items-center gap-2 text-sm md:text-base font-semibold transition-all duration-300 hover:shadow-lg hover:shadow-gray-500/30 ${
+            isCopied 
+              ? "bg-gradient-to-r from-green-600 to-green-700 hover:from-green-500 hover:to-green-600 border-green-600" 
+              : "bg-gradient-to-r from-gray-600 to-gray-700 hover:from-gray-500 hover:to-gray-600"
+          }`}
         >
-          <Copy size={16} /> Copy JSON
+          {isCopied ? <Check size={16} /> : <Copy size={16} />}
+          {isCopied ? "Copied!" : "Copy JSON"}
         </button>
       </div>
       <div className="overflow-x-auto custom-scrollbar bg-black rounded-lg p-4 border border-gray-800">
@@ -155,7 +163,7 @@ const formatDate = (dateString: string): string => {
   }
 };
 
-const renderItemDetails = (item: PlatformData) => {
+const renderItemDetails = (item: PlatformData, copiedStates: {[key: string]: boolean}, handleCopyField: (fieldKey: string, value: string) => void) => {
   if (!item) return null;
 
   const spec = item.spec_format?.[0];
@@ -197,10 +205,18 @@ const renderItemDetails = (item: PlatformData) => {
                           <motion.button
                             whileHover={{ scale: 1.05 }}
                             whileTap={{ scale: 0.95 }}
-                            onClick={() => navigator.clipboard.writeText(value.value)}
-                            className="hover:bg-gray-800 rounded-lg transition-colors p-2 border border-gray-700"
+                            onClick={() => handleCopyField(`spec-id-${key}`, value.value)}
+                            className={`rounded-lg transition-colors p-2 border ${
+                              copiedStates[`spec-id-${key}`] 
+                                ? "bg-green-600/20 border-green-600 hover:bg-green-600/30" 
+                                : "hover:bg-gray-800 border-gray-700"
+                            }`}
                           >
-                            <Copy size={16} className="text-gray-300" />
+                            {copiedStates[`spec-id-${key}`] ? (
+                              <Check size={16} className="text-green-400" />
+                            ) : (
+                              <Copy size={16} className="text-gray-300" />
+                            )}
                           </motion.button>
                         </>
                       ) : key.includes("url") && isStringValue(value) ? (
@@ -219,10 +235,18 @@ const renderItemDetails = (item: PlatformData) => {
                           <motion.button
                             whileHover={{ scale: 1.05 }}
                             whileTap={{ scale: 0.95 }}
-                            onClick={() => navigator.clipboard.writeText(id)}
-                            className="hover:bg-gray-800 rounded-lg transition-colors p-2 border border-gray-700"
+                            onClick={() => handleCopyField(`spec-url-${key}`, value.value)}
+                            className={`rounded-lg transition-colors p-2 border ${
+                              copiedStates[`spec-url-${key}`] 
+                                ? "bg-green-600/20 border-green-600 hover:bg-green-600/30" 
+                                : "hover:bg-gray-800 border-gray-700"
+                            }`}
                           >
-                            <Copy size={16} className="text-gray-300" />
+                            {copiedStates[`spec-url-${key}`] ? (
+                              <Check size={16} className="text-green-400" />
+                            ) : (
+                              <Copy size={16} className="text-gray-300" />
+                            )}
                           </motion.button>
                         </div>
                       ) : (key === "last_seen" || key === "creation_date") &&
@@ -234,10 +258,18 @@ const renderItemDetails = (item: PlatformData) => {
                           <motion.button
                             whileHover={{ scale: 1.05 }}
                             whileTap={{ scale: 0.95 }}
-                            onClick={() => navigator.clipboard.writeText(value.value)}
-                            className="hover:bg-gray-800 rounded-lg transition-colors p-2 border border-gray-700"
+                            onClick={() => handleCopyField(`spec-date-${key}`, value.value)}
+                            className={`rounded-lg transition-colors p-2 border ${
+                              copiedStates[`spec-date-${key}`] 
+                                ? "bg-green-600/20 border-green-600 hover:bg-green-600/30" 
+                                : "hover:bg-gray-800 border-gray-700"
+                            }`}
                           >
-                            <Copy size={16} className="text-gray-300" />
+                            {copiedStates[`spec-date-${key}`] ? (
+                              <Check size={16} className="text-green-400" />
+                            ) : (
+                              <Copy size={16} className="text-gray-300" />
+                            )}
                           </motion.button>
                         </div>
                       ) : isBooleanValue(value) ? (
@@ -302,10 +334,18 @@ const renderItemDetails = (item: PlatformData) => {
                 <motion.button
                   whileHover={{ scale: 1.05 }}
                   whileTap={{ scale: 0.95 }}
-                  onClick={() => navigator.clipboard.writeText(query)}
-                  className="hover:bg-gray-800 rounded-lg transition-colors p-2 border border-gray-700"
+                  onClick={() => handleCopyField('query', query)}
+                  className={`rounded-lg transition-colors p-2 border ${
+                    copiedStates['query'] 
+                      ? "bg-green-600/20 border-green-600 hover:bg-green-600/30" 
+                      : "hover:bg-gray-800 border-gray-700"
+                  }`}
                 >
-                  <Copy size={16} className="text-gray-300" />
+                  {copiedStates['query'] ? (
+                    <Check size={16} className="text-green-400" />
+                  ) : (
+                    <Copy size={16} className="text-gray-300" />
+                  )}
                 </motion.button>
               </div>
             </div>
@@ -324,10 +364,18 @@ const renderItemDetails = (item: PlatformData) => {
                 <motion.button
                   whileHover={{ scale: 1.05 }}
                   whileTap={{ scale: 0.95 }}
-                  onClick={() => navigator.clipboard.writeText(id)}
-                  className="hover:bg-gray-800 rounded-lg transition-colors p-2 border border-gray-700"
+                  onClick={() => handleCopyField('id', id)}
+                  className={`rounded-lg transition-colors p-2 border ${
+                    copiedStates['id'] 
+                      ? "bg-green-600/20 border-green-600 hover:bg-green-600/30" 
+                      : "hover:bg-gray-800 border-gray-700"
+                  }`}
                 >
-                  <Copy size={16} className="text-gray-300" />
+                  {copiedStates['id'] ? (
+                    <Check size={16} className="text-green-400" />
+                  ) : (
+                    <Copy size={16} className="text-gray-300" />
+                  )}
                 </motion.button>
               </div>
             </div>
@@ -346,10 +394,18 @@ const renderItemDetails = (item: PlatformData) => {
                 <motion.button
                   whileHover={{ scale: 1.05 }}
                   whileTap={{ scale: 0.95 }}
-                  onClick={() => navigator.clipboard.writeText(last_seen)}
-                  className="hover:bg-gray-800 rounded-lg transition-colors p-2 border border-gray-700"
+                  onClick={() => handleCopyField('last_seen', last_seen)}
+                  className={`rounded-lg transition-colors p-2 border ${
+                    copiedStates['last_seen'] 
+                      ? "bg-green-600/20 border-green-600 hover:bg-green-600/30" 
+                      : "hover:bg-gray-800 border-gray-700"
+                  }`}
                 >
-                  <Copy size={16} className="text-gray-300" />
+                  {copiedStates['last_seen'] ? (
+                    <Check size={16} className="text-green-400" />
+                  ) : (
+                    <Copy size={16} className="text-gray-300" />
+                  )}
                 </motion.button>
               </div>
             </div>
@@ -402,6 +458,19 @@ export const Expand: React.FC<ExpandProps> = ({
   setIsDetailsOpen,
   selectedItem,
 }) => {
+  const [copiedStates, setCopiedStates] = useState<{[key: string]: boolean}>({});
+  
+  const handleCopyField = (fieldKey: string, value: string) => {
+    navigator.clipboard.writeText(value).then(() => {
+      setCopiedStates(prev => ({ ...prev, [fieldKey]: true }));
+      setTimeout(() => {
+        setCopiedStates(prev => ({ ...prev, [fieldKey]: false }));
+      }, 2000);
+    }).catch((err) => {
+      console.error("Failed to copy: ", err);
+    });
+  };
+
   return (
     <Dialog open={isDetailsOpen} onOpenChange={setIsDetailsOpen}>
       <DialogContent className="max-w-[95vw] md:max-w-5xl bg-gradient-to-br from-black to-gray-900 rounded-2xl shadow-2xl h-[90vh] md:h-[85vh] overflow-y-auto border-2 border-gray-700 custom-scrollbar flex flex-col">
@@ -457,7 +526,7 @@ export const Expand: React.FC<ExpandProps> = ({
             </div>
           </DialogTitle>
         </DialogHeader>
-        {selectedItem && renderItemDetails(selectedItem)}
+        {selectedItem && renderItemDetails(selectedItem, copiedStates, handleCopyField)}
       </DialogContent>
     </Dialog>
   );
